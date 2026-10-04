@@ -472,6 +472,11 @@ body.has-pointer .cursor-glow {
   margin: 0 0 36px;
 }
 
+.hero__subtitle strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -711,7 +716,7 @@ body.has-pointer .cursor-glow {
 }
 
 .ai-pipeline::before {
-  content: "$ smartdev run --architect=human --builders=ai";
+  content: "$ smartdev build --architecture --data --ai-powered";
   display: block;
   font-size: 0.8rem;
   color: var(--color-success);
@@ -728,7 +733,7 @@ body.has-pointer .cursor-glow {
 
 .ai-pipeline__role {
   flex: none;
-  min-width: 96px;
+  min-width: 118px;
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid var(--color-border);
