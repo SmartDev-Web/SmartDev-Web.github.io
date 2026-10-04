@@ -26,7 +26,7 @@ const lightboxState = { images: [], currentIndex: 0, returnFocusElement: null, t
 function renderEnergyScale(scaleListElement, classScale, activeLetter, unitLabel) {
   scaleListElement.innerHTML = classScale.map(function (energyClass, classIndex) {
     const isActive = energyClass.letter === activeLetter;
-    return '<li class="energy-scale__bar' + (isActive ? " is-active" : "") + '" style="width:' + (34 + classIndex * 11) + "%;background:" + energyClass.color + ";color:" + energyClass.textColor + '" data-label="' + energyClass.range + " " + unitLabel + '"' + (isActive ? ' aria-current="true"' : "") + ">" + energyClass.letter + "</li>";
+    return '<li class="energy-scale__bar' + (isActive ? " is-active" : "") + '" style="width:' + (34 + classIndex * 11) + "%;background:" + energyClass.color + ";color:" + energyClass.textColor + '" data-label="' + escapeHtml(energyClass.range + " " + unitLabel) + '"' + (isActive ? ' aria-current="true"' : "") + ">" + energyClass.letter + "</li>";
   }).join("");
   scaleListElement.setAttribute("aria-label", scaleListElement.getAttribute("aria-label") + " : " + activeLetter);
 }
@@ -38,8 +38,9 @@ function renderPropertyGallery(propertyListing) {
   const hiddenImageCount = propertyListing.images.length - visibleImages.length;
   galleryElement.innerHTML = visibleImages.map(function (photoIdentifier, imageIndex) {
     const moreOverlay = imageIndex === visibleImages.length - 1 && hiddenImageCount > 0 ? '<span class="gallery__more">+ ' + hiddenImageCount + " photos</span>" : "";
+    const imageWidth = imageIndex === 0 ? 1400 : 800;
     return '<button class="gallery__item" type="button" data-gallery-index="' + imageIndex + '" aria-label="Agrandir la photo ' + (imageIndex + 1) + " sur " + propertyListing.images.length + '">' +
-      '<img src="' + buildPropertyImageUrl(photoIdentifier, imageIndex === 0 ? 1400 : 800) + '" alt="' + propertyListing.title + ", photo " + (imageIndex + 1) + '">' + moreOverlay + "</button>";
+      '<img src="' + escapeHtml(buildPropertyImageUrl(photoIdentifier, imageWidth)) + '" alt="' + escapeHtml(propertyListing.title) + ", photo " + (imageIndex + 1) + '" width="' + imageWidth + '" height="' + Math.round(imageWidth * 0.75) + '">' + moreOverlay + "</button>";
   }).join("");
   galleryElement.addEventListener("click", function (clickEvent) {
     const galleryItemElement = clickEvent.target.closest("[data-gallery-index]");
@@ -152,7 +153,7 @@ function renderPropertySpecs(propertyListing) {
     ["Prix / m²", propertyListing.transaction === "vente" ? formatEuros(Math.round(propertyListing.price / propertyListing.surface)) : formatEuros(Math.round(propertyListing.price / propertyListing.surface * 10) / 10, 1)]
   ];
   document.getElementById("property-specs").innerHTML = specificationEntries.map(function (specificationEntry) {
-    return '<div class="spec-tile"><dt>' + specificationEntry[0] + "</dt><dd>" + specificationEntry[1] + "</dd></div>";
+    return '<div class="spec-tile"><dt>' + escapeHtml(specificationEntry[0]) + "</dt><dd>" + escapeHtml(specificationEntry[1]) + "</dd></div>";
   }).join("");
 }
 
@@ -167,7 +168,7 @@ function renderMonthlyHint(propertyListing) {
   const defaultDeposit = Math.round(propertyListing.price * 0.1 / 5000) * 5000;
   const estimatedMonthlyPayment = computeMonthlyLoanPayment(propertyListing.price - defaultDeposit, 3.35, 20);
   monthlyHintElement.innerHTML = "À partir de <strong>" + formatEuros(Math.round(estimatedMonthlyPayment)) + " / mois</strong><br>sur 20 ans à 3,35 % avec 10 % d'apport. Ajuster la simulation →";
-  monthlyHintElement.href = "simulateur.html?prix=" + propertyListing.price + "&apport=" + defaultDeposit;
+  monthlyHintElement.href = "simulateur.html?" + new URLSearchParams({ prix: propertyListing.price, apport: defaultDeposit }).toString();
 }
 
 /* Renders up to three comparable listings */
@@ -184,8 +185,10 @@ function renderSimilarListings(propertyListing) {
 function renderMissingProperty() {
   document.getElementById("property-title").textContent = "Ce bien n'est plus disponible";
   document.getElementById("property-location").textContent = "Il a peut-être déjà trouvé preneur. Découvrez nos autres annonces.";
-  document.getElementById("property-content").innerHTML = '<div class="container"><div class="empty-state"><h3>Annonce introuvable</h3><p>La référence demandée n\'existe pas ou a été retirée.</p><a class="button button--forest" href="annonces.html">Voir toutes les annonces</a></div></div>';
+  document.getElementById("property-content").innerHTML = '<div class="container"><div class="empty-state"><h2>Annonce introuvable</h2><p>La référence demandée n\'existe pas ou a été retirée.</p><a class="button button--primary" href="annonces.html">Voir toutes les annonces</a></div></div>';
   document.getElementById("property-gallery").remove();
+  document.getElementById("similar-listings").innerHTML = PROPERTY_LISTINGS.filter(function (propertyListing) { return propertyListing.featured; }).slice(0, 3).map(createListingCardMarkup).join("");
+  refreshFavoriteIndicators();
 }
 
 /* Fills the page with the listing referenced in the URL */
@@ -197,14 +200,13 @@ function initializePropertyPage() {
   }
   const transactionLabel = propertyListing.transaction === "location" ? "À louer" : "À vendre";
   document.title = propertyListing.title + " — " + propertyListing.city + " | Horizon Immobilier";
-  document.getElementById("property-banner-image").src = buildPropertyImageUrl(propertyListing.images[0], 1600);
   document.getElementById("property-breadcrumb").textContent = propertyListing.title;
   document.getElementById("property-eyebrow").textContent = transactionLabel + " · Réf. " + propertyListing.id;
   document.getElementById("property-title").textContent = propertyListing.title;
   document.getElementById("property-location").textContent = propertyListing.city + " — " + propertyListing.district + " · " + PROPERTY_TYPE_LABELS[propertyListing.type] + " de " + propertyListing.surface + " m²";
-  document.getElementById("property-price").innerHTML = formatListingPrice(propertyListing) + (propertyListing.transaction === "vente" ? "<small>Honoraires à la charge du vendeur</small>" : "");
+  document.getElementById("property-price").innerHTML = formatListingPrice(propertyListing) + (propertyListing.transaction === "vente" ? '<small class="property-header__note">Honoraires à la charge du vendeur</small>' : "");
   document.getElementById("property-description").textContent = propertyListing.description;
-  document.getElementById("property-features").innerHTML = propertyListing.features.map(function (featureLabel) { return "<li>" + featureLabel + "</li>"; }).join("");
+  document.getElementById("property-features").innerHTML = propertyListing.features.map(function (featureLabel) { return "<li>" + escapeHtml(featureLabel) + "</li>"; }).join("");
   document.getElementById("property-favorite-button").dataset.favoriteId = propertyListing.id;
   document.getElementById("visit-message").value = "Bonjour, je souhaite visiter le bien réf. " + propertyListing.id + " (" + propertyListing.title + ").";
   renderPropertyGallery(propertyListing);

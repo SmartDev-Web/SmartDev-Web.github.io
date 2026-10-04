@@ -28,7 +28,7 @@ const PROPERTY_LISTINGS = [
     publishedDays: 2,
     featured: true,
     features: ["Accès privatif au lac", "Ponton", "Piscine chauffée", "Domotique", "Garage 3 voitures", "Pompe à chaleur"],
-    description: "Posée sur la rive est du lac d'Annecy, cette villa d'architecte offre une immersion totale dans le paysage. Les volumes baignés de lumière s'ouvrent par de larges baies coulissantes sur une terrasse en ipé et un jardin paysager qui descend en pente douce jusqu'au ponton privatif. Le niveau de vie comprend une cuisine Bulthaup, un séjour cathédrale avec cheminée suspendue et une suite parentale avec dressing et salle de bains en pierre de Savoie. À l'étage, quatre chambres et deux salles d'eau complètent l'ensemble.",
+    description: "Posée sur la rive est du lac d'Annecy, cette villa d'architecte offre une immersion totale dans le paysage. Les volumes baignés de lumière s'ouvrent par de larges baies coulissantes sur une terrasse en ipé et un jardin paysager qui descend en pente douce jusqu'au ponton privatif. Le niveau de vie comprend une cuisine Bulthaup, un séjour cathédrale avec cheminée suspendue et une suite parentale avec dressing et salle de bains en pierre de Savoie. À l'étage, quatre chambres et trois salles d'eau complètent l'ensemble.",
     images: ["1613490493576-7fde63acd811", "1600607687939-ce8a6c25118c", "1600566753190-17f0baa2a6c3", "1505691938895-1758d7feb511", "1600585154526-990dced4db0d"]
   },
   {
@@ -51,7 +51,7 @@ const PROPERTY_LISTINGS = [
     publishedDays: 5,
     featured: true,
     features: ["Terrasse 48 m²", "Vue lac panoramique", "Ascenseur", "2 places en sous-sol", "Cave", "Concierge"],
-    description: "Dans une résidence de standing de l'avenue d'Albigny, à deux pas de l'Impérial Palace, ce dernier étage traversant profite d'une terrasse de 48 m² face au lac et aux Dents de Lanfon. Entrée avec placards, séjour de 52 m² ouvert sur une cuisine équipée, trois chambres dont une suite parentale. Prestations haut de gamme : parquet chêne massif, chauffage au sol, menuiseries aluminium triple vitrage.",
+    description: "Dans une résidence de standing du quartier d'Albigny, à deux pas des plages, ce dernier étage traversant profite d'une terrasse de 48 m² face au lac et aux Dents de Lanfon. Entrée avec placards, séjour de 52 m² ouvert sur une cuisine équipée, trois chambres dont une suite parentale. Prestations haut de gamme : parquet chêne massif, chauffage au sol, menuiseries aluminium triple vitrage.",
     images: ["1600210492486-724fe5c67fb0", "1484154218962-a197022b5858", "1505691938895-1758d7feb511", "1600573472550-8090b5e0745e", "1493809842364-78817add7ffb"]
   },
   {
@@ -141,7 +141,7 @@ const PROPERTY_LISTINGS = [
     energyClass: "B",
     climateClass: "B",
     publishedDays: 3,
-    featured: false,
+    featured: true,
     features: ["Balcon 9 m²", "Parking privatif", "Ascenseur", "Proche technopole", "Bus ligne 4"],
     description: "Dans une copropriété récente et bien entretenue, appartement traversant composé d'une entrée, d'un séjour avec cuisine ouverte donnant sur un balcon exposé sud-ouest, de deux chambres et d'une salle de bains. Place de parking en sous-sol. Idéal premier achat ou investissement locatif près de la technopole.",
     images: ["1522708323590-d24dbb6b0267", "1493809842364-78817add7ffb", "1484154218962-a197022b5858", "1505691938895-1758d7feb511"]
@@ -156,7 +156,7 @@ const PROPERTY_LISTINGS = [
     price: 1890000,
     surface: 220,
     landSurface: 1300,
-    rooms: 6,
+    rooms: 7,
     bedrooms: 4,
     bathrooms: 3,
     floorLabel: "R+1",
@@ -166,7 +166,7 @@ const PROPERTY_LISTINGS = [
     publishedDays: 20,
     featured: false,
     features: ["Piscine à débordement", "Vue lac", "Panneaux solaires", "Cuisine d'été", "Ascenseur privatif"],
-    description: "Maison contemporaine aux lignes épurées, implantée pour capter la lumière et la vue sur le lac. Pièce de vie de 80 m² ouverte sur la piscine à débordement, quatre suites avec dressing, bureau et salle de sport. Construction RE2012 performante avec panneaux photovoltaïques.",
+    description: "Maison contemporaine aux lignes épurées, implantée pour capter la lumière et la vue sur le lac. Pièce de vie de 80 m² ouverte sur la piscine à débordement, quatre chambres dont trois suites avec dressing, un bureau et une salle de sport. Construction RE2012 performante avec panneaux photovoltaïques.",
     images: ["1600596542815-ffad4c1539a9", "1600607687939-ce8a6c25118c", "1600566753190-17f0baa2a6c3", "1600573472550-8090b5e0745e"]
   },
   {
@@ -275,7 +275,7 @@ const PROPERTY_LISTINGS = [
     bedrooms: 4,
     bathrooms: 2,
     floorLabel: "R+1",
-    yearBuilt: 2026,
+    yearBuilt: 2027,
     energyClass: "A",
     climateClass: "A",
     publishedDays: 11,

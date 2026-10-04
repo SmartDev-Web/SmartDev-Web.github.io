@@ -7,9 +7,17 @@ const SVG_ICONS = {
   heart: '<svg viewBox="0 0 24 24" stroke-width="1.8" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.4 7.6 3.6 4 7.2 4c2 0 3.6 1.1 4.8 2.8C13.2 5.1 14.8 4 16.8 4c3.6 0 5.8 3.6 4.5 7.1-1.8 4.8-9.3 9.4-9.3 9.4z"/></svg>',
   surface: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3h18v18H3z"/><path d="M3 9h6V3M15 21v-6h6"/></svg>',
   rooms: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-7h6v7"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>',
   bed: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 18V6M3 14h18v4M21 14v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="2"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>'
 };
+
+const HTML_ESCAPE_MAP = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+
+/* Escapes a value before it is interpolated into an HTML template */
+function escapeHtml(rawValue) {
+  return String(rawValue).replace(/[&<>"']/g, function (matchedCharacter) { return HTML_ESCAPE_MAP[matchedCharacter]; });
+}
 
 /* Formats a number with French thousands separators */
 function formatNumber(numericValue, maximumFractionDigits) {
@@ -47,11 +55,16 @@ function findListingById(listingIdentifier) {
   return PROPERTY_LISTINGS.find(function (propertyListing) { return propertyListing.id === listingIdentifier; });
 }
 
-/* Reads the favorite listing identifiers from localStorage */
+/* Reads the favorite listing identifiers from localStorage, keeping only known listings */
 function readFavoriteListingIds() {
   try {
     const storedValue = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || "[]");
-    return Array.isArray(storedValue) ? storedValue : [];
+    if (!Array.isArray(storedValue)) {
+      return [];
+    }
+    return storedValue.filter(function (storedIdentifier, storedIndex) {
+      return typeof storedIdentifier === "string" && Boolean(findListingById(storedIdentifier)) && storedValue.indexOf(storedIdentifier) === storedIndex;
+    });
   } catch (storageError) {
     return [];
   }
@@ -68,6 +81,9 @@ function persistFavoriteListingIds(favoriteListingIds) {
 
 /* Adds or removes a listing from favorites and notifies the page */
 function toggleFavoriteListing(listingIdentifier) {
+  if (!findListingById(listingIdentifier)) {
+    return;
+  }
   const favoriteListingIds = readFavoriteListingIds();
   const existingIndex = favoriteListingIds.indexOf(listingIdentifier);
   if (existingIndex === -1) {
@@ -94,26 +110,31 @@ function refreshFavoriteIndicators() {
   });
 }
 
-/* Builds the markup of a listing card used on the home and listings pages */
+/* Builds the markup of a listing card used on the home, listings and property pages */
 function createListingCardMarkup(propertyListing) {
   const transactionLabel = propertyListing.transaction === "location" ? "À louer" : "À vendre";
-  const freshBadge = propertyListing.publishedDays <= 3 ? '<span class="badge badge--gold">Nouveau</span>' : "";
-  const bedroomSpec = propertyListing.bedrooms > 0 ? "<li>" + SVG_ICONS.bed + propertyListing.bedrooms + " ch.</li>" : "";
+  const freshBadge = propertyListing.publishedDays <= 3 ? '<span class="badge badge--accent">Nouveau</span>' : "";
+  const bedroomSpec = propertyListing.bedrooms > 0 ? "<li>" + SVG_ICONS.bed + escapeHtml(propertyListing.bedrooms) + " ch.</li>" : "";
+  const safeIdentifier = escapeHtml(propertyListing.id);
+  const safeTitle = escapeHtml(propertyListing.title);
+  const safeCity = escapeHtml(propertyListing.city);
+  const safeEnergyClass = escapeHtml(propertyListing.energyClass);
   return '<article class="listing-card">' +
     '<div class="listing-card__media">' +
-    '<img src="' + buildPropertyImageUrl(propertyListing.images[0], 800) + '" alt="' + propertyListing.title + " à " + propertyListing.city + '" loading="lazy" width="800" height="600">' +
+    '<img src="' + escapeHtml(buildPropertyImageUrl(propertyListing.images[0], 800)) + '" alt="' + safeTitle + " à " + safeCity + '" loading="lazy" width="800" height="600">' +
     '<div class="listing-card__badges"><span class="badge">' + transactionLabel + "</span>" + freshBadge + "</div>" +
-    '<button class="favorite-button" type="button" data-favorite-id="' + propertyListing.id + '" aria-pressed="false" aria-label="Ajouter aux favoris">' + SVG_ICONS.heart + "</button>" +
+    '<span class="energy-chip" data-energy="' + safeEnergyClass + '"><b>' + safeEnergyClass + "</b>DPE</span>" +
+    '<button class="favorite-button" type="button" data-favorite-id="' + safeIdentifier + '" aria-pressed="false" aria-label="Ajouter aux favoris">' + SVG_ICONS.heart + "</button>" +
     "</div>" +
     '<div class="listing-card__body">' +
-    '<p class="listing-card__location">' + propertyListing.city + " · " + PROPERTY_TYPE_LABELS[propertyListing.type] + "</p>" +
-    '<h3 class="listing-card__title"><a href="bien.html?id=' + propertyListing.id + '">' + propertyListing.title + "</a></h3>" +
+    '<p class="listing-card__price">' + formatListingPrice(propertyListing) + "</p>" +
+    '<h3 class="listing-card__title"><a href="bien.html?id=' + encodeURIComponent(propertyListing.id) + '">' + safeTitle + "</a></h3>" +
+    '<p class="listing-card__location">' + SVG_ICONS.pin + safeCity + " · " + escapeHtml(PROPERTY_TYPE_LABELS[propertyListing.type]) + "</p>" +
     '<ul class="listing-card__specs">' +
-    "<li>" + SVG_ICONS.surface + propertyListing.surface + " m²</li>" +
-    "<li>" + SVG_ICONS.rooms + propertyListing.rooms + " p.</li>" +
+    "<li>" + SVG_ICONS.surface + escapeHtml(propertyListing.surface) + " m²</li>" +
+    "<li>" + SVG_ICONS.rooms + escapeHtml(propertyListing.rooms) + " p.</li>" +
     bedroomSpec +
     "</ul>" +
-    '<p class="listing-card__price">' + formatListingPrice(propertyListing) + "</p>" +
     "</div>" +
     "</article>";
 }
@@ -275,7 +296,7 @@ function getFieldErrorMessage(formControlElement) {
     return formControlElement.type === "checkbox" ? "Merci de cocher cette case." : "Ce champ est obligatoire.";
   }
   if (controlValidity.typeMismatch && formControlElement.type === "email") {
-    return "Adresse e-mail invalide (ex. : nom@domaine.fr).";
+    return "Adresse e-mail invalide (ex. : nom@domaine.example).";
   }
   if (controlValidity.patternMismatch) {
     return formControlElement.dataset.patternMessage || "Format invalide.";
@@ -365,9 +386,9 @@ function initializeHomeSearch() {
   };
   let selectedTransaction = "vente";
   const renderBudgetOptions = function () {
-    budgetSelectElement.innerHTML = budgetOptionsByTransaction[selectedTransaction].map(function (budgetOption) {
-      return '<option value="' + budgetOption[0] + '">' + budgetOption[1] + "</option>";
-    }).join("");
+    budgetSelectElement.replaceChildren.apply(budgetSelectElement, budgetOptionsByTransaction[selectedTransaction].map(function (budgetOption) {
+      return new Option(budgetOption[1], budgetOption[0]);
+    }));
   };
   transactionTabElements.forEach(function (transactionTabElement) {
     transactionTabElement.addEventListener("click", function () {
@@ -400,9 +421,9 @@ function initializeHomeSearch() {
 /* Fills every city select flagged with data-city-options */
 function populateCitySelects() {
   document.querySelectorAll("select[data-city-options]").forEach(function (citySelectElement) {
-    citySelectElement.insertAdjacentHTML("beforeend", PROPERTY_CITIES.map(function (cityName) {
-      return '<option value="' + cityName + '">' + cityName + "</option>";
-    }).join(""));
+    PROPERTY_CITIES.forEach(function (cityName) {
+      citySelectElement.appendChild(new Option(cityName, cityName));
+    });
   });
 }
 

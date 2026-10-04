@@ -3,6 +3,8 @@
 const SALE_PRICE_SCALE = [150000, 200000, 250000, 300000, 350000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1200000, 1400000, 1600000, 1800000, 2000000, 2500000, 3000000, 3500000];
 const RENT_PRICE_SCALE = [500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1650, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3500];
 const UNLIMITED_PRICE_INDEX = SALE_PRICE_SCALE.length;
+const ALLOWED_SORT_VALUES = ["recent", "prix-asc", "prix-desc", "surface-desc"];
+const ALLOWED_ROOM_VALUES = [2, 3, 4, 5];
 
 const listingFiltersFormElement = document.getElementById("listing-filters-form");
 const listingResultsElement = document.getElementById("listing-results");
@@ -15,18 +17,31 @@ function getActivePriceScale(transactionValue) {
   return transactionValue === "location" ? RENT_PRICE_SCALE : SALE_PRICE_SCALE;
 }
 
-/* Reads the filter state from the current URL */
+/* Returns a URL parameter only when it belongs to a list of accepted values */
+function readAllowedParameter(urlParameters, parameterName, allowedValues, fallbackValue) {
+  const parameterValue = urlParameters.get(parameterName);
+  return allowedValues.includes(parameterValue) ? parameterValue : fallbackValue;
+}
+
+/* Returns a bounded positive integer read from a URL parameter */
+function readBoundedNumberParameter(urlParameters, parameterName, maximumValue) {
+  const parameterValue = Math.round(Number(urlParameters.get(parameterName)));
+  return Number.isFinite(parameterValue) && parameterValue > 0 ? Math.min(parameterValue, maximumValue) : 0;
+}
+
+/* Reads and validates the filter state from the current URL */
 function readFilterStateFromUrl() {
   const urlParameters = new URLSearchParams(window.location.search);
+  const requestedRooms = Number(urlParameters.get("pieces"));
   return {
-    transaction: ["vente", "location"].includes(urlParameters.get("transaction")) ? urlParameters.get("transaction") : "",
-    type: urlParameters.get("type") || "",
-    ville: urlParameters.get("ville") || "",
-    pieces: Number(urlParameters.get("pieces")) || 0,
-    surfaceMin: Number(urlParameters.get("surfaceMin")) || 0,
-    prixMax: Number(urlParameters.get("prixMax")) || 0,
+    transaction: readAllowedParameter(urlParameters, "transaction", ["vente", "location"], ""),
+    type: readAllowedParameter(urlParameters, "type", Object.keys(PROPERTY_TYPE_LABELS), ""),
+    ville: readAllowedParameter(urlParameters, "ville", PROPERTY_CITIES, ""),
+    pieces: ALLOWED_ROOM_VALUES.includes(requestedRooms) ? requestedRooms : 0,
+    surfaceMin: readBoundedNumberParameter(urlParameters, "surfaceMin", Number(surfaceRangeElement.max)),
+    prixMax: readBoundedNumberParameter(urlParameters, "prixMax", SALE_PRICE_SCALE[SALE_PRICE_SCALE.length - 1]),
     favoris: urlParameters.get("favoris") === "1",
-    tri: urlParameters.get("tri") || "recent"
+    tri: readAllowedParameter(urlParameters, "tri", ALLOWED_SORT_VALUES, "recent")
   };
 }
 
