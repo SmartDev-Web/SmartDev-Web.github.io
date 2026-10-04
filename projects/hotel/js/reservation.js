@@ -131,10 +131,10 @@ function renderRoomOptions() {
   roomOptionsContainerElement.innerHTML = hotelRoomCatalog.map((hotelRoom) => {
     const isTooSmall = hotelRoom.capacity < totalGuests;
     return `<label class="room-option">
-      <input type="radio" name="room" value="${hotelRoom.id}"${hotelRoom.id === stayState.roomId ? ' checked' : ''}${isTooSmall ? ' disabled' : ''}>
+      <input type="radio" name="room" value="${escapeHtml(hotelRoom.id)}"${hotelRoom.id === stayState.roomId ? ' checked' : ''}${isTooSmall ? ' disabled' : ''}>
       <span class="room-option__card">
-        <img src="${buildRoomImageUrl(hotelRoom.imageId, 240)}" alt="" loading="lazy">
-        <span><span class="room-option__name">${hotelRoom.name}</span><span class="room-option__info">${hotelRoom.surface} m² · ${isTooSmall ? `max. ${hotelRoom.capacity} personnes` : hotelRoom.view}</span></span>
+        <img src="${escapeHtml(buildRoomImageUrl(hotelRoom.imageId, 240))}" alt="" width="240" height="180" loading="lazy">
+        <span><span class="room-option__name">${escapeHtml(hotelRoom.name)}</span><span class="room-option__info">${hotelRoom.surface} m² · ${escapeHtml(isTooSmall ? `max. ${hotelRoom.capacity} personnes` : hotelRoom.view)}</span></span>
         <span class="room-option__price">dès<strong>${formatEuroAmount(hotelRoom.nightlyRate)}</strong>/ nuit</span>
       </span>
     </label>`;
@@ -149,8 +149,8 @@ function renderExtraOptions() {
     const isIncluded = Boolean(selectedRoom && extraOption.includedFlag && selectedRoom[extraOption.includedFlag]) || (extraOption.id === 'spa' && isAutumnOffer);
     const isChecked = isIncluded || stayState.selectedExtras.has(extraOption.id);
     return `<label class="extra-option">
-      <input type="checkbox" value="${extraOption.id}" data-extra-option${isChecked ? ' checked' : ''}${isIncluded ? ' disabled' : ''}>
-      <span><strong>${extraOption.label}</strong><small>${isIncluded ? 'Inclus dans votre séjour' : extraOption.detail}</small></span>
+      <input type="checkbox" value="${escapeHtml(extraOption.id)}" data-extra-option${isChecked ? ' checked' : ''}${isIncluded ? ' disabled' : ''}>
+      <span><strong>${escapeHtml(extraOption.label)}</strong><small>${escapeHtml(isIncluded ? 'Inclus dans votre séjour' : extraOption.detail)}</small></span>
     </label>`;
   }).join('');
 }
@@ -167,13 +167,13 @@ function renderStaySummary() {
     document.querySelector(`[data-stepper="${guestType}"][data-step="1"]`).disabled = stayState[guestType] >= guestLimits[guestType].maximum;
   });
   const guestSummary = `${pluralize(stayState.adults, 'adulte', 'adultes')}${stayState.children ? `, ${pluralize(stayState.children, 'enfant', 'enfants')}` : ''}`;
-  summaryRoomElement.innerHTML = selectedRoom ? `<img src="${buildRoomImageUrl(selectedRoom.imageId, 200)}" alt=""><span><strong>${selectedRoom.name}</strong>${guestSummary}</span>` : `<span><strong>Aucune chambre choisie</strong>${guestSummary}</span>`;
+  summaryRoomElement.innerHTML = selectedRoom ? `<img src="${escapeHtml(buildRoomImageUrl(selectedRoom.imageId, 200))}" alt="" width="200" height="140"><span><strong>${escapeHtml(selectedRoom.name)}</strong>${escapeHtml(guestSummary)}</span>` : `<span><strong>Aucune chambre choisie</strong>${escapeHtml(guestSummary)}</span>`;
   if (!stayQuote.quoteLines.length) {
     priceLinesElement.innerHTML = `<li><span>${stayNights.length ? 'Choisissez une chambre pour voir le tarif.' : 'Choisissez vos dates pour voir le tarif.'}</span><span></span></li>`;
     priceTotalElement.textContent = '—';
     return;
   }
-  priceLinesElement.innerHTML = stayQuote.quoteLines.map((quoteLine) => `<li${quoteLine.isInformational ? ' style="opacity:.7"' : ''}><span>${quoteLine.label}</span><span>${quoteLine.amount === 0 ? 'Offert' : formatEuroAmount(quoteLine.amount, quoteLine.fractionDigits || 0)}</span></li>`).join('');
+  priceLinesElement.innerHTML = stayQuote.quoteLines.map((quoteLine) => `<li${quoteLine.isInformational ? ' class="price-lines__info"' : ''}><span>${escapeHtml(quoteLine.label)}</span><span>${quoteLine.amount === 0 ? 'Offert' : formatEuroAmount(quoteLine.amount, quoteLine.fractionDigits || 0)}</span></li>`).join('');
   priceTotalElement.textContent = formatEuroAmount(stayQuote.total, 2);
 }
 
@@ -193,18 +193,27 @@ function synchronizeDepartureBounds() {
   stayState.departure = updateFieldErrorState(departureInputElement) ? departureInputElement.value : '';
 }
 
+/* Returns a yyyy-mm-dd URL parameter only when it is a real calendar date */
+function readDateUrlParameter(urlParameters, parameterName) {
+  const parameterValue = urlParameters.get(parameterName) || '';
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(parameterValue)) return '';
+  return formatStayInputDate(parseStayInputDate(parameterValue)) === parameterValue ? parameterValue : '';
+}
+
 /* Pre-fills the form from URL parameters sent by the home page or the rooms page */
 function applyUrlParameters() {
   const urlParameters = new URLSearchParams(window.location.search);
   const requestedRoom = findHotelRoomById(urlParameters.get('chambre'));
   const requestedAdults = Number(urlParameters.get('adultes'));
-  if (requestedAdults >= guestLimits.adults.minimum && requestedAdults <= guestLimits.adults.maximum) stayState.adults = requestedAdults;
+  const requestedArrival = readDateUrlParameter(urlParameters, 'arrivee');
+  const requestedDeparture = readDateUrlParameter(urlParameters, 'depart');
+  if (Number.isInteger(requestedAdults) && requestedAdults >= guestLimits.adults.minimum && requestedAdults <= guestLimits.adults.maximum) stayState.adults = requestedAdults;
   if (requestedRoom && requestedRoom.capacity >= stayState.adults) stayState.roomId = requestedRoom.id;
-  if (urlParameters.get('arrivee')) {
-    arrivalInputElement.value = urlParameters.get('arrivee');
+  if (requestedArrival) {
+    arrivalInputElement.value = requestedArrival;
     stayState.arrival = updateFieldErrorState(arrivalInputElement) ? arrivalInputElement.value : '';
   }
-  if (urlParameters.get('depart')) departureInputElement.value = urlParameters.get('depart');
+  if (requestedDeparture) departureInputElement.value = requestedDeparture;
   synchronizeDepartureBounds();
 }
 
@@ -225,10 +234,10 @@ function showStayConfirmation(stayFormData) {
     ['Voyageurs', `${pluralize(stayState.adults, 'adulte', 'adultes')}${stayState.children ? `, ${pluralize(stayState.children, 'enfant', 'enfants')}` : ''}`],
     ['Total TTC', formatEuroAmount(stayQuote.total, 2)],
   ];
-  document.querySelector('[data-confirmation-name]').textContent = stayFormData.get('name').trim().split(' ')[0];
+  document.querySelector('[data-confirmation-name]').textContent = String(stayFormData.get('name')).trim().split(/\s+/)[0];
   document.querySelector('[data-confirmation-reference]').textContent = `Réf. ${createStayReference()}`;
-  document.querySelector('[data-confirmation-email]').textContent = stayFormData.get('email').trim();
-  document.querySelector('[data-confirmation-details]').innerHTML = confirmationDetails.map(([detailLabel, detailValue]) => `<div><dt>${detailLabel}</dt><dd>${detailValue}</dd></div>`).join('');
+  document.querySelector('[data-confirmation-email]').textContent = String(stayFormData.get('email')).trim();
+  document.querySelector('[data-confirmation-details]').innerHTML = confirmationDetails.map(([detailLabel, detailValue]) => `<div><dt>${escapeHtml(detailLabel)}</dt><dd>${escapeHtml(detailValue)}</dd></div>`).join('');
   bookingLayoutElement.hidden = true;
   stayConfirmationElement.hidden = false;
   stayConfirmationElement.focus();

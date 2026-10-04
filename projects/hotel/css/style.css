@@ -77,6 +77,7 @@ body.has-open-dialog {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -206,11 +207,156 @@ p {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.wave-divider {
+.section--tight {
+  padding-top: 0;
+}
+
+/* ---------- Coastal ornaments: wave crests and eyebrow swell ---------- */
+
+:root {
+  --wave-crest-foam: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 64' preserveAspectRatio='none'%3E%3Cpath d='M0 30c120-22 240-28 360-12s240 30 360 14 240-30 360-14 240 26 360 10v36H0Z' fill='%23f7f4ee' fill-opacity='.4'/%3E%3Cpath d='M0 44c160-20 320-24 480-8s320 22 480 6 320-20 480-4v26H0Z' fill='%23f7f4ee'/%3E%3C/svg%3E");
+  --wave-crest-navy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 64' preserveAspectRatio='none'%3E%3Cpath d='M0 30c120-22 240-28 360-12s240 30 360 14 240-30 360-14 240 26 360 10v36H0Z' fill='%230e2a3a' fill-opacity='.35'/%3E%3Cpath d='M0 44c160-20 320-24 480-8s320 22 480 6 320-20 480-4v26H0Z' fill='%230e2a3a'/%3E%3C/svg%3E");
+  --wave-swell-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 10'%3E%3Cpath d='M1 6c3 0 3-3 6.5-3S10.5 6 14 6s3-3 6.5-3S24 6 27 6' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.hero::before,
+.page-hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 1;
+  height: clamp(28px, 4.5vw, 64px);
+  background: var(--wave-crest-foam) bottom / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.section--navy,
+.site-footer {
+  position: relative;
+}
+
+.section--navy::before,
+.site-footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% - 1px);
+  height: clamp(24px, 4vw, 56px);
+  background: var(--wave-crest-navy) bottom / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.eyebrow::before,
+.section-heading--center .eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 26px;
+  height: 10px;
+  margin-right: 12px;
+  vertical-align: -1px;
+  background: currentColor;
+  -webkit-mask: var(--wave-swell-line) center / contain no-repeat;
+  mask: var(--wave-swell-line) center / contain no-repeat;
+  opacity: 0.75;
+}
+
+.section-heading--center .eyebrow::after {
+  margin: 0 0 0 12px;
+}
+
+.hero__coordinates {
+  margin: 38px 0 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(232, 220, 200, 0.82);
+}
+
+.hero__coordinates span {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  margin: 0 14px;
+  vertical-align: middle;
+  background: rgba(232, 220, 200, 0.55);
+}
+
+@media (max-width: 560px) {
+  .hero__coordinates {
+    display: none;
+  }
+}
+
+/* ---------- Stylised access map ---------- */
+
+.access-map {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+
+.access-map__legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.access-map__dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 12px;
+  border-radius: 50%;
+  vertical-align: -1px;
+}
+
+.access-map__dot--hotel {
+  background: var(--color-navy);
+  box-shadow: 0 0 0 4px rgba(201, 166, 107, 0.4);
+}
+
+.access-map__dot--beach {
+  background: var(--color-sand);
+  border: 1px solid var(--color-sand-dark);
+}
+
+.access-map__dot--parking {
+  background: var(--color-azur-dark);
+  border-radius: 3px;
+}
+
+.access-map__figure {
+  margin: 0;
+}
+
+.access-map__drawing {
   display: block;
   width: 100%;
-  height: 60px;
-  color: var(--color-foam);
+  height: auto;
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-soft);
+}
+
+.access-map__figure figcaption {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .access-map {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---------- Buttons ---------- */
@@ -2127,6 +2273,10 @@ p {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.92rem;
   animation: card-enter 0.4s var(--ease-out) both;
+}
+
+.price-lines li.price-lines__info {
+  opacity: 0.7;
 }
 
 .price-lines li span:last-child {

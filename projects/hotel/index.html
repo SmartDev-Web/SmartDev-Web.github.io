@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Azur Hôtel & Spa — Hôtel 4 étoiles face à l’océan, Biarritz</title>
   <meta name="description" content="Azur Hôtel & Spa, hôtel 4 étoiles et spa marin face à la Grande Plage de Biarritz : chambres vue océan, soins, surf et gastronomie basque.">
   <meta name="theme-color" content="#0e2a3a">
@@ -11,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/js-ready.js"></script>
   <script src="js/main.js" defer></script>
   <script src="js/home.js" defer></script>
 </head>
@@ -41,7 +44,7 @@
   <main id="contenu">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__media" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1900&q=80" alt="" fetchpriority="high">
+        <img width="1900" height="1267" src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1900&q=80" alt="" fetchpriority="high">
       </div>
       <div class="container hero__content">
         <span class="eyebrow" data-reveal>Hôtel ★★★★ &amp; spa marin · Biarritz</span>
@@ -51,6 +54,7 @@
           <a class="button button--sand" href="chambres.html">Nos chambres</a>
           <a class="button button--light" href="spa.html">Découvrir le spa</a>
         </div>
+        <p class="hero__coordinates" data-reveal style="--reveal-delay: .4s">Biarritz<span aria-hidden="true"></span>Côte basque<span aria-hidden="true"></span>Océan Atlantique</p>
       </div>
     </section>
 
@@ -82,7 +86,7 @@
     <section class="section" aria-labelledby="intro-title">
       <div class="container split">
         <div class="split__media" data-reveal>
-          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80" alt="Plage de sable fin baignée de lumière au bord de l’océan" loading="lazy">
+          <img width="900" height="600" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80" alt="Plage de sable fin baignée de lumière au bord de l’océan" loading="lazy">
           <p class="split__badge"><strong>50 m</strong>de la Grande Plage</p>
         </div>
         <div data-reveal style="--reveal-delay: .15s">
@@ -146,7 +150,7 @@
         </div>
         <div class="experience-grid">
           <a class="experience-card" href="contact.html" data-reveal>
-            <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1000&q=80" alt="Surfeur glissant sur une vague" loading="lazy">
+            <img width="1000" height="667" src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1000&q=80" alt="Surfeur glissant sur une vague" loading="lazy">
             <div>
               <h3>Première vague à la Côte des Basques</h3>
               <p>Deux heures avec Ander, moniteur diplômé d’État, matériel fourni. Dès 8 ans.</p>
@@ -154,19 +158,19 @@
             </div>
           </a>
           <a class="experience-card" href="spa.html" data-reveal style="--reveal-delay: .1s">
-            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80" alt="Massage relaxant en cabine de spa" loading="lazy">
+            <img width="800" height="533" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80" alt="Massage relaxant en cabine de spa" loading="lazy">
             <div>
               <h3>Rituel Marée Haute</h3>
-              <p>Gommage au sel de Salies, enveloppement d’algues et massage de 60 minutes.</p>
-              <span class="experience-card__more">Réserver un soin <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <p>Deux heures de rituel : gommage au sel de Salies-de-Béarn, enveloppement d’algues et massage Océan.</p>
+              <span class="experience-card__more">210 € · Réserver un soin <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
           </a>
-          <a class="experience-card" href="reservation.html" data-reveal style="--reveal-delay: .2s">
-            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" alt="Terrasse de restaurant au bord de l’eau au coucher du soleil" loading="lazy">
+          <a class="experience-card" href="contact.html" data-reveal style="--reveal-delay: .2s">
+            <img width="800" height="533" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" alt="Terrasse de restaurant au bord de l’eau au coucher du soleil" loading="lazy">
             <div>
               <h3>Dîner les pieds dans le sable</h3>
-              <p>Menu de la criée de Saint-Jean-de-Luz et txakoli frais, servis sur notre terrasse.</p>
-              <span class="experience-card__more">Inclus en demi-pension <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <p>Menu de la criée de Saint-Jean-de-Luz et txakoli frais, servis sur la terrasse de la table Le Phare.</p>
+              <span class="experience-card__more">Réserver une table <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
           </a>
         </div>
@@ -202,7 +206,7 @@
     <section class="section" aria-labelledby="cta-title">
       <div class="container">
         <div class="cta-panel" data-reveal>
-          <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=1600&q=80" alt="" loading="lazy">
+          <img width="1600" height="1067" src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=1600&q=80" alt="" loading="lazy">
           <span class="eyebrow" style="color: var(--color-sand)">Offre d’arrière-saison</span>
           <h2 id="cta-title">3 nuits achetées, l’accès spa offert</h2>
           <p>Du 1er octobre au 15 décembre, profitez de la lumière dorée de l’automne basque et d’un accès illimité au spa marin pour tout séjour de trois nuits minimum.</p>
@@ -235,10 +239,10 @@
         <div>
           <h3>Nous joindre</h3>
           <ul>
-            <li>8 esplanade du Phare</li>
+            <li>14 promenade des Brisants-Nacrés</li>
             <li>64200 Biarritz</li>
-            <li><a href="tel:+33559417230">05 59 41 72 30</a></li>
-            <li><a href="mailto:sejour@azur-hotel-biarritz.fr">sejour@azur-hotel-biarritz.fr</a></li>
+            <li><a href="tel:+33536492730">05 36 49 27 30</a></li>
+            <li><a href="mailto:sejour@azur-hotel.example">sejour@azur-hotel.example</a></li>
           </ul>
         </div>
         <div>
@@ -246,14 +250,14 @@
           <p>Offres de saison, calendrier des marées et événements, une fois par mois.</p>
           <form class="newsletter" novalidate data-newsletter-form>
             <label class="visually-hidden" for="newsletter-email">Adresse e-mail</label>
-            <input type="email" id="newsletter-email" name="email" placeholder="votre@email.fr" autocomplete="email" required>
+            <input type="email" id="newsletter-email" name="email" placeholder="votre@adresse.example" autocomplete="email" maxlength="120" required>
             <button type="submit">OK</button>
           </form>
           <p class="newsletter-message" aria-live="polite"></p>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Azur Hôtel &amp; Spa — Établissement fictif, site de démonstration.</span>
+        <span>© <span data-current-year>2026</span> Azur Hôtel &amp; Spa · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
         <span>Réception ouverte 24 h/24 · Parking privé · Animaux bienvenus</span>
       </div>
     </div>

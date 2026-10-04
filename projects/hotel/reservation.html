@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Réserver un séjour — Azur Hôtel & Spa</title>
   <meta name="description" content="Réservez votre séjour à l’Azur Hôtel & Spa de Biarritz : dates, chambre, options et prix en temps réel.">
   <meta name="theme-color" content="#0e2a3a">
@@ -11,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/js-ready.js"></script>
   <script src="js/main.js" defer></script>
   <script src="js/rooms-data.js" defer></script>
   <script src="js/reservation.js" defer></script>
@@ -42,7 +45,7 @@
   <main id="contenu">
     <section class="page-hero" aria-labelledby="page-title">
       <div class="page-hero__media" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1900&q=80" alt="">
+        <img width="1900" height="1267" src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1900&q=80" alt="">
       </div>
       <div class="container">
         <span class="eyebrow" data-reveal>Réservation directe · meilleur tarif garanti</span>
@@ -114,17 +117,17 @@
               <div class="form-grid">
                 <div class="form-field">
                   <label class="form-label" for="stay-name">Nom complet</label>
-                  <input class="form-input" type="text" id="stay-name" name="name" autocomplete="name" required minlength="2" data-validate data-required-message="Merci d’indiquer votre nom.">
+                  <input class="form-input" type="text" id="stay-name" name="name" autocomplete="name" required minlength="2" data-validate data-required-message="Merci d’indiquer votre nom." maxlength="80">
                   <span class="form-error" data-error-for="stay-name" aria-live="polite"></span>
                 </div>
                 <div class="form-field">
                   <label class="form-label" for="stay-phone">Téléphone</label>
-                  <input class="form-input" type="tel" id="stay-phone" name="phone" autocomplete="tel" placeholder="06 12 34 56 78" required data-validate data-required-message="Merci d’indiquer un numéro de téléphone.">
+                  <input class="form-input" type="tel" id="stay-phone" name="phone" autocomplete="tel" placeholder="06 39 98 12 34" required data-validate data-required-message="Merci d’indiquer un numéro de téléphone." maxlength="20">
                   <span class="form-error" data-error-for="stay-phone" aria-live="polite"></span>
                 </div>
                 <div class="form-field">
                   <label class="form-label" for="stay-email">E-mail</label>
-                  <input class="form-input" type="email" id="stay-email" name="email" autocomplete="email" required data-validate data-required-message="Merci d’indiquer votre e-mail.">
+                  <input class="form-input" type="email" id="stay-email" name="email" autocomplete="email" required data-validate data-required-message="Merci d’indiquer votre e-mail." maxlength="120">
                   <span class="form-error" data-error-for="stay-email" aria-live="polite"></span>
                 </div>
                 <div class="form-field">
@@ -138,7 +141,7 @@
                 </div>
                 <div class="form-field form-field--full">
                   <label class="form-label" for="stay-requests">Demandes particulières</label>
-                  <textarea class="form-textarea" id="stay-requests" name="requests" placeholder="Anniversaire, étage élevé, régime alimentaire…"></textarea>
+                  <textarea class="form-textarea" id="stay-requests" name="requests" placeholder="Anniversaire, étage élevé, régime alimentaire…" maxlength="600"></textarea>
                 </div>
                 <div class="form-field form-field--full">
                   <label class="form-checkbox" for="stay-terms"><input type="checkbox" id="stay-terms" name="terms" required data-validate> J’accepte les conditions de réservation et la politique d’annulation (gratuite jusqu’à 72 h avant l’arrivée).</label>
@@ -198,10 +201,10 @@
         <div>
           <h3>Nous joindre</h3>
           <ul>
-            <li>8 esplanade du Phare</li>
+            <li>14 promenade des Brisants-Nacrés</li>
             <li>64200 Biarritz</li>
-            <li><a href="tel:+33559417230">05 59 41 72 30</a></li>
-            <li><a href="mailto:sejour@azur-hotel-biarritz.fr">sejour@azur-hotel-biarritz.fr</a></li>
+            <li><a href="tel:+33536492730">05 36 49 27 30</a></li>
+            <li><a href="mailto:sejour@azur-hotel.example">sejour@azur-hotel.example</a></li>
           </ul>
         </div>
         <div>
@@ -209,14 +212,14 @@
           <p>Offres de saison, calendrier des marées et événements, une fois par mois.</p>
           <form class="newsletter" novalidate data-newsletter-form>
             <label class="visually-hidden" for="newsletter-email">Adresse e-mail</label>
-            <input type="email" id="newsletter-email" name="email" placeholder="votre@email.fr" autocomplete="email" required>
+            <input type="email" id="newsletter-email" name="email" placeholder="votre@adresse.example" autocomplete="email" maxlength="120" required>
             <button type="submit">OK</button>
           </form>
           <p class="newsletter-message" aria-live="polite"></p>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Azur Hôtel &amp; Spa — Établissement fictif, site de démonstration.</span>
+        <span>© <span data-current-year>2026</span> Azur Hôtel &amp; Spa · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
         <span>Réception ouverte 24 h/24 · Parking privé · Animaux bienvenus</span>
       </div>
     </div>

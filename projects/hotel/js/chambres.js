@@ -85,14 +85,10 @@ const comparedAmenityRows = [
   { label: 'Accès spa inclus', flag: 'spaIncluded' },
 ];
 
-/* Reads the list of compared room ids */
+/* Reads the list of compared room ids, keeping only known rooms */
 function loadComparedRoomIds() {
-  try {
-    const storedRoomIds = JSON.parse(localStorage.getItem(compareStorageKey));
-    return Array.isArray(storedRoomIds) ? storedRoomIds.filter((roomId) => findHotelRoomById(roomId)).slice(0, maximumComparedRooms) : [];
-  } catch (storageError) {
-    return [];
-  }
+  const storedRoomIds = readStoredJson(compareStorageKey, Array.isArray, []);
+  return [...new Set(storedRoomIds.filter((roomId) => typeof roomId === 'string' && findHotelRoomById(roomId)))].slice(0, maximumComparedRooms);
 }
 
 let comparedRoomIds = loadComparedRoomIds();
@@ -119,21 +115,21 @@ function renderCompareState() {
   compareOpenButtonElement.disabled = comparedRoomIds.length < 2;
   const selectedRoomNames = comparedRoomIds.map((roomId) => findHotelRoomById(roomId).name.replace(/^(Chambre|Suite) /, ''));
   const remainingHint = comparedRoomIds.length < 2 ? ' — ajoutez-en au moins une autre.' : isSelectionFull ? ' — maximum atteint.' : '';
-  compareTrayTextElement.innerHTML = `<strong>${comparedRoomIds.length}/${maximumComparedRooms}</strong> ${selectedRoomNames.join(', ')}${remainingHint}`;
+  compareTrayTextElement.innerHTML = `<strong>${comparedRoomIds.length}/${maximumComparedRooms}</strong> ${escapeHtml(selectedRoomNames.join(', '))}${escapeHtml(remainingHint)}`;
 }
 
 /* Builds the comparison table for the selected rooms */
 function renderComparisonTable() {
   const comparedRooms = comparedRoomIds.map(findHotelRoomById);
-  const headerCells = comparedRooms.map((hotelRoom) => `<th scope="col">${hotelRoom.name}</th>`).join('');
+  const headerCells = comparedRooms.map((hotelRoom) => `<th scope="col">${escapeHtml(hotelRoom.name)}</th>`).join('');
   const bodyRows = comparedAmenityRows.map((amenityRow) => {
     const valueCells = comparedRooms.map((hotelRoom) => {
-      if (!amenityRow.flag) return `<td>${amenityRow.render(hotelRoom)}</td>`;
+      if (!amenityRow.flag) return `<td>${escapeHtml(amenityRow.render(hotelRoom))}</td>`;
       return hotelRoom[amenityRow.flag] ? '<td><span class="amenity-yes">✓ Oui</span></td>' : '<td><span class="amenity-no">—</span></td>';
     }).join('');
-    return `<tr><th scope="row">${amenityRow.label}</th>${valueCells}</tr>`;
+    return `<tr><th scope="row">${escapeHtml(amenityRow.label)}</th>${valueCells}</tr>`;
   }).join('');
-  const bookingCells = comparedRooms.map((hotelRoom) => `<td><a class="button button--primary button--small" href="reservation.html?chambre=${hotelRoom.id}">Réserver</a></td>`).join('');
+  const bookingCells = comparedRooms.map((hotelRoom) => `<td><a class="button button--primary button--small" href="reservation.html?chambre=${encodeURIComponent(hotelRoom.id)}">Réserver</a></td>`).join('');
   compareTableContainerElement.innerHTML = `<table class="compare-table"><thead><tr><td></td>${headerCells}</tr></thead><tbody>${bodyRows}<tr><th scope="row"></th>${bookingCells}</tr></tbody></table>`;
 }
 

@@ -2,6 +2,7 @@
 const priceFormatter = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" });
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const LOW_STOCK_THRESHOLD = 5;
 
 function formatPrice(amount) {
   return priceFormatter.format(amount).replace(/,00(?=\s?€)/, "");
@@ -46,20 +47,24 @@ function renderColorDots(product) {
   return `<ul class="color-dots" aria-label="Coloris disponibles">${product.colors.map((color) => `<li style="--swatch:${color.hex}" title="${escapeHtml(color.name)}"><span class="visually-hidden">${escapeHtml(color.name)}</span></li>`).join("")}</ul>`;
 }
 
+function renderLowStockNote(product) {
+  return product.stock <= LOW_STOCK_THRESHOLD ? `<p class="product-card__stock">Plus que ${product.stock} en stock</p>` : "";
+}
+
 function renderProductCard(product, cardOptions = {}) {
   const category = NordikCatalog.getCategoryById(product.category);
-  const quickViewButton = cardOptions.withQuickView ? `<button type="button" class="product-card__quick-view" data-quick-view="${product.id}">Aperçu rapide</button>` : "";
+  const quickViewButton = cardOptions.withQuickView ? `<button type="button" class="product-card__quick-view" data-quick-view="${escapeHtml(product.id)}">Aperçu rapide</button>` : "";
   return `
     <article class="product-card reveal">
       <div class="product-card__media">
         <a href="produit.html?id=${encodeURIComponent(product.id)}" tabindex="-1" aria-hidden="true">
-          <img class="product-card__image" src="${product.thumbnail}" alt="" loading="lazy" width="480" height="600">
-          <img class="product-card__image product-card__image--hover" src="${product.hoverImage}" alt="" loading="lazy" width="480" height="600">
+          <img class="product-card__image" src="${escapeHtml(product.thumbnail)}" alt="" loading="lazy" width="480" height="600">
+          <img class="product-card__image product-card__image--hover" src="${escapeHtml(product.hoverImage)}" alt="" loading="lazy" width="480" height="600">
         </a>
         ${renderProductBadges(product)}
         <div class="product-card__actions">
           ${quickViewButton}
-          <button type="button" class="product-card__add" data-quick-add="${product.id}" aria-label="Ajouter ${escapeHtml(product.name)} au panier">
+          <button type="button" class="product-card__add" data-quick-add="${escapeHtml(product.id)}" aria-label="Ajouter ${escapeHtml(product.name)} au panier">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -68,6 +73,7 @@ function renderProductCard(product, cardOptions = {}) {
         <p class="product-card__category">${escapeHtml(category.name)}</p>
         <h3 class="product-card__name"><a href="produit.html?id=${encodeURIComponent(product.id)}">${escapeHtml(product.name)}</a></h3>
         <div class="product-card__footer">${renderPriceMarkup(product)}${renderColorDots(product)}</div>
+        ${renderLowStockNote(product)}
       </div>
     </article>`;
 }
@@ -78,11 +84,12 @@ function renderCartLineOptions(line) {
 }
 
 function renderQuantityStepper(line) {
+  const maximumQuantity = NordikCart.getMaximumQuantity(line.product);
   return `
     <div class="quantity-stepper" role="group" aria-label="Quantité pour ${escapeHtml(line.product.name)}">
       <button type="button" data-cart-action="decrement" data-line-key="${escapeHtml(line.key)}" aria-label="Retirer un exemplaire">−</button>
-      <input type="number" min="1" max="${NordikCart.MAXIMUM_LINE_QUANTITY}" value="${line.quantity}" data-cart-quantity-input data-line-key="${escapeHtml(line.key)}" aria-label="Quantité">
-      <button type="button" data-cart-action="increment" data-line-key="${escapeHtml(line.key)}" aria-label="Ajouter un exemplaire" ${line.quantity >= NordikCart.MAXIMUM_LINE_QUANTITY ? "disabled" : ""}>+</button>
+      <input type="number" min="1" max="${maximumQuantity}" value="${line.quantity}" data-cart-quantity-input data-line-key="${escapeHtml(line.key)}" aria-label="Quantité">
+      <button type="button" data-cart-action="increment" data-line-key="${escapeHtml(line.key)}" aria-label="Ajouter un exemplaire" ${line.quantity >= maximumQuantity ? "disabled" : ""}>+</button>
     </div>`;
 }
 
@@ -91,7 +98,7 @@ function renderCartLine(line, lineVariant) {
   const isEditable = lineVariant !== "summary";
   return `
     <li class="cart-line cart-line--${lineVariant}">
-      <a class="cart-line__media" href="${productUrl}" tabindex="-1" aria-hidden="true"><img src="${line.product.thumbnail}" alt="" width="96" height="120" loading="lazy">${lineVariant === "summary" ? `<span class="cart-line__count">${line.quantity}</span>` : ""}</a>
+      <a class="cart-line__media" href="${productUrl}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(line.product.thumbnail)}" alt="" width="96" height="120" loading="lazy">${lineVariant === "summary" ? `<span class="cart-line__count">${line.quantity}</span>` : ""}</a>
       <div class="cart-line__info">
         <a class="cart-line__name" href="${productUrl}">${escapeHtml(line.product.name)}</a>
         <p class="cart-line__options">${renderCartLineOptions(line)}</p>

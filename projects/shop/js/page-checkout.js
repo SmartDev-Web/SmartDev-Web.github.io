@@ -69,8 +69,8 @@ function bindLiveValidation(formElement, validationRules) {
 const shippingValidationRules = {
   firstName: (fieldValue) => fieldValue.length >= 2 ? "" : "Indiquez votre prénom.",
   lastName: (fieldValue) => fieldValue.length >= 2 ? "" : "Indiquez votre nom.",
-  email: (fieldValue) => EMAIL_PATTERN.test(fieldValue) ? "" : "Adresse e-mail invalide (ex. : prenom@exemple.fr).",
-  phone: (fieldValue) => /^(?:\+\d{2,3}\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(fieldValue) ? "" : "Numéro invalide (ex. : 06 12 34 56 78).",
+  email: (fieldValue) => EMAIL_PATTERN.test(fieldValue) ? "" : "Adresse e-mail invalide (ex. : prenom@domaine.example).",
+  phone: (fieldValue) => /^(?:\+\d{2,3}\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(fieldValue) ? "" : "Numéro invalide (ex. : 06 39 98 12 34).",
   address: (fieldValue) => fieldValue.length >= 6 ? "" : "Indiquez une adresse complète.",
   postalCode: (fieldValue, formValues) => (postalCodePatterns[formValues.country] || postalCodePatterns.France).test(fieldValue) ? "" : `Code postal invalide pour ${formValues.country || "la France"}.`,
   city: (fieldValue) => fieldValue.length >= 2 ? "" : "Indiquez votre ville.",
@@ -179,8 +179,8 @@ function renderShippingMethods() {
     const methodPrice = NordikCart.computeTotals(shippingMethod.id).shipping;
     return `
       <label class="shipping-option">
-        <input type="radio" name="shippingMethod" value="${shippingMethod.id}" ${shippingMethod.id === checkoutState.shippingMethodId ? "checked" : ""}>
-        <span class="shipping-option__text"><strong>${shippingMethod.label}</strong><small>${shippingMethod.delay}</small></span>
+        <input type="radio" name="shippingMethod" value="${escapeHtml(shippingMethod.id)}" ${shippingMethod.id === checkoutState.shippingMethodId ? "checked" : ""}>
+        <span class="shipping-option__text"><strong>${escapeHtml(shippingMethod.label)}</strong><small>${escapeHtml(shippingMethod.delay)}</small></span>
         <span class="shipping-option__price">${methodPrice === 0 ? "Offerte" : formatExactPrice(methodPrice)}</span>
       </label>`;
   }).join("");
@@ -207,25 +207,25 @@ function showCheckoutStep(stepName) {
 function generateOrderNumber() {
   const currentDate = new Date();
   const datePart = `${String(currentDate.getFullYear()).slice(2)}${String(currentDate.getMonth() + 1).padStart(2, "0")}${String(currentDate.getDate()).padStart(2, "0")}`;
-  const randomPart = String(Math.floor(Math.random() * 90000) + 10000);
+  const randomPart = String(10000 + (crypto.getRandomValues(new Uint32Array(1))[0] % 90000));
   return `NS-${datePart}-${randomPart}`;
 }
 
 function renderConfirmation(orderNumber, cardDigits, cartTotals) {
   const shippingDetails = checkoutState.shippingDetails;
-  const shippingMethod = NordikCart.shippingMethods[checkoutState.shippingMethodId];
+  const shippingMethod = NordikCart.getShippingMethod(checkoutState.shippingMethodId);
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + (shippingMethod.id === "express" ? 1 : 4));
   checkoutElements.confirmationContent.innerHTML = `
     <div class="confirmation__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M14 24.5l7 7 13-14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <p class="eyebrow">Commande confirmée</p>
     <h3 class="confirmation__title">Merci ${escapeHtml(shippingDetails.firstName)}, votre commande est en préparation.</h3>
-    <p class="confirmation__number">Numéro de commande <strong>${orderNumber}</strong></p>
+    <p class="confirmation__number">Numéro de commande <strong>${escapeHtml(orderNumber)}</strong></p>
     <p>Un e-mail de confirmation a été envoyé à <strong>${escapeHtml(shippingDetails.email)}</strong>. Vous recevrez le lien de suivi dès l'expédition depuis notre entrepôt de Lille.</p>
     <dl class="confirmation__details">
       <div><dt>Livraison</dt><dd>${escapeHtml(shippingDetails.firstName)} ${escapeHtml(shippingDetails.lastName)}<br>${escapeHtml(shippingDetails.address)}${shippingDetails.addressComplement ? `<br>${escapeHtml(shippingDetails.addressComplement)}` : ""}<br>${escapeHtml(shippingDetails.postalCode)} ${escapeHtml(shippingDetails.city)}, ${escapeHtml(shippingDetails.country)}</dd></div>
-      <div><dt>Mode d'envoi</dt><dd>${shippingMethod.label}<br>Arrivée estimée le ${deliveryDate.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</dd></div>
-      <div><dt>Paiement</dt><dd>Carte se terminant par ${cardDigits.slice(-4)}<br>${formatExactPrice(cartTotals.total)} débités</dd></div>
+      <div><dt>Mode d'envoi</dt><dd>${escapeHtml(shippingMethod.label)}<br>Arrivée estimée le ${deliveryDate.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</dd></div>
+      <div><dt>Paiement</dt><dd>Carte se terminant par ${escapeHtml(cardDigits.slice(-4))}<br>${formatExactPrice(cartTotals.total)} débités</dd></div>
     </dl>
     <div class="confirmation__actions">
       <a class="button button--primary" href="catalogue.html">Continuer mes achats</a>
@@ -237,7 +237,8 @@ function initCheckoutForms() {
   bindLiveValidation(checkoutElements.shippingForm, shippingValidationRules);
   bindLiveValidation(checkoutElements.paymentForm, paymentValidationRules);
   checkoutElements.shippingMethodList.addEventListener("change", (changeEvent) => {
-    checkoutState.shippingMethodId = changeEvent.target.value;
+    if (changeEvent.target.name !== "shippingMethod") return;
+    checkoutState.shippingMethodId = NordikCart.getShippingMethod(changeEvent.target.value).id;
     renderOrderSummary();
   });
   checkoutElements.shippingForm.addEventListener("submit", (submitEvent) => {
@@ -245,7 +246,7 @@ function initCheckoutForms() {
     const shippingDetails = validateFormFields(checkoutElements.shippingForm, shippingValidationRules);
     if (!shippingDetails) return;
     checkoutState.shippingDetails = shippingDetails;
-    checkoutElements.shippingRecap.innerHTML = `<strong>Livraison à :</strong> ${escapeHtml(shippingDetails.firstName)} ${escapeHtml(shippingDetails.lastName)}, ${escapeHtml(shippingDetails.address)}, ${escapeHtml(shippingDetails.postalCode)} ${escapeHtml(shippingDetails.city)} · ${NordikCart.shippingMethods[checkoutState.shippingMethodId].label}`;
+    checkoutElements.shippingRecap.innerHTML = `<strong>Livraison à :</strong> ${escapeHtml(shippingDetails.firstName)} ${escapeHtml(shippingDetails.lastName)}, ${escapeHtml(shippingDetails.address)}, ${escapeHtml(shippingDetails.postalCode)} ${escapeHtml(shippingDetails.city)} · ${escapeHtml(NordikCart.getShippingMethod(checkoutState.shippingMethodId).label)}`;
     showCheckoutStep("payment");
   });
   checkoutElements.backToShippingButton.addEventListener("click", () => showCheckoutStep("shipping"));

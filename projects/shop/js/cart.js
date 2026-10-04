@@ -5,7 +5,7 @@ const NordikCart = (() => {
   const MAXIMUM_LINE_QUANTITY = 10;
   const shippingMethods = {
     standard: { id: "standard", label: "Livraison standard", delay: "3 à 5 jours ouvrés", price: 6.9 },
-    express: { id: "express", label: "Livraison express", delay: "24 h, avant 13 h", price: 14.9 }
+    express: { id: "express", label: "Livraison express", delay: "24 h (commande avant 13 h)", price: 14.9 }
   };
   const promoCodes = {
     NORDIK10: { code: "NORDIK10", label: "10 % sur votre commande", type: "percent", value: 10, minimumSubtotal: 0 },
@@ -13,13 +13,33 @@ const NordikCart = (() => {
     LIVRAISONOFFERTE: { code: "LIVRAISONOFFERTE", label: "Livraison standard offerte", type: "shipping", value: 0, minimumSubtotal: 0 }
   };
   const changeListeners = new Set();
+  function buildLineKey(productId, colorName, sizeLabel) {
+    return [productId, colorName || "", sizeLabel || ""].join("|");
+  }
+  function getMaximumQuantity(product) {
+    return Math.max(Math.min(MAXIMUM_LINE_QUANTITY, product.stock), 0);
+  }
+  function sanitizeStoredLine(storedLine) {
+    if (!storedLine || typeof storedLine !== "object") return null;
+    const product = NordikCatalog.getProductById(storedLine.productId);
+    if (!product) return null;
+    const colorIsKnown = product.colors.some((color) => color.name === storedLine.color);
+    const sizeIsKnown = product.sizes.length ? product.sizes.some((size) => size.label === storedLine.size) : storedLine.size === "";
+    const storedQuantity = Number(storedLine.quantity);
+    if (!colorIsKnown || !sizeIsKnown || !Number.isInteger(storedQuantity) || storedQuantity < 1) return null;
+    return { key: buildLineKey(product.id, storedLine.color, storedLine.size), productId: product.id, color: storedLine.color, size: storedLine.size, quantity: Math.min(storedQuantity, getMaximumQuantity(product)) };
+  }
   function readCartState() {
     try {
       const storedState = JSON.parse(localStorage.getItem(CART_STORAGE_KEY));
       const storedLines = storedState && Array.isArray(storedState.lines) ? storedState.lines : [];
+      const sanitizedLines = [];
+      storedLines.map(sanitizeStoredLine).forEach((sanitizedLine) => {
+        if (sanitizedLine && sanitizedLine.quantity > 0 && !sanitizedLines.some((line) => line.key === sanitizedLine.key)) sanitizedLines.push(sanitizedLine);
+      });
       return {
-        lines: storedLines.filter((line) => NordikCatalog.getProductById(line.productId) && line.quantity > 0),
-        promoCode: storedState && promoCodes[storedState.promoCode] ? storedState.promoCode : null
+        lines: sanitizedLines,
+        promoCode: storedState && typeof storedState.promoCode === "string" && Object.prototype.hasOwnProperty.call(promoCodes, storedState.promoCode) ? storedState.promoCode : null
       };
     } catch (storageError) {
       return { lines: [], promoCode: null };
@@ -42,9 +62,6 @@ const NordikCart = (() => {
     cartState = readCartState();
     notifyListeners();
   });
-  function buildLineKey(productId, colorName, sizeLabel) {
-    return [productId, colorName || "", sizeLabel || ""].join("|");
-  }
   function getDetailedLines() {
     return cartState.lines.map((line) => {
       const product = NordikCatalog.getProductById(line.productId);
@@ -58,12 +75,14 @@ const NordikCart = (() => {
   function addItem({ productId, color, size, quantity = 1 }) {
     const product = NordikCatalog.getProductById(productId);
     if (!product) return null;
-    const selectedColor = color || (product.colors[0] && product.colors[0].name) || "";
-    const selectedSize = size || (product.sizes[0] && product.sizes[0].label) || "";
-    const lineKey = buildLineKey(productId, selectedColor, selectedSize);
+    const selectedColor = product.colors.some((productColor) => productColor.name === color) ? color : product.colors[0].name;
+    const selectedSize = product.sizes.length ? (product.sizes.some((productSize) => productSize.label === size) ? size : product.sizes[0].label) : "";
+    const requestedQuantity = Math.max(Math.round(Number(quantity)) || 1, 1);
+    const maximumQuantity = getMaximumQuantity(product);
+    const lineKey = buildLineKey(product.id, selectedColor, selectedSize);
     const existingLine = cartState.lines.find((line) => line.key === lineKey);
-    if (existingLine) existingLine.quantity = Math.min(existingLine.quantity + quantity, MAXIMUM_LINE_QUANTITY);
-    else cartState.lines.push({ key: lineKey, productId, color: selectedColor, size: selectedSize, quantity: Math.min(quantity, MAXIMUM_LINE_QUANTITY) });
+    if (existingLine) existingLine.quantity = Math.min(existingLine.quantity + requestedQuantity, maximumQuantity);
+    else cartState.lines.push({ key: lineKey, productId: product.id, color: selectedColor, size: selectedSize, quantity: Math.min(requestedQuantity, maximumQuantity) });
     persistCartState();
     return lineKey;
   }
@@ -72,7 +91,7 @@ const NordikCart = (() => {
     if (!targetLine) return;
     const sanitizedQuantity = Math.round(Number(requestedQuantity)) || 0;
     if (sanitizedQuantity <= 0) cartState.lines = cartState.lines.filter((line) => line.key !== lineKey);
-    else targetLine.quantity = Math.min(sanitizedQuantity, MAXIMUM_LINE_QUANTITY);
+    else targetLine.quantity = Math.min(sanitizedQuantity, getMaximumQuantity(NordikCatalog.getProductById(targetLine.productId)));
     persistCartState();
   }
   function removeItem(lineKey) {
@@ -86,8 +105,8 @@ const NordikCart = (() => {
   function applyPromoCode(rawCode) {
     const normalizedCode = String(rawCode || "").trim().toUpperCase();
     if (!normalizedCode) return { success: false, message: "Saisissez un code promo." };
-    const promoDefinition = promoCodes[normalizedCode];
-    if (!promoDefinition) return { success: false, message: `Le code « ${normalizedCode} » n'est pas valide.` };
+    const promoDefinition = Object.prototype.hasOwnProperty.call(promoCodes, normalizedCode) ? promoCodes[normalizedCode] : null;
+    if (!promoDefinition) return { success: false, message: `Le code « ${normalizedCode.slice(0, 30)} » n'est pas valide.` };
     cartState.promoCode = normalizedCode;
     persistCartState();
     return { success: true, message: `Code ${normalizedCode} appliqué : ${promoDefinition.label}.` };
@@ -99,6 +118,9 @@ const NordikCart = (() => {
   function getActivePromo() {
     return cartState.promoCode ? promoCodes[cartState.promoCode] : null;
   }
+  function getShippingMethod(shippingMethodId) {
+    return Object.prototype.hasOwnProperty.call(shippingMethods, shippingMethodId) ? shippingMethods[shippingMethodId] : shippingMethods.standard;
+  }
   function computeTotals(shippingMethodId = "standard") {
     const subtotal = getDetailedLines().reduce((amountSum, line) => amountSum + line.lineTotal, 0);
     const activePromo = getActivePromo();
@@ -106,7 +128,7 @@ const NordikCart = (() => {
     let discount = 0;
     if (promoIsEligible && activePromo.type === "percent") discount = Math.round(subtotal * activePromo.value) / 100;
     if (promoIsEligible && activePromo.type === "amount") discount = Math.min(activePromo.value, subtotal);
-    const shippingMethod = shippingMethods[shippingMethodId] || shippingMethods.standard;
+    const shippingMethod = getShippingMethod(shippingMethodId);
     const qualifiesForFreeStandard = subtotal >= FREE_SHIPPING_THRESHOLD || (promoIsEligible && activePromo.type === "shipping");
     let shipping = 0;
     if (subtotal > 0) shipping = shippingMethod.id === "standard" && qualifiesForFreeStandard ? 0 : shippingMethod.price;
@@ -131,6 +153,8 @@ const NordikCart = (() => {
     FREE_SHIPPING_THRESHOLD,
     MAXIMUM_LINE_QUANTITY,
     shippingMethods,
+    getShippingMethod,
+    getMaximumQuantity,
     getDetailedLines,
     getItemCount,
     addItem,

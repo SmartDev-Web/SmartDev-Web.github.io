@@ -1,8 +1,8 @@
 /* ==========================================================================
    Azur Hôtel & Spa — shared behaviours used on every page
    Header state, mobile navigation, page transitions, scroll reveal,
-   animated counters, parallax, modal dialogs, newsletter and form
-   validation helpers.
+   animated counters, parallax, modal dialogs, newsletter, form
+   validation, HTML escaping and safe storage helpers.
    ========================================================================== */
 
 const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -149,7 +149,7 @@ function getFieldValidationMessage(fieldElement) {
   if (fieldElement.type === 'checkbox') return fieldElement.required && !fieldElement.checked ? 'Merci de cocher cette case pour continuer.' : '';
   if (fieldElement.required && !fieldValue) return fieldElement.dataset.requiredMessage || 'Ce champ est obligatoire.';
   if (fieldValue && fieldElement.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(fieldValue)) return 'Merci d’indiquer une adresse e-mail valide.';
-  if (fieldValue && fieldElement.type === 'tel' && !/^(?:\+33\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(fieldValue)) return 'Format attendu : 06 12 34 56 78.';
+  if (fieldValue && fieldElement.type === 'tel' && !/^(?:\+33\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(fieldValue)) return 'Format attendu : 06 39 98 12 34.';
   if (fieldValue && fieldElement.type === 'date' && ((fieldElement.min && fieldValue < fieldElement.min) || (fieldElement.max && fieldValue > fieldElement.max))) return fieldElement.dataset.rangeMessage || 'Cette date n’est pas disponible.';
   if (fieldValue && fieldElement.minLength > 0 && fieldValue.length < fieldElement.minLength) return `Merci d’écrire au moins ${fieldElement.minLength} caractères.`;
   return '';
@@ -249,6 +249,22 @@ function initializeNewsletterForms() {
       if (!validationMessage) newsletterFormElement.reset();
     });
   });
+}
+
+/* Escapes a value before it is interpolated into an HTML template */
+function escapeHtml(rawValue) {
+  const htmlEntities = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  return String(rawValue).replace(/[&<>"']/g, (character) => htmlEntities[character]);
+}
+
+/* Reads and parses a JSON value from localStorage, returning the fallback when missing, unreadable or invalid */
+function readStoredJson(storageKey, isValidValue, fallbackValue) {
+  try {
+    const storedValue = JSON.parse(localStorage.getItem(storageKey));
+    return isValidValue(storedValue) ? storedValue : fallbackValue;
+  } catch (storageError) {
+    return fallbackValue;
+  }
 }
 
 /* Formats an amount in euros using French conventions */

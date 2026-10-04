@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Mon panier · Nordik Store</title>
   <meta name="description" content="Votre panier Nordik Store : modifiez les quantités, appliquez un code promo et finalisez votre commande.">
   <meta name="theme-color" content="#f6f3ee">
@@ -68,7 +71,7 @@
         <form class="promo-form" data-promo-form novalidate>
           <label for="promo-code">Code promo</label>
           <div class="promo-form__row">
-            <input type="text" id="promo-code" name="promoCode" placeholder="Ex. : NORDIK10" autocomplete="off">
+            <input type="text" id="promo-code" name="promoCode" placeholder="Ex. : NORDIK10" autocomplete="off" maxlength="30">
             <button type="submit" class="button button--ghost">Appliquer</button>
           </div>
           <p class="form-feedback" data-promo-feedback role="status"></p>
@@ -122,15 +125,15 @@
       <div>
         <h2 class="footer-title">Showroom</h2>
         <ul class="footer-links">
-          <li>27 rue Oberkampf, 75011 Paris</li>
+          <li>9 passage des Aurores-Boréales, 75011 Paris</li>
           <li>Du mardi au samedi, 11 h – 19 h</li>
-          <li><a href="tel:+33142560718">01 42 56 07 18</a></li>
-          <li><a href="mailto:hej@nordik-store.fr">hej@nordik-store.fr</a></li>
+          <li><a href="tel:+33199002718">01 99 00 27 18</a></li>
+          <li><a href="mailto:hej@nordik-store.example">hej@nordik-store.example</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© 2026 Nordik Store SAS · Paiement sécurisé · Prix TTC en euros</p>
+      <p>© 2026 Nordik Store · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a> · Prix TTC en euros</p>
       <ul class="payment-logos" aria-label="Moyens de paiement acceptés"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>CB</li></ul>
     </div>
   </footer>

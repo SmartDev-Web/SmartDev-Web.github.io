@@ -15,7 +15,7 @@ const productSelection = { imageIndex: 0, color: "", size: "", quantity: 1 };
 
 function renderProductDetail(product) {
   const category = NordikCatalog.getCategoryById(product.category);
-  const stockMessage = product.stock <= 5 ? `Plus que ${product.stock} en stock, commandez vite` : "En stock, expédié sous 48 h";
+  const stockMessage = product.stock <= LOW_STOCK_THRESHOLD ? `Plus que ${product.stock} en stock, commandez vite` : "En stock, expédié sous 48 h";
   const sizeFieldset = product.sizes.length ? `
     <fieldset class="option-group">
       <legend class="field-label">Taille : <span data-selected-size>${escapeHtml(product.sizes[0].label)}</span></legend>
@@ -26,7 +26,7 @@ function renderProductDetail(product) {
   productPageElements.pageRoot.innerHTML = `
     <section class="product-gallery" aria-label="Galerie photos">
       <figure class="gallery-main" data-gallery-main>
-        <img src="${product.gallery[0].src}" alt="${escapeHtml(product.gallery[0].alt)}" width="1200" height="1400" data-gallery-image>
+        <img src="${escapeHtml(product.gallery[0].src)}" alt="${escapeHtml(product.gallery[0].alt)}" width="1200" height="1400" data-gallery-image>
         ${renderProductBadges(product)}
         <button type="button" class="gallery-main__expand" data-open-lightbox aria-label="Agrandir la photo">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -34,7 +34,7 @@ function renderProductDetail(product) {
         <figcaption class="gallery-main__hint">Survolez pour zoomer</figcaption>
       </figure>
       <div class="gallery-thumbs" role="group" aria-label="Choisir une photo">
-        ${product.gallery.map((galleryImage, imageIndex) => `<button type="button" class="gallery-thumb" data-gallery-index="${imageIndex}" aria-pressed="${imageIndex === 0}" aria-label="Photo ${imageIndex + 1} : ${escapeHtml(galleryImage.alt)}"><img src="${galleryImage.src.replace("w=1200&h=1400", "w=240&h=280")}" alt="" width="240" height="280" loading="lazy"></button>`).join("")}
+        ${product.gallery.map((galleryImage, imageIndex) => `<button type="button" class="gallery-thumb" data-gallery-index="${imageIndex}" aria-pressed="${imageIndex === 0}" aria-label="Photo ${imageIndex + 1} : ${escapeHtml(galleryImage.alt)}"><img src="${escapeHtml(galleryImage.src.replace("w=1200&h=1400", "w=240&h=280"))}" alt="" width="240" height="280" loading="lazy"></button>`).join("")}
       </div>
     </section>
     <section class="product-info" aria-labelledby="product-title">
@@ -54,7 +54,7 @@ function renderProductDetail(product) {
         <div class="purchase-row">
           <div class="quantity-stepper quantity-stepper--large" role="group" aria-label="Quantité">
             <button type="button" data-product-quantity="-1" aria-label="Diminuer la quantité">−</button>
-            <input type="number" id="product-quantity" min="1" max="${NordikCart.MAXIMUM_LINE_QUANTITY}" value="1" aria-label="Quantité" data-product-quantity-input>
+            <input type="number" id="product-quantity" min="1" max="${NordikCart.getMaximumQuantity(product)}" value="1" aria-label="Quantité" data-product-quantity-input>
             <button type="button" data-product-quantity="1" aria-label="Augmenter la quantité">+</button>
           </div>
           <button type="submit" class="button button--primary button--block">
@@ -62,7 +62,7 @@ function renderProductDetail(product) {
             Ajouter au panier · <span data-add-total>${formatPrice(product.price)}</span>
           </button>
         </div>
-        <p class="stock-info${product.stock <= 5 ? " stock-info--low" : ""}"><span class="stock-info__dot" aria-hidden="true"></span>${stockMessage}</p>
+        <p class="stock-info${product.stock <= LOW_STOCK_THRESHOLD ? " stock-info--low" : ""}"><span class="stock-info__dot" aria-hidden="true"></span>${stockMessage}</p>
       </form>
       <ul class="product-perks">
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7" cy="17.5" r="1.7" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="17.5" r="1.7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Livraison offerte dès ${formatPrice(NordikCart.FREE_SHIPPING_THRESHOLD)}</li>
@@ -76,7 +76,7 @@ function renderProductDetail(product) {
         </details>
         <details>
           <summary>Livraison et retours</summary>
-          <p>Expédition depuis notre entrepôt de Lille sous 48 h. Livraison standard en 3 à 5 jours ouvrés (6,90 €, offerte dès ${formatPrice(NordikCart.FREE_SHIPPING_THRESHOLD)}) ou express en 24 h (14,90 €). Les meubles volumineux sont livrés en pièce de vie sur rendez-vous.</p>
+          <p>Préparation et expédition depuis notre entrepôt de Lille. Livraison standard en ${escapeHtml(NordikCart.shippingMethods.standard.delay)} (${formatExactPrice(NordikCart.shippingMethods.standard.price)}, offerte dès ${formatPrice(NordikCart.FREE_SHIPPING_THRESHOLD)}) ou express en ${escapeHtml(NordikCart.shippingMethods.express.delay)} (${formatExactPrice(NordikCart.shippingMethods.express.price)}). Les meubles volumineux sont livrés en pièce de vie sur rendez-vous.</p>
         </details>
         <details>
           <summary>Entretien</summary>
@@ -111,7 +111,7 @@ function showGalleryImage(product, imageIndex) {
 }
 
 function setProductQuantity(product, requestedQuantity) {
-  productSelection.quantity = Math.min(Math.max(Math.round(Number(requestedQuantity)) || 1, 1), NordikCart.MAXIMUM_LINE_QUANTITY);
+  productSelection.quantity = Math.min(Math.max(Math.round(Number(requestedQuantity)) || 1, 1), NordikCart.getMaximumQuantity(product));
   productPageElements.pageRoot.querySelector("[data-product-quantity-input]").value = String(productSelection.quantity);
   updatePriceDisplay(product);
 }
@@ -205,6 +205,7 @@ function renderUnknownProduct() {
 if (currentProduct) {
   const productCategory = NordikCatalog.getCategoryById(currentProduct.category);
   document.title = `${currentProduct.name} · Nordik Store`;
+  document.querySelector('meta[name="description"]').setAttribute("content", `${currentProduct.name} (${productCategory.name}), par ${currentProduct.designer} : ${formatPrice(currentProduct.price)}. ${currentProduct.description}`.slice(0, 300));
   productPageElements.breadcrumbCategory.innerHTML = `<a href="catalogue.html?cat=${encodeURIComponent(productCategory.id)}">${escapeHtml(productCategory.name)}</a>`;
   productPageElements.breadcrumbCurrent.textContent = currentProduct.name;
   renderProductDetail(currentProduct);

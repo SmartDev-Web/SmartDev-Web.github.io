@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Chambres & suites — Azur Hôtel & Spa, Biarritz</title>
   <meta name="description" content="Découvrez les 42 chambres et suites de l’Azur Hôtel & Spa à Biarritz et comparez leurs équipements.">
   <meta name="theme-color" content="#0e2a3a">
@@ -11,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/js-ready.js"></script>
   <script src="js/main.js" defer></script>
   <script src="js/rooms-data.js" defer></script>
   <script src="js/chambres.js" defer></script>
@@ -42,7 +45,7 @@
   <main id="contenu">
     <section class="page-hero" aria-labelledby="page-title">
       <div class="page-hero__media" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1900&q=80" alt="">
+        <img width="1900" height="1267" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1900&q=80" alt="">
       </div>
       <div class="container">
         <span class="eyebrow" data-reveal>Chambres &amp; suites</span>
@@ -56,9 +59,9 @@
         <article class="room-card" id="classique" data-room-id="classique" data-reveal>
           <div class="carousel" data-carousel aria-roledescription="carrousel" aria-label="Photos — Chambre Classique Jardin">
             <div class="carousel__track">
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1100&q=80" alt="Chambre claire avec grand lit et fenêtre sur le jardin" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1100&q=80" alt="Salle de bain contemporaine avec douche vitrée" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1100&q=80" alt="Façade blanche de l’hôtel et sa piscine" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1100&q=80" alt="Chambre claire avec grand lit et fenêtre sur le jardin" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1100&q=80" alt="Salle de bain contemporaine avec douche vitrée" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1100&q=80" alt="Façade blanche de l’hôtel et sa piscine" loading="lazy" draggable="false"></figure>
             </div>
             <button class="carousel__button carousel__button--previous" type="button" data-carousel-previous aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <button class="carousel__button carousel__button--next" type="button" data-carousel-next aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -92,9 +95,9 @@
         <article class="room-card" id="superieure" data-room-id="superieure" data-reveal>
           <div class="carousel" data-carousel aria-roledescription="carrousel" aria-label="Photos — Chambre Supérieure Vue Océan">
             <div class="carousel__track">
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1100&q=80" alt="Chambre chaleureuse au mobilier en bois" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=1100&q=80" alt="Vagues de l’océan vues du ciel" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1100&q=80" alt="Grand lit face aux baies vitrées" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1100&q=80" alt="Chambre chaleureuse au mobilier en bois" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=1100&q=80" alt="Vagues de l’océan vues du ciel" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1100&q=80" alt="Grand lit face aux baies vitrées" loading="lazy" draggable="false"></figure>
             </div>
             <button class="carousel__button carousel__button--previous" type="button" data-carousel-previous aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <button class="carousel__button carousel__button--next" type="button" data-carousel-next aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -128,9 +131,9 @@
         <article class="room-card" id="deluxe" data-room-id="deluxe" data-reveal>
           <div class="carousel" data-carousel aria-roledescription="carrousel" aria-label="Photos — Chambre Deluxe Balcon">
             <div class="carousel__track">
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1100&q=80" alt="Chambre deluxe avec canapé capitonné et grand lit" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1100&q=80" alt="Coucher de soleil sur la plage" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1100&q=80" alt="Piscine illuminée à la tombée de la nuit" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1100&q=80" alt="Chambre deluxe avec canapé capitonné et grand lit" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1100&q=80" alt="Coucher de soleil sur la plage" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1100&q=80" alt="Piscine illuminée à la tombée de la nuit" loading="lazy" draggable="false"></figure>
             </div>
             <button class="carousel__button carousel__button--previous" type="button" data-carousel-previous aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <button class="carousel__button carousel__button--next" type="button" data-carousel-next aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -164,9 +167,9 @@
         <article class="room-card" id="junior" data-room-id="junior" data-reveal>
           <div class="carousel" data-carousel aria-roledescription="carrousel" aria-label="Photos — Suite Junior Côte des Basques">
             <div class="carousel__track">
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1100&q=80" alt="Chambre de la suite junior et ses lampes de chevet" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1100&q=80" alt="Piscine bordée de transats et parasols" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img src="https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=1100&q=80" alt="Terrasse au bord de l’eau au coucher du soleil" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1100&q=80" alt="Chambre de la suite junior et ses lampes de chevet" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1100&q=80" alt="Piscine bordée de transats et parasols" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=1100&q=80" alt="Terrasse au bord de l’eau au coucher du soleil" loading="lazy" draggable="false"></figure>
             </div>
             <button class="carousel__button carousel__button--previous" type="button" data-carousel-previous aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <button class="carousel__button carousel__button--next" type="button" data-carousel-next aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -200,9 +203,9 @@
         <article class="room-card" id="panoramique" data-room-id="panoramique" data-reveal>
           <div class="carousel" data-carousel aria-roledescription="carrousel" aria-label="Photos — Suite Panoramique Azur">
             <div class="carousel__track">
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1100&q=80" alt="Suite panoramique ouverte sur de grandes baies vitrées" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1100&q=80" alt="Transats sur le toit-terrasse de la suite" loading="lazy" draggable="false"></figure>
-            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1100&q=80" alt="Terrasse en bois et piscine à débordement face à la mer" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1100&q=80" alt="Suite panoramique ouverte sur de grandes baies vitrées" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1100&q=80" alt="Transats sur le toit-terrasse de la suite" loading="lazy" draggable="false"></figure>
+            <figure class="carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3"><img width="1100" height="733" src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1100&q=80" alt="Terrasse en bois et piscine à débordement face à la mer" loading="lazy" draggable="false"></figure>
             </div>
             <button class="carousel__button carousel__button--previous" type="button" data-carousel-previous aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <button class="carousel__button carousel__button--next" type="button" data-carousel-next aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -294,10 +297,10 @@
         <div>
           <h3>Nous joindre</h3>
           <ul>
-            <li>8 esplanade du Phare</li>
+            <li>14 promenade des Brisants-Nacrés</li>
             <li>64200 Biarritz</li>
-            <li><a href="tel:+33559417230">05 59 41 72 30</a></li>
-            <li><a href="mailto:sejour@azur-hotel-biarritz.fr">sejour@azur-hotel-biarritz.fr</a></li>
+            <li><a href="tel:+33536492730">05 36 49 27 30</a></li>
+            <li><a href="mailto:sejour@azur-hotel.example">sejour@azur-hotel.example</a></li>
           </ul>
         </div>
         <div>
@@ -305,14 +308,14 @@
           <p>Offres de saison, calendrier des marées et événements, une fois par mois.</p>
           <form class="newsletter" novalidate data-newsletter-form>
             <label class="visually-hidden" for="newsletter-email">Adresse e-mail</label>
-            <input type="email" id="newsletter-email" name="email" placeholder="votre@email.fr" autocomplete="email" required>
+            <input type="email" id="newsletter-email" name="email" placeholder="votre@adresse.example" autocomplete="email" maxlength="120" required>
             <button type="submit">OK</button>
           </form>
           <p class="newsletter-message" aria-live="polite"></p>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Azur Hôtel &amp; Spa — Établissement fictif, site de démonstration.</span>
+        <span>© <span data-current-year>2026</span> Azur Hôtel &amp; Spa · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
         <span>Réception ouverte 24 h/24 · Parking privé · Animaux bienvenus</span>
       </div>
     </div>

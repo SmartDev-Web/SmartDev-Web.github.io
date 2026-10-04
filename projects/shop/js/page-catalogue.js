@@ -20,12 +20,21 @@ const catalogueElements = {
   quickViewContent: document.querySelector("[data-quick-view-content]")
 };
 
+/* Reads a price URL parameter, rounded to the slider step and kept inside the catalogue range */
+function readPriceParameter(parameterName, fallbackPrice) {
+  const parameterValue = Number(getQueryParameter(parameterName));
+  if (!getQueryParameter(parameterName) || !Number.isFinite(parameterValue)) return fallbackPrice;
+  return Math.min(Math.max(Math.round(parameterValue / PRICE_SLIDER_STEP) * PRICE_SLIDER_STEP, 0), highestCatalogPrice);
+}
+
+const requestedMinimumPrice = readPriceParameter("min", 0);
+const requestedMaximumPrice = readPriceParameter("max", highestCatalogPrice);
 const catalogueState = {
   categoryId: NordikCatalog.getCategoryById(getQueryParameter("cat")) ? getQueryParameter("cat") : "all",
-  searchQuery: getQueryParameter("q") || "",
+  searchQuery: (getQueryParameter("q") || "").slice(0, 80),
   sortMode: getQueryParameter("tri") || "featured",
-  minimumPrice: Number(getQueryParameter("min")) || 0,
-  maximumPrice: Number(getQueryParameter("max")) || highestCatalogPrice
+  minimumPrice: requestedMinimumPrice < requestedMaximumPrice ? requestedMinimumPrice : 0,
+  maximumPrice: requestedMinimumPrice < requestedMaximumPrice ? requestedMaximumPrice : highestCatalogPrice
 };
 
 const sortComparators = {
@@ -36,6 +45,8 @@ const sortComparators = {
   rating: (firstProduct, secondProduct) => secondProduct.rating - firstProduct.rating || secondProduct.reviewCount - firstProduct.reviewCount
 };
 
+if (!Object.prototype.hasOwnProperty.call(sortComparators, catalogueState.sortMode)) catalogueState.sortMode = "featured";
+
 function getFilteredProducts() {
   const normalizedQueryWords = normalizeSearchText(catalogueState.searchQuery.trim()).split(/\s+/).filter(Boolean);
   return NordikCatalog.products.filter((product) => {
@@ -45,7 +56,7 @@ function getFilteredProducts() {
     const matchesPrice = product.price >= catalogueState.minimumPrice && product.price <= catalogueState.maximumPrice;
     const matchesQuery = normalizedQueryWords.every((queryWord) => searchableText.includes(queryWord));
     return matchesCategory && matchesPrice && matchesQuery;
-  }).sort(sortComparators[catalogueState.sortMode] || sortComparators.featured);
+  }).sort(sortComparators[catalogueState.sortMode]);
 }
 
 function syncCatalogueUrl() {
@@ -63,7 +74,7 @@ function renderCategoryFilters() {
   const filterOptions = [{ id: "all", name: "Tout voir" }].concat(NordikCatalog.categories);
   catalogueElements.categoryFilterList.innerHTML = filterOptions.map((filterOption) => {
     const optionCount = filterOption.id === "all" ? NordikCatalog.products.length : NordikCatalog.products.filter((product) => product.category === filterOption.id).length;
-    return `<li><button type="button" class="filter-chip" data-category-filter="${filterOption.id}" aria-pressed="${filterOption.id === catalogueState.categoryId}">${escapeHtml(filterOption.name)} <span>${optionCount}</span></button></li>`;
+    return `<li><button type="button" class="filter-chip" data-category-filter="${escapeHtml(filterOption.id)}" aria-pressed="${filterOption.id === catalogueState.categoryId}">${escapeHtml(filterOption.name)} <span>${optionCount}</span></button></li>`;
   }).join("");
   const activeCategory = NordikCatalog.getCategoryById(catalogueState.categoryId);
   catalogueElements.pageTitle.textContent = activeCategory ? activeCategory.name : "Toute la collection";
@@ -132,7 +143,7 @@ function openQuickView(productId) {
     <label class="field-label" for="quick-view-size">Taille</label>
     <select id="quick-view-size" class="select-input" data-quick-view-size>${product.sizes.map((size) => `<option value="${escapeHtml(size.label)}">${escapeHtml(size.label)}${size.priceDelta ? ` (+${formatPrice(size.priceDelta)})` : ""}</option>`).join("")}</select>` : "";
   catalogueElements.quickViewContent.innerHTML = `
-    <div class="quick-view__media"><img src="${product.image}" alt="${escapeHtml(product.name)}" width="900" height="1100"></div>
+    <div class="quick-view__media"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" width="900" height="1100"></div>
     <div class="quick-view__info">
       <p class="eyebrow">${escapeHtml(category.name)}</p>
       <h2 id="quick-view-title">${escapeHtml(product.name)}</h2>
@@ -145,7 +156,7 @@ function openQuickView(productId) {
       </fieldset>
       ${sizeSelectMarkup}
       <div class="quick-view__actions">
-        <button type="button" class="button button--primary" data-quick-view-add="${product.id}">Ajouter au panier</button>
+        <button type="button" class="button button--primary" data-quick-view-add="${escapeHtml(product.id)}">Ajouter au panier</button>
         <a class="button button--ghost" href="produit.html?id=${encodeURIComponent(product.id)}">Voir la fiche</a>
       </div>
     </div>`;
@@ -181,16 +192,16 @@ function initCatalogueControls() {
   });
   catalogueElements.minimumPriceInput.value = String(catalogueState.minimumPrice);
   catalogueElements.maximumPriceInput.value = String(catalogueState.maximumPrice);
-  catalogueElements.sortSelect.value = sortComparators[catalogueState.sortMode] ? catalogueState.sortMode : "featured";
+  catalogueElements.sortSelect.value = catalogueState.sortMode;
   catalogueElements.searchInput.value = catalogueState.searchQuery;
   catalogueElements.categoryFilterList.addEventListener("click", (clickEvent) => {
     const filterButton = clickEvent.target.closest("[data-category-filter]");
     if (!filterButton) return;
-    catalogueState.categoryId = filterButton.dataset.categoryFilter;
+    catalogueState.categoryId = NordikCatalog.getCategoryById(filterButton.dataset.categoryFilter) ? filterButton.dataset.categoryFilter : "all";
     refreshCatalogue();
   });
   catalogueElements.sortSelect.addEventListener("change", () => {
-    catalogueState.sortMode = catalogueElements.sortSelect.value;
+    catalogueState.sortMode = Object.prototype.hasOwnProperty.call(sortComparators, catalogueElements.sortSelect.value) ? catalogueElements.sortSelect.value : "featured";
     renderProductGrid();
   });
   catalogueElements.searchInput.addEventListener("input", () => {

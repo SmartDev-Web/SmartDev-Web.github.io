@@ -56,6 +56,12 @@ function parseSpaInputDate(dateString) {
   return new Date(yearPart, monthPart - 1, dayPart);
 }
 
+/* Formats a hh:mm time the French way, e.g. 9 h 30 */
+function formatSpaTimeLabel(timeLabel) {
+  const [hourPart, minutePart] = timeLabel.split(':');
+  return `${Number(hourPart)} h ${minutePart}`;
+}
+
 function formatTreatmentDuration(durationMinutes) {
   return durationMinutes >= 120 ? `${durationMinutes / 60} h` : `${durationMinutes} min`;
 }
@@ -80,12 +86,12 @@ function renderTreatmentList() {
   }
   treatmentGridElement.innerHTML = visibleTreatments.map((spaTreatment, treatmentIndex) => `
     <li class="treatment-card" style="--item-index:${treatmentIndex}">
-      <span class="treatment-card__category">${spaCategoryLabels[spaTreatment.category]}</span>
-      <h3>${spaTreatment.name}</h3>
-      <p>${spaTreatment.description}</p>
+      <span class="treatment-card__category">${escapeHtml(spaCategoryLabels[spaTreatment.category])}</span>
+      <h3>${escapeHtml(spaTreatment.name)}</h3>
+      <p>${escapeHtml(spaTreatment.description)}</p>
       <div class="treatment-card__footer">
         <span class="treatment-card__details"><strong>${formatEuroAmount(spaTreatment.price)}</strong>${formatTreatmentDuration(spaTreatment.duration)}</span>
-        <button class="button button--primary button--small" type="button" data-book-treatment="${spaTreatment.id}">Réserver</button>
+        <button class="button button--primary button--small" type="button" data-book-treatment="${escapeHtml(spaTreatment.id)}">Réserver</button>
       </div>
     </li>`).join('');
 }
@@ -116,17 +122,26 @@ function renderSpaSlots() {
     spaSlotsContainerElement.innerHTML = '<p class="slot-message">Plus aucun horaire libre ce jour-là. Essayez une autre date.</p>';
     return;
   }
-  spaSlotsContainerElement.innerHTML = `<div class="slot-grid" role="radiogroup" aria-label="Horaires disponibles">${availableSlots.map((spaSlot, slotIndex) => `<label class="slot-option"><input type="radio" name="slot" value="${spaSlot.timeLabel}"${spaSlot.isTaken ? ' disabled' : ''}><span style="--item-index:${slotIndex}">${spaSlot.timeLabel.replace(':', 'h')}</span></label>`).join('')}</div>`;
+  spaSlotsContainerElement.innerHTML = `<div class="slot-grid" role="radiogroup" aria-label="Horaires disponibles">${availableSlots.map((spaSlot, slotIndex) => `<label class="slot-option"><input type="radio" name="slot" value="${spaSlot.timeLabel}"${spaSlot.isTaken ? ' disabled' : ''}><span style="--item-index:${slotIndex}">${formatSpaTimeLabel(spaSlot.timeLabel)}</span></label>`).join('')}</div>`;
 }
 
-/* Reads saved spa appointments */
+/* Finds a treatment by its identifier */
+function findSpaTreatmentById(treatmentId) {
+  return spaTreatmentCatalog.find((spaTreatment) => spaTreatment.id === treatmentId) || null;
+}
+
+/* True when a restored appointment has the expected shape and refers to a known treatment */
+function isValidSpaBooking(spaBooking) {
+  return Boolean(spaBooking) && typeof spaBooking === 'object'
+    && typeof spaBooking.id === 'string' && /^\d{1,16}$/.test(spaBooking.id)
+    && typeof spaBooking.treatmentId === 'string' && Boolean(findSpaTreatmentById(spaBooking.treatmentId))
+    && typeof spaBooking.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(spaBooking.date)
+    && typeof spaBooking.time === 'string' && /^\d{2}:\d{2}$/.test(spaBooking.time);
+}
+
+/* Reads saved spa appointments, discarding any malformed entry */
 function loadSpaBookings() {
-  try {
-    const storedBookings = JSON.parse(localStorage.getItem(spaBookingsStorageKey));
-    return Array.isArray(storedBookings) ? storedBookings : [];
-  } catch (storageError) {
-    return [];
-  }
+  return readStoredJson(spaBookingsStorageKey, Array.isArray, []).filter(isValidSpaBooking);
 }
 
 /* Saves spa appointments and refreshes the list */
@@ -139,19 +154,37 @@ function persistSpaBookings(spaBookings) {
   renderMySpaBookings(spaBookings);
 }
 
+/* Formats an appointment date and time in French */
+function formatSpaAppointment(dateString, timeLabel) {
+  return `${parseSpaInputDate(dateString).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })} à ${formatSpaTimeLabel(timeLabel)}`;
+}
+
 /* Lists upcoming spa appointments with a cancel action */
 function renderMySpaBookings(spaBookings) {
   const todayValue = formatSpaInputDate(new Date());
   const upcomingBookings = spaBookings.filter((spaBooking) => spaBooking.date >= todayValue).sort((firstBooking, secondBooking) => `${firstBooking.date}${firstBooking.time}`.localeCompare(`${secondBooking.date}${secondBooking.time}`));
   myBookingsElement.hidden = upcomingBookings.length === 0;
-  myBookingsListElement.innerHTML = upcomingBookings.map((spaBooking) => `
-    <li><span><strong>${spaBooking.treatmentName}</strong> — ${parseSpaInputDate(spaBooking.date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })} à ${spaBooking.time.replace(':', 'h')}</span>
-    <button class="text-button" type="button" data-cancel-booking="${spaBooking.id}">Annuler</button></li>`).join('');
+  myBookingsListElement.replaceChildren(...upcomingBookings.map((spaBooking) => {
+    const bookingItemElement = document.createElement('li');
+    const bookingTextElement = document.createElement('span');
+    const treatmentNameElement = document.createElement('strong');
+    const cancelButtonElement = document.createElement('button');
+    treatmentNameElement.textContent = findSpaTreatmentById(spaBooking.treatmentId).name;
+    bookingTextElement.append(treatmentNameElement, ` — ${formatSpaAppointment(spaBooking.date, spaBooking.time)}`);
+    cancelButtonElement.className = 'text-button';
+    cancelButtonElement.type = 'button';
+    cancelButtonElement.dataset.cancelBooking = spaBooking.id;
+    cancelButtonElement.textContent = 'Annuler';
+    bookingItemElement.append(bookingTextElement, cancelButtonElement);
+    return bookingItemElement;
+  }));
 }
 
 /* Prepares and opens the booking dialog for a treatment */
 function openSpaBookingDialog(treatmentId) {
-  spaState.selectedTreatment = spaTreatmentCatalog.find((spaTreatment) => spaTreatment.id === treatmentId);
+  const requestedTreatment = findSpaTreatmentById(treatmentId);
+  if (!requestedTreatment) return;
+  spaState.selectedTreatment = requestedTreatment;
   document.querySelector('[data-dialog-treatment-name]').textContent = spaState.selectedTreatment.name;
   document.querySelector('[data-dialog-treatment-details]').textContent = `${formatTreatmentDuration(spaState.selectedTreatment.duration)} · ${formatEuroAmount(spaState.selectedTreatment.price)}`;
   spaBookingFormElement.reset();
@@ -205,13 +238,13 @@ spaBookingFormElement.addEventListener('submit', (submitEvent) => {
   const spaBookingFormData = new FormData(spaBookingFormElement);
   const spaBooking = {
     id: `${Date.now()}`,
-    treatmentName: spaState.selectedTreatment.name,
+    treatmentId: spaState.selectedTreatment.id,
     date: spaDateInputElement.value,
     time: spaState.selectedSlot,
-    name: spaBookingFormData.get('name').trim(),
   };
+  const visitorFirstName = String(spaBookingFormData.get('name')).trim().split(/\s+/)[0];
   persistSpaBookings([...loadSpaBookings(), spaBooking]);
-  document.querySelector('[data-spa-success-text]').textContent = `${spaBooking.name.split(' ')[0]}, nous vous attendons le ${parseSpaInputDate(spaBooking.date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })} à ${spaBooking.time.replace(':', 'h')} pour votre soin « ${spaBooking.treatmentName} ». Pensez à arriver 20 minutes en avance.`;
+  document.querySelector('[data-spa-success-text]').textContent = `${visitorFirstName}, nous vous attendons le ${formatSpaAppointment(spaBooking.date, spaBooking.time)} pour votre soin « ${spaState.selectedTreatment.name} ». Pensez à arriver 20 minutes en avance.`;
   spaBookingFormElement.hidden = true;
   spaSuccessElement.hidden = false;
   spaSuccessElement.focus();

@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Commande · Nordik Store</title>
   <meta name="description" content="Finalisez votre commande Nordik Store : livraison, paiement sécurisé et confirmation.">
   <meta name="theme-color" content="#f6f3ee">
@@ -70,32 +73,32 @@
             <form id="shipping-form" class="form-grid" novalidate>
               <div class="form-field">
                 <label for="first-name">Prénom</label>
-                <input type="text" id="first-name" name="firstName" autocomplete="given-name">
+                <input type="text" id="first-name" name="firstName" autocomplete="given-name" maxlength="60">
                 <p class="field-error" data-error-for="firstName"></p>
               </div>
               <div class="form-field">
                 <label for="last-name">Nom</label>
-                <input type="text" id="last-name" name="lastName" autocomplete="family-name">
+                <input type="text" id="last-name" name="lastName" autocomplete="family-name" maxlength="60">
                 <p class="field-error" data-error-for="lastName"></p>
               </div>
               <div class="form-field form-field--wide">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" autocomplete="email">
+                <input type="email" id="email" name="email" autocomplete="email" maxlength="120">
                 <p class="field-error" data-error-for="email"></p>
               </div>
               <div class="form-field form-field--wide">
                 <label for="phone">Téléphone</label>
-                <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="06 12 34 56 78">
+                <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="06 39 98 12 34" maxlength="20">
                 <p class="field-error" data-error-for="phone"></p>
               </div>
               <div class="form-field form-field--wide">
                 <label for="address">Adresse</label>
-                <input type="text" id="address" name="address" autocomplete="address-line1" placeholder="12 rue des Lilas">
+                <input type="text" id="address" name="address" autocomplete="address-line1" placeholder="3 allée des Lichens-Argentés" maxlength="120">
                 <p class="field-error" data-error-for="address"></p>
               </div>
               <div class="form-field form-field--wide">
                 <label for="address-complement">Complément (facultatif)</label>
-                <input type="text" id="address-complement" name="addressComplement" autocomplete="address-line2" placeholder="Bâtiment, étage, digicode…">
+                <input type="text" id="address-complement" name="addressComplement" autocomplete="address-line2" placeholder="Bâtiment, étage, digicode…" maxlength="120">
                 <p class="field-error" data-error-for="addressComplement"></p>
               </div>
               <div class="form-field">
@@ -105,7 +108,7 @@
               </div>
               <div class="form-field">
                 <label for="city">Ville</label>
-                <input type="text" id="city" name="city" autocomplete="address-level2">
+                <input type="text" id="city" name="city" autocomplete="address-level2" maxlength="80">
                 <p class="field-error" data-error-for="city"></p>
               </div>
               <div class="form-field form-field--wide">
@@ -158,7 +161,7 @@
               </div>
                 <div class="form-field form-field--wide">
                 <label for="card-holder">Titulaire de la carte</label>
-                <input type="text" id="card-holder" name="cardHolder" autocomplete="cc-name" placeholder="Prénom Nom">
+                <input type="text" id="card-holder" name="cardHolder" autocomplete="cc-name" placeholder="Prénom Nom" maxlength="60">
                 <p class="field-error" data-error-for="cardHolder"></p>
               </div>
                 <div class="form-field">
@@ -225,15 +228,15 @@
       <div>
         <h2 class="footer-title">Showroom</h2>
         <ul class="footer-links">
-          <li>27 rue Oberkampf, 75011 Paris</li>
+          <li>9 passage des Aurores-Boréales, 75011 Paris</li>
           <li>Du mardi au samedi, 11 h – 19 h</li>
-          <li><a href="tel:+33142560718">01 42 56 07 18</a></li>
-          <li><a href="mailto:hej@nordik-store.fr">hej@nordik-store.fr</a></li>
+          <li><a href="tel:+33199002718">01 99 00 27 18</a></li>
+          <li><a href="mailto:hej@nordik-store.example">hej@nordik-store.example</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© 2026 Nordik Store SAS · Paiement sécurisé · Prix TTC en euros</p>
+      <p>© 2026 Nordik Store · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a> · Prix TTC en euros</p>
       <ul class="payment-logos" aria-label="Moyens de paiement acceptés"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>CB</li></ul>
     </div>
   </footer>
