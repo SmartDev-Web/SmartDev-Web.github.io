@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Azur Hôtel & Spa — room catalogue shared by the rooms and booking pages,
+   looked up by identifier.
+   ========================================================================== */
+
+const hotelRoomCatalog = [
+  {
+    id: 'classique',
+    name: 'Chambre Classique Jardin',
+    nightlyRate: 169,
+    surface: 22,
+    capacity: 2,
+    bed: 'Lit queen size 160 cm',
+    view: 'Jardin d’hortensias',
+    balcony: false,
+    bathtub: false,
+    coffeeMachine: true,
+    breakfastIncluded: false,
+    spaIncluded: false,
+    imageId: '1631049307264-da0ec9d70304',
+  },
+  {
+    id: 'superieure',
+    name: 'Chambre Supérieure Vue Océan',
+    nightlyRate: 229,
+    surface: 26,
+    capacity: 2,
+    bed: 'Lit king size 180 cm',
+    view: 'Océan, Grande Plage',
+    balcony: false,
+    bathtub: true,
+    coffeeMachine: true,
+    breakfastIncluded: false,
+    spaIncluded: false,
+    imageId: '1611892440504-42a792e24d32',
+  },
+  {
+    id: 'deluxe',
+    name: 'Chambre Deluxe Balcon',
+    nightlyRate: 289,
+    surface: 32,
+    capacity: 3,
+    bed: 'Lit king size + canapé-lit',
+    view: 'Océan et phare',
+    balcony: true,
+    bathtub: true,
+    coffeeMachine: true,
+    breakfastIncluded: false,
+    spaIncluded: true,
+    imageId: '1590490360182-c33d57733427',
+  },
+  {
+    id: 'junior',
+    name: 'Suite Junior Côte des Basques',
+    nightlyRate: 389,
+    surface: 45,
+    capacity: 4,
+    bed: 'Lit king size + chambre enfants',
+    view: 'Côte des Basques',
+    balcony: true,
+    bathtub: true,
+    coffeeMachine: true,
+    breakfastIncluded: true,
+    spaIncluded: true,
+    imageId: '1618773928121-c32242e63f39',
+  },
+  {
+    id: 'panoramique',
+    name: 'Suite Panoramique Azur',
+    nightlyRate: 590,
+    surface: 68,
+    capacity: 4,
+    bed: 'Lit king size + salon séparé',
+    view: 'Panoramique à 180° sur l’océan',
+    balcony: true,
+    bathtub: true,
+    coffeeMachine: true,
+    breakfastIncluded: true,
+    spaIncluded: true,
+    imageId: '1578683010236-d716f9a3f461',
+  },
+];
+
+/* Finds a room by its identifier */
+function findHotelRoomById(roomId) {
+  return hotelRoomCatalog.find((hotelRoom) => hotelRoom.id === roomId) || null;
+}

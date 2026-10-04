@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact & horaires — Maison Ambre</title>
+  <meta name="description" content="Horaires, adresse et formulaire de contact du restaurant Maison Ambre, 14 rue des Remparts à Bordeaux.">
+  <meta name="theme-color" content="#2a1c13">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%232a1c13'/%3E%3Cpath d='M20 8c4.6 5.4 7 9.6 7 13.4A7 7 0 0 1 13 21.4C13 17.6 15.4 13.4 20 8Z' fill='%23e0a458'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/main.js" defer></script>
+  <script src="js/contact.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Maison Ambre — accueil">
+        <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="1.2"/><path d="M20 8c4.6 5.4 7 9.6 7 13.4A7 7 0 0 1 13 21.4C13 17.6 15.4 13.4 20 8Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M20 15.5c2 2.6 3 4.6 3 6.3a3 3 0 0 1-6 0c0-1.7 1-3.7 3-6.3Z" fill="currentColor"/></svg>
+        <span><span class="brand__name">Maison Ambre</span><span class="brand__tagline">Bistronomie · Bordeaux</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
+        <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+      </button>
+      <nav class="primary-nav" id="navigation-principale" aria-label="Navigation principale">
+        <ul class="primary-nav__list">
+          <li><a class="primary-nav__link" href="index.html">Accueil</a></li>
+          <li><a class="primary-nav__link" href="carte.html">La Carte</a></li>
+          <li><a class="primary-nav__link" href="galerie.html">Galerie</a></li>
+          <li><a class="primary-nav__link" href="contact.html" aria-current="page">Contact</a></li>
+          <li><a class="primary-nav__link primary-nav__link--cta" href="reservation.html">Réserver</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenu">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1800&q=80" alt="">
+      </div>
+      <div class="container">
+        <span class="eyebrow" data-reveal>Horaires, accès &amp; contact</span>
+        <h1 id="page-title" data-reveal style="--reveal-delay: .1s">Venir nous voir</h1>
+        <p data-reveal style="--reveal-delay: .2s">Au cœur du quartier Saint-Seurin, à cinq minutes à pied de la place Gambetta. Tram B, arrêt Gambetta, ou parking Mériadeck à 400 m.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Informations pratiques et formulaire">
+      <div class="container contact-layout">
+        <div data-reveal>
+          <div class="hours-card">
+            <h2>Horaires d’ouverture</h2>
+            <p class="open-status" data-open-status aria-live="polite">Horaires du restaurant</p>
+            <table class="hours-table">
+              <caption class="visually-hidden">Horaires d’ouverture de la semaine</caption>
+              <tbody>
+                <tr data-weekday="1"><th scope="row">Lundi</th><td class="is-closed">Fermé</td></tr>
+                <tr data-weekday="2"><th scope="row">Mardi</th><td>12h – 14h · 19h – 22h30</td></tr>
+                <tr data-weekday="3"><th scope="row">Mercredi</th><td>12h – 14h · 19h – 22h30</td></tr>
+                <tr data-weekday="4"><th scope="row">Jeudi</th><td>12h – 14h · 19h – 22h30</td></tr>
+                <tr data-weekday="5"><th scope="row">Vendredi</th><td>12h – 14h · 19h – 23h</td></tr>
+                <tr data-weekday="6"><th scope="row">Samedi</th><td>12h – 14h · 19h – 23h</td></tr>
+                <tr data-weekday="0"><th scope="row">Dimanche</th><td>12h – 14h30</td></tr>
+              </tbody>
+            </table>
+            <ul class="contact-details">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                <span>14 rue des Remparts<br>33000 Bordeaux</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+                <a href="tel:+33556482917">05 56 48 29 17</a>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                <a href="mailto:bonjour@maison-ambre.fr">bonjour@maison-ambre.fr</a>
+              </li>
+            </ul>
+          </div>
+          <div class="map-card">
+            <svg viewBox="0 0 480 260" role="img" aria-label="Plan stylisé du quartier : le restaurant se situe rue des Remparts, près de la place Gambetta">
+              <rect width="480" height="260" fill="#ece1cb"/>
+              <path d="M0 70 L480 40" stroke="#fbf7ef" stroke-width="16"/>
+              <path d="M0 190 L480 210" stroke="#fbf7ef" stroke-width="14"/>
+              <path d="M140 0 L170 260" stroke="#fbf7ef" stroke-width="18"/>
+              <path d="M330 0 L300 260" stroke="#fbf7ef" stroke-width="12"/>
+              <path d="M170 120 L480 120" stroke="#fbf7ef" stroke-width="10"/>
+              <circle cx="158" cy="58" r="30" fill="#d9c9a8"/>
+              <text x="158" y="62" font-family="Karla, sans-serif" font-size="11" text-anchor="middle" fill="#7d6a58">Gambetta</text>
+              <rect x="350" y="140" width="110" height="50" rx="6" fill="#cfd6bf"/>
+              <text x="405" y="169" font-family="Karla, sans-serif" font-size="11" text-anchor="middle" fill="#6f7d5a">Jardin public</text>
+              <text x="240" y="114" font-family="Karla, sans-serif" font-size="10" fill="#7d6a58">Rue des Remparts</text>
+              <g transform="translate(250 120)">
+                <circle r="22" fill="#c27a2c" opacity="0.2"/>
+                <path d="M0 -4c0 0-12-10-12-19a12 12 0 0 1 24 0C12-14 0-4 0-4Z" fill="#c27a2c" transform="translate(0 4)"/>
+                <circle cy="-19" r="4.5" fill="#fbf7ef"/>
+              </g>
+            </svg>
+            <a class="map-card__link" href="https://www.openstreetmap.org/search?query=rue%20des%20Remparts%20Bordeaux" target="_blank" rel="noopener">Ouvrir l’itinéraire</a>
+          </div>
+        </div>
+
+        <div class="reservation-card" data-reveal style="--reveal-delay: .15s">
+          <span class="eyebrow">Écrivez-nous</span>
+          <h2>Une question, un événement ?</h2>
+          <p class="lead">Privatisation, bons cadeaux, allergies ou simple curiosité : notre équipe vous répond sous 24 h ouvrées.</p>
+          <form id="formulaire-contact" novalidate data-simple-form data-success-target="contact-success">
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label" for="contact-name">Nom complet</label>
+                <input class="form-input" type="text" id="contact-name" name="name" autocomplete="name" required minlength="2" data-validate data-required-message="Merci d’indiquer votre nom.">
+                <span class="form-error" data-error-for="contact-name" aria-live="polite"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="contact-email">E-mail</label>
+                <input class="form-input" type="email" id="contact-email" name="email" autocomplete="email" required data-validate data-required-message="Merci d’indiquer votre e-mail.">
+                <span class="form-error" data-error-for="contact-email" aria-live="polite"></span>
+              </div>
+              <div class="form-field form-field--full">
+                <label class="form-label" for="contact-subject">Sujet</label>
+                <select class="form-select" id="contact-subject" name="subject" required data-validate data-required-message="Merci de choisir un sujet.">
+                  <option value="">Choisir un sujet…</option>
+                  <option>Privatisation &amp; groupes</option>
+                  <option>Bon cadeau</option>
+                  <option>Allergies &amp; régimes</option>
+                  <option>Recrutement</option>
+                  <option>Autre demande</option>
+                </select>
+                <span class="form-error" data-error-for="contact-subject" aria-live="polite"></span>
+              </div>
+              <div class="form-field form-field--full">
+                <label class="form-label" for="contact-message">Votre message</label>
+                <textarea class="form-textarea" id="contact-message" name="message" required minlength="20" data-validate data-required-message="Merci d’écrire votre message."></textarea>
+                <span class="form-error" data-error-for="contact-message" aria-live="polite"></span>
+              </div>
+            </div>
+            <button class="button button--primary button--block" type="submit">Envoyer le message</button>
+          </form>
+          <div class="form-success" id="contact-success" hidden tabindex="-1">
+            <svg class="confirmation-card__icon" viewBox="0 0 76 76" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="38" cy="38" r="35"/><path d="M24 39l10 10 19-21" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Merci <span data-success-name></span> !</h3>
+            <p>Votre message est bien parti. Nous revenons vers vous très vite, généralement dans la journée.</p>
+            <button class="button button--outline" type="button" data-reset-form="formulaire-contact">Écrire un autre message</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="1.2"/><path d="M20 8c4.6 5.4 7 9.6 7 13.4A7 7 0 0 1 13 21.4C13 17.6 15.4 13.4 20 8Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M20 15.5c2 2.6 3 4.6 3 6.3a3 3 0 0 1-6 0c0-1.7 1-3.7 3-6.3Z" fill="currentColor"/></svg>
+            <span><span class="brand__name">Maison Ambre</span><span class="brand__tagline">Bistronomie · Bordeaux</span></span>
+          </a>
+          <p>Une cuisine de saison, sincère et généreuse, à deux pas de la place Gambetta. Produits de Nouvelle-Aquitaine, vins de petits domaines et accueil chaleureux.</p>
+          <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8Z" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h3>Explorer</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="carte.html">La Carte</a></li>
+            <li><a href="galerie.html">Galerie</a></li>
+            <li><a href="reservation.html">Réserver une table</a></li>
+            <li><a href="contact.html">Contact &amp; accès</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Nous trouver</h3>
+          <ul>
+            <li>14 rue des Remparts</li>
+            <li>33000 Bordeaux</li>
+            <li><a href="tel:+33556482917">05 56 48 29 17</a></li>
+            <li><a href="mailto:bonjour@maison-ambre.fr">bonjour@maison-ambre.fr</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Horaires</h3>
+          <ul>
+            <li>Mar. – Sam. : 12h – 14h</li>
+            <li>Mar. – Jeu. : 19h – 22h30</li>
+            <li>Ven. – Sam. : 19h – 23h</li>
+            <li>Dimanche : 12h – 14h30</li>
+            <li>Fermé le lundi</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> Maison Ambre — Restaurant fictif, site de démonstration.</span>
+        <span>L’abus d’alcool est dangereux pour la santé, à consommer avec modération.</span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Réserver un séjour — Azur Hôtel & Spa</title>
+  <meta name="description" content="Réservez votre séjour à l’Azur Hôtel & Spa de Biarritz : dates, chambre, options et prix en temps réel.">
+  <meta name="theme-color" content="#0e2a3a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'%3E%3Ccircle cx='21' cy='21' r='21' fill='%231f6f8b'/%3E%3Ccircle cx='21' cy='17' r='6' fill='%23e8dcc8'/%3E%3Cpath d='M8 26c3 0 3-2 6.5-2s3.5 2 6.5 2 3-2 6.5-2 3.5 2 6.5 2' stroke='%23fff' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/main.js" defer></script>
+  <script src="js/rooms-data.js" defer></script>
+  <script src="js/reservation.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Azur Hôtel &amp; Spa — accueil">
+        <svg class="brand__mark" viewBox="0 0 42 42" fill="none" aria-hidden="true"><circle cx="21" cy="21" r="20" stroke="currentColor" stroke-width="1.2"/><circle cx="21" cy="17" r="6" fill="#c9a66b"/><path d="M8 25c3 0 3-2 6.5-2s3.5 2 6.5 2 3-2 6.5-2 3.5 2 6.5 2M10 30c2.7 0 2.7-1.8 5.5-1.8s2.8 1.8 5.5 1.8 2.7-1.8 5.5-1.8 2.8 1.8 5.5 1.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span><span class="brand__name">Azur</span><span class="brand__tagline">Hôtel &amp; Spa <span class="brand__stars" aria-label="4 étoiles">★★★★</span></span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
+        <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+      </button>
+      <nav class="primary-nav" id="navigation-principale" aria-label="Navigation principale">
+        <ul class="primary-nav__list">
+          <li><a class="primary-nav__link" href="index.html">Accueil</a></li>
+          <li><a class="primary-nav__link" href="chambres.html">Chambres</a></li>
+          <li><a class="primary-nav__link" href="spa.html">Spa</a></li>
+          <li><a class="primary-nav__link" href="contact.html">Contact</a></li>
+          <li><a class="primary-nav__link primary-nav__link--cta" href="reservation.html" aria-current="page">Réserver</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenu">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1900&q=80" alt="">
+      </div>
+      <div class="container">
+        <span class="eyebrow" data-reveal>Réservation directe · meilleur tarif garanti</span>
+        <h1 id="page-title" data-reveal style="--reveal-delay: .1s">Réserver votre séjour</h1>
+        <p data-reveal style="--reveal-delay: .2s">Choisissez vos dates, votre chambre et vos options : le prix se met à jour en temps réel, taxes comprises. Annulation gratuite jusqu’à 72 h avant l’arrivée.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Formulaire de réservation de séjour">
+      <div class="container">
+        <div class="booking-layout" data-booking-layout>
+          <form class="panel" id="stay-booking-form" novalidate data-reveal>
+            <fieldset class="booking-step">
+              <legend><span class="booking-step__number">1</span>Vos dates</legend>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label class="form-label" for="stay-arrival">Arrivée (dès 15 h)</label>
+                  <input class="form-input" type="date" id="stay-arrival" name="arrival" required data-validate data-required-message="Merci de choisir une date d’arrivée." data-range-message="L’arrivée doit être comprise entre aujourd’hui et dans un an.">
+                  <span class="form-error" data-error-for="stay-arrival" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="stay-departure">Départ (avant 12 h)</label>
+                  <input class="form-input" type="date" id="stay-departure" name="departure" required data-validate data-required-message="Merci de choisir une date de départ." data-range-message="Le départ doit suivre l’arrivée (21 nuits maximum).">
+                  <span class="form-error" data-error-for="stay-departure" aria-live="polite"></span>
+                </div>
+              </div>
+              <p class="nights-badge" data-nights-badge aria-live="polite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+                <span data-nights-text>Sélectionnez vos dates</span>
+              </p>
+            </fieldset>
+
+            <fieldset class="booking-step">
+              <legend><span class="booking-step__number">2</span>Voyageurs</legend>
+              <div class="guest-steppers">
+                <div class="guest-stepper">
+                  <span class="guest-stepper__label" id="adults-label">Adultes<small>13 ans et plus</small></span>
+                  <div class="stepper" role="group" aria-labelledby="adults-label">
+                    <button class="stepper__button" type="button" data-stepper="adults" data-step="-1" aria-label="Retirer un adulte">−</button>
+                    <output class="stepper__value" data-stepper-value="adults" aria-live="polite">2</output>
+                    <button class="stepper__button" type="button" data-stepper="adults" data-step="1" aria-label="Ajouter un adulte">+</button>
+                  </div>
+                </div>
+                <div class="guest-stepper">
+                  <span class="guest-stepper__label" id="children-label">Enfants<small>De 2 à 12 ans</small></span>
+                  <div class="stepper" role="group" aria-labelledby="children-label">
+                    <button class="stepper__button" type="button" data-stepper="children" data-step="-1" aria-label="Retirer un enfant">−</button>
+                    <output class="stepper__value" data-stepper-value="children" aria-live="polite">0</output>
+                    <button class="stepper__button" type="button" data-stepper="children" data-step="1" aria-label="Ajouter un enfant">+</button>
+                  </div>
+                </div>
+              </div>
+              <p class="form-hint" style="margin-top: 10px">Lit bébé offert sur demande pour les moins de 2 ans.</p>
+            </fieldset>
+
+            <fieldset class="booking-step">
+              <legend><span class="booking-step__number">3</span>Votre chambre</legend>
+              <div class="room-options" data-room-options></div>
+              <span class="form-error" data-error-for="stay-room" aria-live="polite"></span>
+            </fieldset>
+
+            <fieldset class="booking-step">
+              <legend><span class="booking-step__number">4</span>Options</legend>
+              <div class="extra-options" data-extra-options></div>
+            </fieldset>
+
+            <fieldset class="booking-step">
+              <legend><span class="booking-step__number">5</span>Vos coordonnées</legend>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label class="form-label" for="stay-name">Nom complet</label>
+                  <input class="form-input" type="text" id="stay-name" name="name" autocomplete="name" required minlength="2" data-validate data-required-message="Merci d’indiquer votre nom.">
+                  <span class="form-error" data-error-for="stay-name" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="stay-phone">Téléphone</label>
+                  <input class="form-input" type="tel" id="stay-phone" name="phone" autocomplete="tel" placeholder="06 12 34 56 78" required data-validate data-required-message="Merci d’indiquer un numéro de téléphone.">
+                  <span class="form-error" data-error-for="stay-phone" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="stay-email">E-mail</label>
+                  <input class="form-input" type="email" id="stay-email" name="email" autocomplete="email" required data-validate data-required-message="Merci d’indiquer votre e-mail.">
+                  <span class="form-error" data-error-for="stay-email" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="stay-arrival-time">Heure d’arrivée estimée</label>
+                  <select class="form-select" id="stay-arrival-time" name="arrivalTime">
+                    <option>15 h – 17 h</option>
+                    <option>17 h – 19 h</option>
+                    <option>19 h – 21 h</option>
+                    <option>Après 21 h</option>
+                  </select>
+                </div>
+                <div class="form-field form-field--full">
+                  <label class="form-label" for="stay-requests">Demandes particulières</label>
+                  <textarea class="form-textarea" id="stay-requests" name="requests" placeholder="Anniversaire, étage élevé, régime alimentaire…"></textarea>
+                </div>
+                <div class="form-field form-field--full">
+                  <label class="form-checkbox" for="stay-terms"><input type="checkbox" id="stay-terms" name="terms" required data-validate> J’accepte les conditions de réservation et la politique d’annulation (gratuite jusqu’à 72 h avant l’arrivée).</label>
+                  <span class="form-error" data-error-for="stay-terms" aria-live="polite"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <button class="button button--primary button--block" type="submit">Confirmer ma réservation</button>
+          </form>
+
+          <aside class="price-summary" aria-labelledby="price-summary-title" data-reveal style="--reveal-delay: .15s">
+            <h2 id="price-summary-title">Votre séjour</h2>
+            <div class="price-summary__room" data-summary-room></div>
+            <ul class="price-lines" data-price-lines aria-live="polite"></ul>
+            <div class="price-total"><span>Total TTC</span><strong data-price-total>—</strong></div>
+            <p class="price-summary__note" data-price-note>TVA de 10 % incluse. Aucun prélèvement avant l’arrivée : vous réglez sur place.</p>
+          </aside>
+        </div>
+
+        <div class="panel confirmation" data-stay-confirmation hidden tabindex="-1">
+          <svg class="success-icon" viewBox="0 0 76 76" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="38" cy="38" r="35"/><path d="M24 39l10 10 19-21" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="eyebrow">Réservation confirmée</span>
+          <h2>Merci <span data-confirmation-name></span>, l’océan vous attend !</h2>
+          <span class="confirmation__reference" data-confirmation-reference></span>
+          <dl data-confirmation-details></dl>
+          <p>Un e-mail de confirmation a été envoyé à <strong data-confirmation-email></strong>. Notre conciergerie vous contactera une semaine avant votre arrivée pour préparer votre séjour.</p>
+          <div class="confirmation__actions">
+            <a class="button button--outline" href="spa.html">Réserver un soin au spa</a>
+            <button class="button button--primary" type="button" data-new-stay>Nouvelle réservation</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand__mark" viewBox="0 0 42 42" fill="none" aria-hidden="true"><circle cx="21" cy="21" r="20" stroke="currentColor" stroke-width="1.2"/><circle cx="21" cy="17" r="6" fill="#c9a66b"/><path d="M8 25c3 0 3-2 6.5-2s3.5 2 6.5 2 3-2 6.5-2 3.5 2 6.5 2M10 30c2.7 0 2.7-1.8 5.5-1.8s2.8 1.8 5.5 1.8 2.7-1.8 5.5-1.8 2.8 1.8 5.5 1.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span><span class="brand__name">Azur</span><span class="brand__tagline">Hôtel &amp; Spa <span class="brand__stars" aria-label="4 étoiles">★★★★</span></span></span>
+          </a>
+          <p>Un hôtel de 42 chambres posé face à la Grande Plage, un spa marin de 1 200 m² et la douceur de vivre basque, à quelques pas du Rocher de la Vierge.</p>
+        </div>
+        <div>
+          <h3>Découvrir</h3>
+          <ul>
+            <li><a href="index.html">L’hôtel</a></li>
+            <li><a href="chambres.html">Chambres &amp; suites</a></li>
+            <li><a href="spa.html">Le spa marin</a></li>
+            <li><a href="reservation.html">Réserver un séjour</a></li>
+            <li><a href="contact.html">Contact &amp; FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Nous joindre</h3>
+          <ul>
+            <li>8 esplanade du Phare</li>
+            <li>64200 Biarritz</li>
+            <li><a href="tel:+33559417230">05 59 41 72 30</a></li>
+            <li><a href="mailto:sejour@azur-hotel-biarritz.fr">sejour@azur-hotel-biarritz.fr</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>La lettre des marées</h3>
+          <p>Offres de saison, calendrier des marées et événements, une fois par mois.</p>
+          <form class="newsletter" novalidate data-newsletter-form>
+            <label class="visually-hidden" for="newsletter-email">Adresse e-mail</label>
+            <input type="email" id="newsletter-email" name="email" placeholder="votre@email.fr" autocomplete="email" required>
+            <button type="submit">OK</button>
+          </form>
+          <p class="newsletter-message" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> Azur Hôtel &amp; Spa — Établissement fictif, site de démonstration.</span>
+        <span>Réception ouverte 24 h/24 · Parking privé · Animaux bienvenus</span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+</body>
+</html>

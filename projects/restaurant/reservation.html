@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Réserver une table — Maison Ambre</title>
+  <meta name="description" content="Réservez votre table en ligne chez Maison Ambre, restaurant bistronomique à Bordeaux.">
+  <meta name="theme-color" content="#2a1c13">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%232a1c13'/%3E%3Cpath d='M20 8c4.6 5.4 7 9.6 7 13.4A7 7 0 0 1 13 21.4C13 17.6 15.4 13.4 20 8Z' fill='%23e0a458'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/main.js" defer></script>
+  <script src="js/reservation.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Maison Ambre — accueil">
+        <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="1.2"/><path d="M20 8c4.6 5.4 7 9.6 7 13.4A7 7 0 0 1 13 21.4C13 17.6 15.4 13.4 20 8Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M20 15.5c2 2.6 3 4.6 3 6.3a3 3 0 0 1-6 0c0-1.7 1-3.7 3-6.3Z" fill="currentColor"/></svg>
+        <span><span class="brand__name">Maison Ambre</span><span class="brand__tagline">Bistronomie · Bordeaux</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
+        <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+      </button>
+      <nav class="primary-nav" id="navigation-principale" aria-label="Navigation principale">
+        <ul class="primary-nav__list">
+          <li><a class="primary-nav__link" href="index.html">Accueil</a></li>
+          <li><a class="primary-nav__link" href="carte.html">La Carte</a></li>
+          <li><a class="primary-nav__link" href="galerie.html">Galerie</a></li>
+          <li><a class="primary-nav__link" href="contact.html">Contact</a></li>
+          <li><a class="primary-nav__link primary-nav__link--cta" href="reservation.html" aria-current="page">Réserver</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenu">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80" alt="">
+      </div>
+      <div class="container">
+        <span class="eyebrow" data-reveal>Réservation en ligne</span>
+        <h1 id="page-title" data-reveal style="--reveal-delay: .1s">Réserver une table</h1>
+        <p data-reveal style="--reveal-delay: .2s">Choisissez votre jour, votre créneau et le nombre de convives. Confirmation immédiate, annulation gratuite jusqu’à 24 h avant.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Formulaire de réservation">
+      <div class="container">
+        <div class="previous-booking" data-previous-booking hidden>
+          <span data-previous-booking-text></span>
+          <button class="text-button" type="button" data-forget-booking>Oublier cette réservation</button>
+        </div>
+
+        <div class="reservation-layout" data-reservation-layout>
+          <form class="reservation-card" id="formulaire-reservation" novalidate data-reveal>
+            <fieldset class="reservation-step">
+              <legend><span class="reservation-step__number">1</span>Date &amp; horaire</legend>
+              <div class="form-field">
+                <label class="form-label" for="reservation-date">Date souhaitée</label>
+                <input class="form-input" type="date" id="reservation-date" name="date" required data-validate data-required-message="Merci de choisir une date." data-range-message="Les réservations sont ouvertes du jour même à 90 jours.">
+                <span class="form-error" data-error-for="reservation-date" aria-live="polite"></span>
+              </div>
+              <div class="time-slots" data-time-slots aria-live="polite">
+                <p class="time-slots__message">Sélectionnez une date pour afficher les créneaux disponibles.</p>
+              </div>
+              <span class="form-error" data-error-for="reservation-time" aria-live="polite"></span>
+            </fieldset>
+
+            <fieldset class="reservation-step">
+              <legend><span class="reservation-step__number">2</span>Nombre de convives</legend>
+              <div class="stepper" role="group" aria-label="Nombre de convives">
+                <button class="stepper__button" type="button" data-party-decrease aria-label="Retirer un convive">−</button>
+                <output class="stepper__value" id="party-size-output" aria-live="polite">2 personnes</output>
+                <button class="stepper__button" type="button" data-party-increase aria-label="Ajouter un convive">+</button>
+              </div>
+              <p class="form-hint">Au-delà de 8 personnes, contactez-nous pour une <a href="contact.html">privatisation ou un repas de groupe</a>.</p>
+            </fieldset>
+
+            <fieldset class="reservation-step">
+              <legend><span class="reservation-step__number">3</span>Vos coordonnées</legend>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label class="form-label" for="reservation-name">Nom complet</label>
+                  <input class="form-input" type="text" id="reservation-name" name="name" autocomplete="name" required minlength="2" data-validate data-required-message="Merci d’indiquer votre nom.">
+                  <span class="form-error" data-error-for="reservation-name" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="reservation-phone">Téléphone</label>
+                  <input class="form-input" type="tel" id="reservation-phone" name="phone" autocomplete="tel" placeholder="06 12 34 56 78" required data-validate data-required-message="Merci d’indiquer un numéro pour vous joindre.">
+                  <span class="form-error" data-error-for="reservation-phone" aria-live="polite"></span>
+                </div>
+                <div class="form-field form-field--full">
+                  <label class="form-label" for="reservation-email">E-mail</label>
+                  <input class="form-input" type="email" id="reservation-email" name="email" autocomplete="email" placeholder="prenom.nom@exemple.fr" required data-validate data-required-message="Merci d’indiquer votre e-mail.">
+                  <span class="form-error" data-error-for="reservation-email" aria-live="polite"></span>
+                </div>
+                <div class="form-field form-field--full">
+                  <label class="form-label" for="reservation-occasion">Occasion (facultatif)</label>
+                  <select class="form-select" id="reservation-occasion" name="occasion">
+                    <option value="">Aucune occasion particulière</option>
+                    <option>Anniversaire</option>
+                    <option>Dîner en amoureux</option>
+                    <option>Repas d’affaires</option>
+                    <option>Fête de famille</option>
+                  </select>
+                </div>
+                <div class="form-field form-field--full">
+                  <label class="form-label" for="reservation-notes">Allergies, demandes particulières</label>
+                  <textarea class="form-textarea" id="reservation-notes" name="notes" placeholder="Ex. : une personne végétarienne, chaise haute pour un enfant…"></textarea>
+                </div>
+                <div class="form-field form-field--full">
+                  <label class="form-checkbox" for="reservation-consent">
+                    <input type="checkbox" id="reservation-consent" name="consent" required data-validate>
+                    <span>J’accepte que mes coordonnées soient utilisées pour gérer ma réservation. Elles ne seront jamais transmises à des tiers.</span>
+                  </label>
+                  <span class="form-error" data-error-for="reservation-consent" aria-live="polite"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <button class="button button--primary button--block" type="submit">Confirmer la réservation</button>
+          </form>
+
+          <aside class="summary-card" aria-labelledby="summary-title" data-reveal style="--reveal-delay: .15s">
+            <h2 id="summary-title">Votre table</h2>
+            <ul class="summary-list">
+              <li><span class="summary-list__label">Date</span><span class="summary-list__value" data-summary-date>—</span></li>
+              <li><span class="summary-list__label">Service</span><span class="summary-list__value" data-summary-service>—</span></li>
+              <li><span class="summary-list__label">Heure</span><span class="summary-list__value" data-summary-time>—</span></li>
+              <li><span class="summary-list__label">Convives</span><span class="summary-list__value" data-summary-party>2 personnes</span></li>
+            </ul>
+            <p class="summary-card__note">Nous gardons votre table 15 minutes. En cas de retard, un simple appel au 05 56 48 29 17 suffit.</p>
+          </aside>
+        </div>
+
+        <div class="confirmation-card" data-confirmation hidden tabindex="-1">
+          <svg class="confirmation-card__icon" viewBox="0 0 76 76" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="38" cy="38" r="35"/><path d="M24 39l10 10 19-21" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="eyebrow">Réservation confirmée</span>
+          <h2>Merci <span data-confirmation-name></span>, à très bientôt !</h2>
+          <span class="confirmation-card__reference" data-confirmation-reference></span>
+          <dl>
+            <div><dt>Date</dt><dd data-confirmation-date></dd></div>
+            <div><dt>Heure</dt><dd data-confirmation-time></dd></div>
+            <div><dt>Convives</dt><dd data-confirmation-party></dd></div>
+            <div><dt>Occasion</dt><dd data-confirmation-occasion></dd></div>
+          </dl>
+          <p>Un e-mail récapitulatif vient de vous être envoyé à <strong data-confirmation-email></strong>.</p>
+          <div class="hero__actions" style="justify-content:center">
+            <button class="button button--outline" type="button" data-new-reservation>Nouvelle réservation</button>
+            <a class="button button--primary" href="carte.html">Consulter la carte</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="1.2"/><path d="M20 8c4.6 5.4 7 9.6 7 13.4A7 7 0 0 1 13 21.4C13 17.6 15.4 13.4 20 8Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M20 15.5c2 2.6 3 4.6 3 6.3a3 3 0 0 1-6 0c0-1.7 1-3.7 3-6.3Z" fill="currentColor"/></svg>
+            <span><span class="brand__name">Maison Ambre</span><span class="brand__tagline">Bistronomie · Bordeaux</span></span>
+          </a>
+          <p>Une cuisine de saison, sincère et généreuse, à deux pas de la place Gambetta. Produits de Nouvelle-Aquitaine, vins de petits domaines et accueil chaleureux.</p>
+          <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8Z" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h3>Explorer</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="carte.html">La Carte</a></li>
+            <li><a href="galerie.html">Galerie</a></li>
+            <li><a href="reservation.html">Réserver une table</a></li>
+            <li><a href="contact.html">Contact &amp; accès</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Nous trouver</h3>
+          <ul>
+            <li>14 rue des Remparts</li>
+            <li>33000 Bordeaux</li>
+            <li><a href="tel:+33556482917">05 56 48 29 17</a></li>
+            <li><a href="mailto:bonjour@maison-ambre.fr">bonjour@maison-ambre.fr</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Horaires</h3>
+          <ul>
+            <li>Mar. – Sam. : 12h – 14h</li>
+            <li>Mar. – Jeu. : 19h – 22h30</li>
+            <li>Ven. – Sam. : 19h – 23h</li>
+            <li>Dimanche : 12h – 14h30</li>
+            <li>Fermé le lundi</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> Maison Ambre — Restaurant fictif, site de démonstration.</span>
+        <span>L’abus d’alcool est dangereux pour la santé, à consommer avec modération.</span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+</body>
+</html>

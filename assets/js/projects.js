@@ -20,7 +20,7 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Restaurant",
     description: "Restaurant bistronomique bordelais : carte filtrable, réservation avec créneaux dynamiques et galerie immersive.",
     tags: ["Réservation", "Carte filtrable", "Lightbox"],
-    accentColor: "#d99a3d",
+    accentColor: "#c27a2c",
     imageUrl: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=75"
   },
   {
@@ -90,8 +90,8 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Hôtellerie",
     description: "Hôtel 4 étoiles à Biarritz : chambres, soins spa réservables et réservation de séjour avec calcul de prix en direct.",
     tags: ["Réservation", "Carrousels", "Spa"],
-    accentColor: "#2e86ab",
-    imageUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=75"
+    accentColor: "#1f6f8b",
+    imageUrl: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=75"
   },
   {
     slug: "festival",
