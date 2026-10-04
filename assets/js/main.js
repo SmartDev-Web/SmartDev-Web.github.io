@@ -485,7 +485,7 @@
       const mailSubject = encodeURIComponent(`[${formValues.projectType}] Demande de ${formValues.name}`);
       const mailBody = encodeURIComponent(`${formValues.message}\n\n${formValues.name} — ${formValues.email}`);
       contactSuccessElement.hidden = false;
-      window.location.href = `mailto:contact@smartdev.fr?subject=${mailSubject}&body=${mailBody}`;
+      window.location.href = `mailto:smart.developpement.web@gmail.com?subject=${mailSubject}&body=${mailBody}`;
       contactFormElement.reset();
     });
   }

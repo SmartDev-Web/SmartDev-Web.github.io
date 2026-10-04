@@ -679,6 +679,91 @@ body.has-pointer .cursor-glow {
   position: relative;
 }
 
+.service-card--featured {
+  border-color: rgba(124, 92, 255, 0.45);
+  background: linear-gradient(160deg, rgba(124, 92, 255, 0.16), var(--color-surface) 60%);
+}
+
+/* ---------- AI architect ---------- */
+
+.section--ai {
+  background: radial-gradient(ellipse at 85% 0%, rgba(0, 229, 255, 0.08), transparent 55%);
+}
+
+.ai-architect {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.ai-pipeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 28px;
+  display: grid;
+  gap: 22px;
+  border-radius: var(--radius-large);
+  border: 1px solid var(--color-border);
+  background: var(--color-background-elevated);
+  font-family: var(--font-mono);
+}
+
+.ai-pipeline::before {
+  content: "$ smartdev run --architect=human --builders=ai";
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-success);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  overflow-wrap: anywhere;
+}
+
+.ai-pipeline__step {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.ai-pipeline__role {
+  flex: none;
+  min-width: 96px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+}
+
+.ai-pipeline__role--ai {
+  border-color: transparent;
+  background: var(--gradient-brand);
+  color: #0b0d14;
+  font-weight: 600;
+}
+
+.ai-pipeline__step h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin: 2px 0 6px;
+}
+
+.ai-pipeline__step p {
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.ai-pillars {
+  display: grid;
+  gap: 20px;
+}
+
 /* ---------- Project filters ---------- */
 
 .project-filters {
@@ -999,13 +1084,15 @@ body.has-pointer .cursor-glow {
 
 .contact {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 56px;
   align-items: start;
 }
 
 .contact__mail {
   display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   margin-top: 28px;
   font-family: var(--font-display);
   font-size: clamp(1.3rem, 3vw, 1.8rem);
@@ -1128,7 +1215,8 @@ body.has-pointer .cursor-glow {
 
 @media (max-width: 900px) {
   .stack,
-  .contact {
+  .contact,
+  .ai-architect {
     grid-template-columns: 1fr;
   }
   .nav__toggle {
@@ -1172,6 +1260,13 @@ body.has-pointer .cursor-glow {
   }
   .contact-form {
     padding: 22px;
+  }
+  .ai-pipeline {
+    padding: 20px;
+  }
+  .ai-pipeline__step {
+    flex-direction: column;
+    gap: 8px;
   }
   .hero__stat dd {
     font-size: 2rem;

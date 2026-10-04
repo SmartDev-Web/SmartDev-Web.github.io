@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartDev — Développeur web freelance</title>
-  <meta name="description" content="SmartDev, développeur web : sites vitrines, e-commerce, applications web et communautés. Découvrez dix projets explorables en direct.">
+  <title>SmartDev — Architecte IA &amp; développeur web</title>
+  <meta name="description" content="SmartDev, architecte IA et développeur web : je conçois l'architecture, j'orchestre des agents IA et je valide chaque ligne. Sites vitrines, e-commerce, applications web et intégration IA.">
   <meta name="theme-color" content="#0b0d14">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d14'/%3E%3Cpath d='M22 22 12 32l10 10M42 22l10 10-10 10M36 16l-8 32' stroke='%237c5cff' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,7 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="navLinks">
+        <li><a href="#ia" class="nav__link">Architecte IA</a></li>
         <li><a href="#services" class="nav__link">Services</a></li>
         <li><a href="#projets" class="nav__link">Projets</a></li>
         <li><a href="#methode" class="nav__link">Méthode</a></li>
@@ -37,46 +38,81 @@
     <section class="hero" id="accueil">
       <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
       <div class="hero__content container">
-        <p class="hero__eyebrow reveal"><span class="status-dot"></span> Disponible pour de nouveaux projets</p>
+        <p class="hero__eyebrow reveal"><span class="status-dot"></span> Architecte IA · Disponible pour de nouveaux projets</p>
         <h1 class="hero__title reveal">
-          Je conçois des sites
+          J'architecture des sites
           <span class="hero__rotator" id="heroRotator" aria-live="polite">
             <span class="hero__rotator-word is-active">vitrines</span>
             <span class="hero__rotator-word">e-commerce</span>
-            <span class="hero__rotator-word">communautaires</span>
-            <span class="hero__rotator-word">sur mesure</span>
+            <span class="hero__rotator-word">métier</span>
+            <span class="hero__rotator-word">intelligents</span>
           </span>
-          <br>qui donnent envie de cliquer.
+          <br>propulsés par l'IA.
         </h1>
-        <p class="hero__subtitle reveal">Développeur web passionné par les interfaces rapides, animées et accessibles. Ci-dessous, dix sites complets que vous pouvez explorer comme un vrai visiteur.</p>
+        <p class="hero__subtitle reveal">Architecte IA et développeur web : je conçois l'architecture, j'orchestre des agents IA pour produire le code et je valide chaque livraison. Résultat : la vitesse de l'IA, la rigueur d'un architecte. Ci-dessous, dix sites complets à explorer comme un vrai visiteur.</p>
         <div class="hero__actions reveal">
-          <a href="#projets" class="button button--primary magnetic">Explorer les projets
+          <a href="#ia" class="button button--primary magnetic">Ma méthode IA
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
           </a>
-          <a href="#contact" class="button button--ghost magnetic">Démarrer un projet</a>
+          <a href="#projets" class="button button--ghost magnetic">Explorer les projets</a>
         </div>
         <dl class="hero__stats reveal">
+          <div class="hero__stat"><dt>Projets pilotés par l'IA</dt><dd><span class="counter" data-target="100">0</span>%</dd></div>
           <div class="hero__stat"><dt>Sites démo</dt><dd><span class="counter" data-target="10">0</span></dd></div>
-          <div class="hero__stat"><dt>Pages explorables</dt><dd><span class="counter" data-target="50">0</span></dd></div>
-          <div class="hero__stat"><dt>Frameworks requis</dt><dd><span class="counter" data-target="0">0</span></dd></div>
+          <div class="hero__stat"><dt>Lignes livrées sans revue</dt><dd><span class="counter" data-target="0">0</span></dd></div>
         </dl>
       </div>
-      <a href="#services" class="hero__scroll" aria-label="Défiler vers les services"><span></span></a>
+      <a href="#ia" class="hero__scroll" aria-label="Défiler vers la section architecte IA"><span></span></a>
     </section>
 
     <section class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Responsive</span><span>Animations</span><span>Accessibilité</span><span>Performance</span><span>SEO</span><span>GitHub Pages</span><span>UX / UI</span>
-        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Responsive</span><span>Animations</span><span>Accessibilité</span><span>Performance</span><span>SEO</span><span>GitHub Pages</span><span>UX / UI</span>
+        <span>Architecture IA</span><span>Agents IA</span><span>LLM</span><span>Prompt engineering</span><span>Automatisation</span><span>RAG</span><span>JavaScript</span><span>Accessibilité</span><span>Performance</span><span>SEO</span>
+        <span>Architecture IA</span><span>Agents IA</span><span>LLM</span><span>Prompt engineering</span><span>Automatisation</span><span>RAG</span><span>JavaScript</span><span>Accessibilité</span><span>Performance</span><span>SEO</span>
+      </div>
+    </section>
+
+    <section class="section section--ai" id="ia">
+      <div class="container">
+        <header class="section__header reveal">
+          <p class="section__kicker">01 — Architecte IA</p>
+          <h2 class="section__title">L'IA écrit le code.<br>Je conçois, je pilote, je valide.</h2>
+          <p class="section__lead">Je travaille principalement avec l'IA, pas à côté d'elle. Mon rôle : définir l'architecture, découper le travail en tâches précises, orchestrer des agents IA spécialisés et passer chaque livrable au crible avant qu'il n'atteigne votre production.</p>
+        </header>
+        <div class="ai-architect">
+          <ol class="ai-pipeline" aria-label="Chaîne de production pilotée par l'IA">
+            <li class="ai-pipeline__step reveal"><span class="ai-pipeline__role">humain</span><div><h3>Vision &amp; architecture</h3><p>Objectifs, contraintes, découpage technique et règles de qualité : le plan que l'IA devra suivre.</p></div></li>
+            <li class="ai-pipeline__step reveal"><span class="ai-pipeline__role ai-pipeline__role--ai">agents IA</span><div><h3>Génération orchestrée</h3><p>Des agents dédiés produisent le code, les tests et la documentation en parallèle, dans le cadre défini.</p></div></li>
+            <li class="ai-pipeline__step reveal"><span class="ai-pipeline__role">humain</span><div><h3>Revue d'architecte</h3><p>Lecture critique, refactorisation, sécurité et performance : rien n'est livré sans validation.</p></div></li>
+            <li class="ai-pipeline__step reveal"><span class="ai-pipeline__role ai-pipeline__role--ai">agents IA</span><div><h3>Itérations express</h3><p>Vos retours sont intégrés en heures plutôt qu'en semaines, sans dégrader la base de code.</p></div></li>
+          </ol>
+          <div class="ai-pillars">
+            <article class="service-card reveal tilt">
+              <div class="service-card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5zM3 13l9 5 9-5M3 18l9 5 9-5"/></svg></div>
+              <h3>Architecture d'abord</h3>
+              <p>Une IA sans plan produit du code jetable. Je pose la structure, les conventions et les garde-fous avant la première génération.</p>
+            </article>
+            <article class="service-card reveal tilt">
+              <div class="service-card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5 6.5 17M12 11.5l5.5 5.5"/></svg></div>
+              <h3>Orchestration d'agents</h3>
+              <p>Chaque agent a une mission claire et un périmètre limité. Je coordonne l'ensemble comme une équipe de développeurs infatigables.</p>
+            </article>
+            <article class="service-card reveal tilt">
+              <div class="service-card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></div>
+              <h3>Qualité garantie</h3>
+              <p>Revue systématique, tests et contrôle de sécurité : vous profitez de la vitesse de l'IA sans hériter de ses approximations.</p>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section" id="services">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">01 — Services</p>
+          <p class="section__kicker">02 — Services</p>
           <h2 class="section__title">Ce que je construis pour vous</h2>
-          <p class="section__lead">Du site vitrine qui convertit à l'application web qui fidélise, chaque projet est pensé pour vos visiteurs avant d'être pensé pour le code.</p>
+          <p class="section__lead">Du site vitrine qui convertit à l'assistant IA qui répond à vos clients, chaque projet est architecturé pour vos visiteurs puis accéléré par l'IA.</p>
         </header>
         <div class="services-grid">
           <article class="service-card reveal tilt">
@@ -99,6 +135,11 @@
             <h3>Communautés</h3>
             <p>Forums, espaces membres et contenus collaboratifs qui donnent à vos utilisateurs une bonne raison de revenir.</p>
           </article>
+          <article class="service-card service-card--featured reveal tilt">
+            <div class="service-card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="7" width="14" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9.5 16h5M2 12v3M22 12v3"/></svg></div>
+            <h3>Intégration IA</h3>
+            <p>Chatbots connectés à vos données, automatisation de tâches répétitives, génération de contenus : l'IA mise au service de votre activité.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -106,7 +147,7 @@
     <section class="section section--projects" id="projets">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">02 — Projets</p>
+          <p class="section__kicker">03 — Projets</p>
           <h2 class="section__title">Dix sites, dix univers, tous explorables</h2>
           <p class="section__lead">Cliquez sur une carte : chaque projet est un site complet, avec plusieurs pages, des interactions réelles et sa propre identité visuelle.</p>
         </header>
@@ -125,21 +166,21 @@
     <section class="section" id="methode">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">03 — Méthode</p>
-          <h2 class="section__title">Un processus clair, sans mauvaise surprise</h2>
+          <p class="section__kicker">04 — Méthode</p>
+          <h2 class="section__title">Un processus augmenté par l'IA, piloté par un architecte</h2>
         </header>
         <ol class="timeline" id="processTimeline">
           <li class="timeline__step reveal">
             <span class="timeline__number">01</span>
-            <div><h3>Découverte</h3><p>On échange sur vos objectifs, votre cible et vos contraintes. Je reformule le tout dans un cahier des charges simple et chiffré.</p></div>
+            <div><h3>Découverte &amp; cadrage</h3><p>On échange sur vos objectifs, votre cible et vos contraintes. J'en tire un cahier des charges chiffré et une architecture cible.</p></div>
           </li>
           <li class="timeline__step reveal">
             <span class="timeline__number">02</span>
-            <div><h3>Maquette</h3><p>Une maquette interactive pour valider l'ergonomie et l'identité visuelle avant d'écrire la moindre ligne de production.</p></div>
+            <div><h3>Prototype accéléré</h3><p>Grâce à l'IA, une maquette interactive est prête en un temps record pour valider l'ergonomie et l'identité visuelle avant la production.</p></div>
           </li>
           <li class="timeline__step reveal">
             <span class="timeline__number">03</span>
-            <div><h3>Développement</h3><p>Code propre, responsive et accessible, avec des points d'étape réguliers et une préproduction accessible à tout moment.</p></div>
+            <div><h3>Développement orchestré</h3><p>Des agents IA produisent le code sous ma supervision ; chaque livraison est relue, testée et validée. Préproduction accessible à tout moment.</p></div>
           </li>
           <li class="timeline__step reveal">
             <span class="timeline__number">04</span>
@@ -152,15 +193,17 @@
     <section class="section" id="stack">
       <div class="container stack">
         <header class="section__header reveal">
-          <p class="section__kicker">04 — Stack</p>
-          <h2 class="section__title">Des fondations solides</h2>
-          <p class="section__lead">Le web natif d'abord : des sites légers, sans dépendance inutile, qui se chargent vite et vieillissent bien.</p>
+          <p class="section__kicker">05 — Stack</p>
+          <h2 class="section__title">L'IA comme moteur, le web natif comme fondation</h2>
+          <p class="section__lead">Des outils IA de pointe pour concevoir et produire, du web natif pour livrer : des sites légers, sans dépendance inutile, qui se chargent vite et vieillissent bien.</p>
         </header>
         <ul class="skills" id="skillsList">
+          <li class="skill reveal"><div class="skill__header"><span>Architecture logicielle pilotée par l'IA</span><span class="skill__value">95%</span></div><div class="skill__bar"><span style="--skill-level:95%"></span></div></li>
+          <li class="skill reveal"><div class="skill__header"><span>Orchestration d'agents IA &amp; prompt engineering</span><span class="skill__value">93%</span></div><div class="skill__bar"><span style="--skill-level:93%"></span></div></li>
+          <li class="skill reveal"><div class="skill__header"><span>Intégration LLM, RAG &amp; automatisation</span><span class="skill__value">88%</span></div><div class="skill__bar"><span style="--skill-level:88%"></span></div></li>
           <li class="skill reveal"><div class="skill__header"><span>HTML sémantique &amp; accessibilité</span><span class="skill__value">95%</span></div><div class="skill__bar"><span style="--skill-level:95%"></span></div></li>
           <li class="skill reveal"><div class="skill__header"><span>CSS moderne (Grid, animations, variables)</span><span class="skill__value">92%</span></div><div class="skill__bar"><span style="--skill-level:92%"></span></div></li>
           <li class="skill reveal"><div class="skill__header"><span>JavaScript vanilla &amp; APIs du navigateur</span><span class="skill__value">90%</span></div><div class="skill__bar"><span style="--skill-level:90%"></span></div></li>
-          <li class="skill reveal"><div class="skill__header"><span>UX / UI design</span><span class="skill__value">85%</span></div><div class="skill__bar"><span style="--skill-level:85%"></span></div></li>
           <li class="skill reveal"><div class="skill__header"><span>Performance &amp; SEO technique</span><span class="skill__value">88%</span></div><div class="skill__bar"><span style="--skill-level:88%"></span></div></li>
         </ul>
       </div>
@@ -169,10 +212,10 @@
     <section class="section section--contact" id="contact">
       <div class="container contact">
         <div class="contact__intro reveal">
-          <p class="section__kicker">05 — Contact</p>
+          <p class="section__kicker">06 — Contact</p>
           <h2 class="section__title">Un projet en tête ?<br>Parlons-en.</h2>
           <p class="section__lead">Décrivez votre besoin en quelques lignes, je vous réponds sous 48 heures avec une première estimation.</p>
-          <a class="contact__mail" href="mailto:contact@smartdev.fr">smart.developpement.Web@gmail.com</a>
+          <a class="contact__mail" href="mailto:smart.developpement.web@gmail.com">smart.developpement.web@gmail.com</a>
         </div>
         <form class="contact-form reveal" id="contactForm" novalidate>
           <div class="field">
@@ -192,6 +235,7 @@
               <option>E-commerce</option>
               <option>Application web</option>
               <option>Forum / communauté</option>
+              <option>Intégration IA / automatisation</option>
               <option>Autre</option>
             </select>
             <label for="contactProjectType">Type de projet</label>
@@ -211,7 +255,7 @@
 
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <p>&copy; <span id="currentYear">2026</span> SmartDev — Conçu et codé à la main, hébergé sur GitHub Pages.</p>
+      <p>&copy; <span id="currentYear">2026</span> SmartDev — Architecturé par un humain, construit avec l'IA, hébergé sur GitHub Pages.</p>
       <a href="#accueil" class="site-footer__top">Retour en haut ↑</a>
     </div>
   </footer>
