@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DevAgora · La communauté francophone des développeurs</title>
+  <meta name="description" content="Forum d'entraide pour développeurs francophones : JavaScript, back-end, DevOps, mobile, data, accessibilité et carrière.">
+  <meta name="theme-color" content="#7c5cff">
+  <script src="js/theme-init.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+  <div class="scroll-sentinel" aria-hidden="true"></div>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="DevAgora, retour à l'accueil">
+        <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M11 9l-6 7 6 7M21 9l6 7-6 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 7l-4 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+        <span class="brand__name">Dev<strong>Agora</strong></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html" data-nav="home">Accueil</a></li>
+          <li><a href="index.html#categories" data-nav="categories">Catégories</a></li>
+          <li><a href="index.html#discussions" data-nav="discussions">Discussions</a></li>
+          <li><a href="membre.html?id=u11" data-nav="member">Mon profil</a></li>
+          <li class="site-nav__cta"><a class="button button--primary" href="nouveau-sujet.html" data-nav="new-thread">Nouveau sujet</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="icon-button theme-toggle" data-theme-toggle aria-label="Changer de thème">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="icon-button nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+          <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="contenu">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">Forum d'entraide · 100 % francophone</p>
+          <h1 class="reveal">Posez vos questions.<br><span class="gradient-text">Partagez ce que vous savez.</span></h1>
+          <p class="hero-lead reveal">Plus de 18 000 développeuses et développeurs échangent chaque jour sur leurs bugs, leurs architectures et leurs carrières. Rejoignez la conversation.</p>
+          <div class="search-box reveal" role="search">
+            <label class="visually-hidden" for="thread-search">Rechercher dans les discussions</label>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input type="search" id="thread-search" placeholder="Rechercher : react, kubernetes, salaire…" autocomplete="off">
+            <button type="button" class="search-box__clear" data-search-clear hidden aria-label="Effacer la recherche">×</button>
+          </div>
+          <dl class="hero-stats reveal" data-forum-stats></dl>
+        </div>
+        <figure class="hero-visual reveal">
+          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80" alt="Ordinateur portable affichant du code dans un éditeur sombre" width="1200" height="800">
+          <figcaption class="hero-snippet">
+            <span class="hero-snippet__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <code><span class="tok-key">const</span> communaute = <span class="tok-fn">rejoindre</span>(<span class="tok-str">"DevAgora"</span>);</code>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <div class="container layout-with-sidebar">
+      <div class="layout-main">
+        <section id="categories" class="section" aria-labelledby="categories-title">
+          <div class="section-head">
+            <div>
+              <h2 id="categories-title">Catégories</h2>
+              <p>Huit espaces thématiques animés par des membres experts.</p>
+            </div>
+          </div>
+          <ul class="category-list" data-category-list></ul>
+        </section>
+
+        <section id="discussions" class="section" aria-labelledby="discussions-title">
+          <div class="section-head">
+            <div>
+              <h2 id="discussions-title" data-thread-list-heading>Dernières discussions</h2>
+              <p data-thread-list-caption aria-live="polite"></p>
+            </div>
+            <a class="button button--ghost" href="nouveau-sujet.html">Lancer un sujet</a>
+          </div>
+          <div class="thread-list" data-thread-list></div>
+        </section>
+      </div>
+
+      <aside class="layout-sidebar" aria-label="Communauté">
+        <section class="side-card reveal">
+          <h2 class="side-card__title"><span class="presence-dot" aria-hidden="true"></span> En ligne maintenant <span class="side-card__count" data-online-count></span></h2>
+          <ul class="online-list" data-online-members></ul>
+        </section>
+        <section class="side-card reveal">
+          <h2 class="side-card__title">Tags populaires</h2>
+          <ul class="tag-cloud" data-popular-tags></ul>
+        </section>
+        <section class="side-card reveal">
+          <h2 class="side-card__title">Top contributeurs</h2>
+          <ol class="contributor-list" data-top-contributors></ol>
+        </section>
+        <section class="side-card side-card--accent reveal">
+          <h2 class="side-card__title">Une question bloquante ?</h2>
+          <p>Décrivez votre problème, ajoutez un extrait de code : la communauté répond en moyenne en 42 minutes.</p>
+          <a class="button button--light" href="nouveau-sujet.html">Poser ma question</a>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M11 9l-6 7 6 7M21 9l6 7-6 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 7l-4 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="brand__name">Dev<strong>Agora</strong></span></a>
+        <p>La place publique des développeuses et développeurs francophones. Entraide, retours d'expérience et débats techniques depuis 2023.</p>
+      </div>
+      <div>
+        <h2 class="footer-title">Forum</h2>
+        <ul class="footer-links">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="nouveau-sujet.html">Créer un sujet</a></li>
+          <li><a href="membre.html?id=u11">Mon profil</a></li>
+          <li><a href="sujet.html?id=t23">Charte de la communauté</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Catégories</h2>
+        <ul class="footer-links" data-footer-categories></ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Contact</h2>
+        <ul class="footer-links">
+          <li><a href="mailto:bonjour@devagora.fr">bonjour@devagora.fr</a></li>
+          <li>Association DevAgora<br>14 rue de la République, 69002 Lyon</li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 DevAgora · Contenus publiés sous licence CC BY-SA 4.0</p>
+      <p>Fait avec soin à Lyon, pour toute la francophonie.</p>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/page-home.js"></script>
+</body>
+</html>

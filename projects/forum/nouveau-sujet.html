@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nouveau sujet · DevAgora</title>
+  <meta name="description" content="Créez un nouveau sujet sur DevAgora : choisissez une catégorie, ajoutez des tags et rédigez en markdown.">
+  <meta name="theme-color" content="#7c5cff">
+  <script src="js/theme-init.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="new-thread">
+  <div class="scroll-sentinel" aria-hidden="true"></div>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="DevAgora, retour à l'accueil">
+        <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M11 9l-6 7 6 7M21 9l6 7-6 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 7l-4 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+        <span class="brand__name">Dev<strong>Agora</strong></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html" data-nav="home">Accueil</a></li>
+          <li><a href="index.html#categories" data-nav="categories">Catégories</a></li>
+          <li><a href="index.html#discussions" data-nav="discussions">Discussions</a></li>
+          <li><a href="membre.html?id=u11" data-nav="member">Mon profil</a></li>
+          <li class="site-nav__cta"><a class="button button--primary" href="nouveau-sujet.html" data-nav="new-thread">Nouveau sujet</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="icon-button theme-toggle" data-theme-toggle aria-label="Changer de thème">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="icon-button nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+          <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="contenu">
+    <nav class="breadcrumb container" aria-label="Fil d'Ariane">
+      <ol>
+        <li><a href="index.html">Accueil</a></li>
+        <li aria-current="page">Nouveau sujet</li>
+      </ol>
+    </nav>
+    <div class="container layout-with-sidebar layout-with-sidebar--form">
+      <section class="layout-main form-card reveal" aria-labelledby="new-thread-title">
+        <p class="eyebrow">Lancer une discussion</p>
+        <h1 id="new-thread-title">Nouveau sujet</h1>
+        <p class="form-intro">Plus votre question est précise, plus vite vous obtiendrez une réponse utile.</p>
+        <form data-new-thread-form novalidate>
+          <div class="field">
+            <label for="thread-category">Catégorie <span aria-hidden="true">*</span></label>
+            <select id="thread-category" name="category" required></select>
+            <p class="field-error" data-error-for="category" role="alert"></p>
+          </div>
+          <div class="field">
+            <div class="field__label-row">
+              <label for="thread-title">Titre <span aria-hidden="true">*</span></label>
+              <span class="char-count" data-title-counter>0 / 120</span>
+            </div>
+            <input type="text" id="thread-title" name="title" placeholder="Ex. : Erreur CORS uniquement en production avec Nginx" required autocomplete="off">
+            <p class="field-error" data-error-for="title" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="thread-tags">Tags <span class="field__hint">(1 à 5, validez avec Entrée ou virgule)</span></label>
+            <div class="tag-field" data-tag-field>
+              <ul class="tag-field__chips" data-tag-chips></ul>
+              <input type="text" id="thread-tags" name="tags" autocomplete="off" placeholder="Ajouter un tag puis Entrée">
+            </div>
+            <ul class="tag-suggestions" data-tag-suggestions aria-label="Tags suggérés"></ul>
+            <p class="field-error" data-error-for="tags" role="alert"></p>
+          </div>
+          <div class="field">
+            <span class="field__label">Message <span aria-hidden="true">*</span></span>
+            <div class="md-editor" data-markdown-editor>
+                <div class="md-editor__bar">
+                  <div class="md-editor__tabs" role="tablist" aria-label="Mode de l'éditeur">
+                    <button type="button" role="tab" aria-selected="true" data-editor-tab="write">Écrire</button>
+                    <button type="button" role="tab" aria-selected="false" data-editor-tab="preview">Aperçu</button>
+                  </div>
+                  <div class="md-editor__tools" aria-label="Mise en forme">
+                    <button type="button" class="tool-button" data-editor-format="bold" aria-label="Gras" title="Gras"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h6a3.5 3.5 0 010 7H7zM7 12h7a3.5 3.5 0 010 7H7z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg></button>
+                    <button type="button" class="tool-button" data-editor-format="italic" aria-label="Italique" title="Italique"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5h8M6 19h8M14 5l-4 14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+                    <button type="button" class="tool-button" data-editor-format="code" aria-label="Code en ligne" title="Code en ligne"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button type="button" class="tool-button" data-editor-format="codeblock" aria-label="Bloc de code" title="Bloc de code"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10l-2 2 2 2M16 10l2 2-2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+                    <button type="button" class="tool-button" data-editor-format="quote" aria-label="Citation" title="Citation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" fill="currentColor"/></svg></button>
+                    <button type="button" class="tool-button" data-editor-format="list" aria-label="Liste" title="Liste"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.5" fill="currentColor"/><circle cx="4.5" cy="12" r="1.5" fill="currentColor"/><circle cx="4.5" cy="18" r="1.5" fill="currentColor"/></svg></button>
+                    <button type="button" class="tool-button" data-editor-format="link" aria-label="Lien" title="Lien"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+                  </div>
+                </div>
+                <label class="visually-hidden" for="thread-body">Message du sujet</label>
+                <textarea id="thread-body" name="body" rows="10" placeholder="Décrivez le contexte, ce que vous attendez et ce que vous obtenez…"></textarea>
+                <div class="md-editor__preview markdown-body" hidden></div>
+                <p class="md-editor__hint">Markdown simplifié : <code>**gras**</code> <code>*italique*</code> <code>`code`</code> <code>```bloc```</code> <code>&gt; citation</code> <code>- liste</code></p>
+              </div>
+            <p class="field-error" data-error-for="body" role="alert"></p>
+          </div>
+          <div class="form-actions">
+            <button type="reset" class="button button--ghost">Tout effacer</button>
+            <button type="submit" class="button button--primary">Publier le sujet</button>
+          </div>
+          <p class="form-status" data-form-status role="status"></p>
+        </form>
+      </section>
+      <aside class="layout-sidebar" aria-label="Aperçu et conseils">
+        <section class="side-card side-card--sticky reveal">
+          <h2 class="side-card__title">Aperçu dans la liste</h2>
+          <div class="card-preview" data-card-preview></div>
+          <h2 class="side-card__title">Checklist avant de publier</h2>
+          <ul class="tips-list">
+            <li>J'ai cherché si la question existait déjà.</li>
+            <li>J'ai indiqué les versions (langage, framework, OS).</li>
+            <li>Mon code est entre triples accents graves.</li>
+            <li>Je reste courtois, même quand le bug m'agace.</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M11 9l-6 7 6 7M21 9l6 7-6 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 7l-4 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="brand__name">Dev<strong>Agora</strong></span></a>
+        <p>La place publique des développeuses et développeurs francophones. Entraide, retours d'expérience et débats techniques depuis 2023.</p>
+      </div>
+      <div>
+        <h2 class="footer-title">Forum</h2>
+        <ul class="footer-links">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="nouveau-sujet.html">Créer un sujet</a></li>
+          <li><a href="membre.html?id=u11">Mon profil</a></li>
+          <li><a href="sujet.html?id=t23">Charte de la communauté</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Catégories</h2>
+        <ul class="footer-links" data-footer-categories></ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Contact</h2>
+        <ul class="footer-links">
+          <li><a href="mailto:bonjour@devagora.fr">bonjour@devagora.fr</a></li>
+          <li>Association DevAgora<br>14 rue de la République, 69002 Lyon</li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 DevAgora · Contenus publiés sous licence CC BY-SA 4.0</p>
+      <p>Fait avec soin à Lyon, pour toute la francophonie.</p>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/page-new-thread.js"></script>
+</body>
+</html>

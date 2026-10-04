@@ -51,7 +51,7 @@ const PORTFOLIO_PROJECTS = [
     description: "Forum de développeurs francophones : catégories, discussions, votes, réponses avec aperçu Markdown et profils membres.",
     tags: ["Discussions", "Votes", "Thème sombre"],
     accentColor: "#7c5cff",
-    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=75"
+    imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=75"
   },
   {
     slug: "shop",
@@ -60,8 +60,8 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Boutique en ligne",
     description: "Boutique de design scandinave : catalogue filtrable, fiche produit, panier persistant et tunnel de commande complet.",
     tags: ["Panier", "Filtres", "Checkout"],
-    accentColor: "#8fb3a3",
-    imageUrl: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=75"
+    accentColor: "#4f6f5f",
+    imageUrl: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=900&q=75"
   },
   {
     slug: "immobilier",

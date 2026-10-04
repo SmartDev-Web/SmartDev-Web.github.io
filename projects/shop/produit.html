@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produit · Nordik Store</title>
+  <meta name="description" content="Fiche produit Nordik Store : photos, coloris, tailles et livraison.">
+  <meta name="theme-color" content="#f6f3ee">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="product">
+  <div class="scroll-sentinel" aria-hidden="true"></div>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <p class="announcement">Livraison offerte dès 120 € · Retours gratuits sous 30 jours · <strong>-10 %</strong> sur votre première commande avec <strong>NORDIK10</strong></p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Nordik Store, retour à l'accueil">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25l9-14 5 7 4-5 8 12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="23" cy="7" r="2.6" fill="currentColor"/></svg>
+        <span class="brand__name">Nordik<span>Store</span></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html" data-nav="home">Accueil</a></li>
+          <li><a href="catalogue.html" data-nav="catalogue">Catalogue</a></li>
+          <li><a href="catalogue.html?cat=luminaires" data-nav="catalogue" data-nav-category="luminaires">Luminaires</a></li>
+          <li><a href="catalogue.html?cat=ceramique" data-nav="catalogue" data-nav-category="ceramique">Céramique</a></li>
+          <li><a href="catalogue.html?cat=textiles" data-nav="catalogue" data-nav-category="textiles">Textiles</a></li>
+          <li><a href="catalogue.html?cat=mobilier" data-nav="catalogue" data-nav-category="mobilier">Mobilier</a></li>
+          <li class="site-nav__mobile-only"><a href="panier.html" data-nav="cart">Mon panier</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-button" href="catalogue.html#catalogue-search" aria-label="Rechercher un produit">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M20 20l-4.2-4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </a>
+        <button type="button" class="icon-button cart-button" data-open-cart aria-label="Ouvrir le panier">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.3 11.2a2 2 0 01-2 1.8H8.3a2 2 0 01-2-1.8z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 8V6a3 3 0 016 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="cart-badge" data-cart-count hidden>0</span>
+        </button>
+        <button type="button" class="icon-button nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+          <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="contenu">
+    <nav class="breadcrumb container" aria-label="Fil d'Ariane">
+      <ol>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="catalogue.html">Catalogue</a></li>
+        <li data-breadcrumb-category></li>
+        <li aria-current="page" data-breadcrumb-current>Chargement…</li>
+      </ol>
+    </nav>
+    <div class="container product-layout" data-product-page></div>
+    <section class="section container" data-related-section aria-labelledby="related-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">À associer</p>
+          <h2 id="related-title">Vous aimerez aussi</h2>
+        </div>
+        <a class="text-link" href="catalogue.html">Tout le catalogue →</a>
+      </div>
+      <div class="product-grid" data-related-grid></div>
+    </section>
+    <dialog class="modal lightbox" id="lightbox" aria-label="Photo agrandie">
+      <button type="button" class="icon-button modal__close" data-close-lightbox aria-label="Fermer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      <button type="button" class="icon-button lightbox__nav lightbox__nav--prev" data-lightbox-step="-1" aria-label="Photo précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      <img data-lightbox-image src="" alt="">
+      <button type="button" class="icon-button lightbox__nav lightbox__nav--next" data-lightbox-step="1" aria-label="Photo suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    </dialog>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html"><svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25l9-14 5 7 4-5 8 12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="23" cy="7" r="2.6" fill="currentColor"/></svg><span class="brand__name">Nordik<span>Store</span></span></a>
+        <p>Objets et mobilier de design scandinave, sélectionnés auprès d'ateliers indépendants de Suède, du Danemark et de Norvège. Conçus pour durer, livrés depuis Lille.</p>
+      </div>
+      <div>
+        <h2 class="footer-title">La boutique</h2>
+        <ul class="footer-links">
+          <li><a href="catalogue.html?cat=luminaires">Luminaires</a></li>
+          <li><a href="catalogue.html?cat=ceramique">Céramique</a></li>
+          <li><a href="catalogue.html?cat=textiles">Textiles</a></li>
+          <li><a href="catalogue.html?cat=mobilier">Mobilier</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Votre commande</h2>
+        <ul class="footer-links">
+          <li><a href="panier.html">Mon panier</a></li>
+          <li><a href="checkout.html">Finaliser ma commande</a></li>
+          <li><a href="produit.html?id=plaid-lofoten">Idée cadeau : plaid Lofoten</a></li>
+          <li><a href="catalogue.html?tri=newest">Nouveautés</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Showroom</h2>
+        <ul class="footer-links">
+          <li>27 rue Oberkampf, 75011 Paris</li>
+          <li>Du mardi au samedi, 11 h – 19 h</li>
+          <li><a href="tel:+33142560718">01 42 56 07 18</a></li>
+          <li><a href="mailto:hej@nordik-store.fr">hej@nordik-store.fr</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Nordik Store SAS · Paiement sécurisé · Prix TTC en euros</p>
+      <ul class="payment-logos" aria-label="Moyens de paiement acceptés"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>CB</li></ul>
+    </div>
+  </footer>
+  <div class="drawer-overlay" data-drawer-overlay></div>
+  <aside class="cart-drawer" data-cart-drawer role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title" inert>
+    <header class="cart-drawer__header">
+      <h2 id="cart-drawer-title">Votre panier <span data-drawer-count></span></h2>
+      <button type="button" class="icon-button" data-close-cart aria-label="Fermer le panier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    </header>
+    <div class="cart-drawer__body" data-drawer-body></div>
+    <footer class="cart-drawer__footer" data-drawer-footer hidden>
+      <div data-drawer-totals></div>
+      <a class="button button--primary button--block" href="checkout.html">Passer commande</a>
+      <a class="button button--ghost button--block" href="panier.html">Voir le panier</a>
+    </footer>
+  </aside>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/page-product.js"></script>
+</body>
+</html>
