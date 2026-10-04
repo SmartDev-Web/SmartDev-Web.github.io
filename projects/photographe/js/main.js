@@ -139,7 +139,7 @@ function getFieldErrorMessage(formControlElement) {
     return formControlElement.type === "radio" ? "Merci de choisir une option." : "Ce champ est obligatoire.";
   }
   if (controlValidity.typeMismatch && formControlElement.type === "email") {
-    return "Adresse e-mail invalide (ex. : prenom@domaine.fr).";
+    return "Adresse e-mail invalide (ex. : prenom@domaine.example).";
   }
   if (controlValidity.patternMismatch) {
     return formControlElement.dataset.patternMessage || "Format invalide.";

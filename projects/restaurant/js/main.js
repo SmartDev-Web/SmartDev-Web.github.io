@@ -128,7 +128,7 @@ function getFieldValidationMessage(fieldElement) {
   if (fieldElement.type === 'checkbox') return fieldElement.required && !fieldElement.checked ? 'Merci de cocher cette case pour continuer.' : '';
   if (fieldElement.required && !fieldValue) return fieldElement.dataset.requiredMessage || 'Ce champ est obligatoire.';
   if (fieldValue && fieldElement.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(fieldValue)) return 'Merci d’indiquer une adresse e-mail valide.';
-  if (fieldValue && fieldElement.type === 'tel' && !/^(?:\+33\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(fieldValue)) return 'Format attendu : 06 12 34 56 78.';
+  if (fieldValue && fieldElement.type === 'tel' && !/^(?:\+33\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(fieldValue)) return 'Format attendu : 06 39 98 12 34.';
   if (fieldValue && fieldElement.type === 'date' && ((fieldElement.min && fieldValue < fieldElement.min) || (fieldElement.max && fieldValue > fieldElement.max))) return fieldElement.dataset.rangeMessage || 'Cette date n’est pas disponible.';
   if (fieldValue && fieldElement.minLength > 0 && fieldValue.length < fieldElement.minLength) return `Merci d’écrire au moins ${fieldElement.minLength} caractères.`;
   return '';
