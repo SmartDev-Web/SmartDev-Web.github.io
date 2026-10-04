@@ -1,6 +1,6 @@
-# SmartDev — Samuel Martin, ingénieur architecte IA
+# SmartDev — Samuel Martin, architecte logiciel IA freelance
 
-Portfolio de **Samuel Martin** (SmartDev), ingénieur architecte IA spécialisé dans la conception d'architectures et la gestion des données de sites web propulsés par l'IA, avec une exigence constante en **sécurité**, **SEO**, **performances** et **UI/UX design**.
+Portfolio de **Samuel Martin** (SmartDev), architecte logiciel IA freelance spécialisé dans la conception d'architectures et la gestion des données de sites web propulsés par l'IA, avec une exigence constante en **sécurité**, **SEO**, **performances** et **UI/UX design**.
 
 Site en ligne : <https://smartdev-web.github.io/>
 
@@ -11,6 +11,7 @@ Le site est 100 % statique (HTML, CSS et JavaScript natifs, sans framework ni é
 ```
 index.html                  Page d'accueil du portfolio (contenu entièrement rendu en HTML pour le SEO)
 404.html                    Page d'erreur personnalisée servie par GitHub Pages
+mentions-legales.html       Mentions légales, hébergeur et politique de confidentialité
 assets/css/main.css         Styles du portfolio
 assets/js/main.js           Animations et interactions (révélations rejouables, services, projets, formulaire)
 assets/img/                 Favicon, icônes et image de partage Open Graph
@@ -28,7 +29,7 @@ projects/<slug>/            Un site de démonstration autonome par dossier
 | Accueil | Positionnement, accroche animée et chiffres clés |
 | 01 — Expertise | Profil de Samuel Martin et ses quatre spécialités : sécurité, SEO, performances, UI/UX design |
 | 02 — Services | Vitrine animée pilotée par le défilement : sites vitrines, e-commerce, applications web, communautés, audit & refonte |
-| 03 — Projets | Liste interactive des dix démos avec aperçu flottant au survol et filtres animés |
+| 03 — Projets | Liste interactive des dix démos : au survol, l'aperçu du site apparaît dans la ligne et se fond dans la couleur du projet ; filtres animés |
 | 04 — Méthode | Processus en quatre étapes avec frise de progression |
 | 05 — Compétences | Compétences regroupées par domaine, sans niveau chiffré |
 | 06 — Contact | Formulaire validé côté client, envoi via Mailjet ou client mail |

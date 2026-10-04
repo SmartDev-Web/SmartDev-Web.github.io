@@ -417,44 +417,7 @@
     });
   }
 
-  /* ---------- Project list, floating preview and filters ---------- */
-
-  /**
-   * Shows a floating preview of the hovered project that eases toward the pointer.
-   */
-  function initializeProjectPreview() {
-    const projectListElement = document.getElementById("projectList");
-    const previewElement = document.getElementById("projectPreview");
-    const previewImageElement = previewElement.querySelector(".project-preview__image");
-    const previewPosition = { currentX: 0, currentY: 0, targetX: 0, targetY: 0 };
-    let previewFrameRequest = 0;
-    if (!hasFinePointer || prefersReducedMotion) return;
-    const renderPreviewFrame = () => {
-      previewPosition.currentX += (previewPosition.targetX - previewPosition.currentX) * 0.18;
-      previewPosition.currentY += (previewPosition.targetY - previewPosition.currentY) * 0.18;
-      previewElement.style.transform = `translate3d(${previewPosition.currentX}px, ${previewPosition.currentY}px, 0)`;
-      const isSettled = Math.abs(previewPosition.targetX - previewPosition.currentX) < 0.5 && Math.abs(previewPosition.targetY - previewPosition.currentY) < 0.5;
-      previewFrameRequest = isSettled ? 0 : requestAnimationFrame(renderPreviewFrame);
-    };
-    const movePreviewTarget = (pointerEvent) => {
-      previewPosition.targetX = pointerEvent.clientX + 28;
-      previewPosition.targetY = pointerEvent.clientY - previewElement.offsetHeight / 2;
-      if (!previewFrameRequest) previewFrameRequest = requestAnimationFrame(renderPreviewFrame);
-    };
-    projectListElement.addEventListener("pointerover", (pointerEvent) => {
-      const hoveredRowElement = pointerEvent.target.closest(".project-row");
-      if (!hoveredRowElement) return;
-      const rowThumbnailElement = hoveredRowElement.querySelector(".project-row__thumb");
-      if (previewImageElement.getAttribute("src") !== rowThumbnailElement.getAttribute("src")) previewImageElement.src = rowThumbnailElement.getAttribute("src");
-      if (!previewElement.classList.contains("is-visible")) {
-        previewPosition.currentX = pointerEvent.clientX + 28;
-        previewPosition.currentY = pointerEvent.clientY - previewElement.offsetHeight / 2;
-      }
-      previewElement.classList.add("is-visible");
-    });
-    projectListElement.addEventListener("pointermove", movePreviewTarget, { passive: true });
-    projectListElement.addEventListener("pointerleave", () => previewElement.classList.remove("is-visible"));
-  }
+  /* ---------- Project list filters ---------- */
 
   /**
    * Moves the pill indicator under the active filter button.
@@ -619,7 +582,6 @@
   initializeHeroCanvas();
   initializeCursorGlow();
   initializeServicesShowcase();
-  initializeProjectPreview();
   initializeProjectFilters();
   initializeContactForm();
   revealPageOnLoad();
