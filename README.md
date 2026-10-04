@@ -1,6 +1,6 @@
-# SmartDev — Samuel Martin, architecte logiciel IA freelance
+# SmartDev — Samuel Martin, architecte solution & ingénieur IA
 
-Portfolio de **Samuel Martin** (SmartDev), architecte logiciel IA freelance spécialisé dans la conception d'architectures et la gestion des données de sites web propulsés par l'IA, avec une exigence constante en **sécurité**, **SEO**, **performances** et **UI/UX design**.
+Portfolio de **Samuel Martin** (SmartDev), architecte solution & ingénieur IA spécialisé dans la conception d'architectures et la gestion des données de sites web propulsés par l'IA, avec une exigence constante en **sécurité**, **SEO**, **performances** et **UI/UX design**.
 
 Site en ligne : <https://smartdev-web.github.io/>
 
