@@ -53,15 +53,15 @@ function initializeStickyHeader() {
   updateHeaderState();
 }
 
-/* Opens and closes the full-screen mobile navigation */
+/* Opens and closes the full-screen mobile navigation panel */
 function initializeBurgerMenu() {
   const burgerButtonElement = document.querySelector(".burger-button");
-  const navigationListElement = document.querySelector(".main-nav__list");
+  const navigationPanelElement = document.getElementById(burgerButtonElement.getAttribute("aria-controls"));
   const siteHeaderElement = document.querySelector(".site-header");
   const setMenuState = function (shouldOpen) {
     burgerButtonElement.setAttribute("aria-expanded", String(shouldOpen));
-    burgerButtonElement.setAttribute("aria-label", shouldOpen ? "Fermer le menu" : "Ouvrir le menu");
-    navigationListElement.classList.toggle("is-open", shouldOpen);
+    burgerButtonElement.textContent = shouldOpen ? "Fermer" : "Menu";
+    navigationPanelElement.classList.toggle("is-open", shouldOpen);
     siteHeaderElement.classList.toggle("menu-is-open", shouldOpen);
     document.body.classList.toggle("scroll-is-locked", shouldOpen);
   };
@@ -69,7 +69,7 @@ function initializeBurgerMenu() {
     setMenuState(burgerButtonElement.getAttribute("aria-expanded") !== "true");
   });
   document.addEventListener("keydown", function (keyboardEvent) {
-    if (keyboardEvent.key === "Escape" && navigationListElement.classList.contains("is-open")) {
+    if (keyboardEvent.key === "Escape" && navigationPanelElement.classList.contains("is-open")) {
       setMenuState(false);
       burgerButtonElement.focus();
     }
@@ -206,20 +206,32 @@ function initializeValidatedForms() {
   });
 }
 
-/* Home hero: crossfade slideshow advanced by the progress bar animationend event */
+/* Builds one progress button of the hero slideshow */
+function createSlideshowDotElement(slideIndex) {
+  const dotElement = document.createElement("button");
+  dotElement.className = "slideshow-dot";
+  dotElement.type = "button";
+  dotElement.dataset.slideIndex = String(slideIndex);
+  dotElement.setAttribute("aria-label", "Afficher la photo " + (slideIndex + 1));
+  dotElement.append(document.createElement("span"));
+  return dotElement;
+}
+
+/* Home hero: crossfading main figure advanced by the progress bar animationend event */
 function initializeHeroSlideshow() {
-  const heroElement = document.querySelector("[data-hero-slideshow]");
-  if (!heroElement) {
+  const heroFigureElement = document.querySelector("[data-hero-slideshow]");
+  if (!heroFigureElement) {
     return;
   }
-  const slideElements = Array.from(heroElement.querySelectorAll(".hero__slide"));
-  const dotsContainerElement = heroElement.querySelector(".slideshow-dots");
-  const captionElement = heroElement.querySelector(".slideshow-caption");
+  const slideElements = Array.from(heroFigureElement.querySelectorAll(".hero-spread__slide"));
+  const dotsContainerElement = heroFigureElement.querySelector(".slideshow-dots");
+  const captionElement = heroFigureElement.querySelector(".slideshow-caption");
+  const figureNumberElement = captionElement.querySelector(".figure-caption__number");
+  const captionTextNode = document.createTextNode("");
   let activeSlideIndex = 0;
-  dotsContainerElement.innerHTML = slideElements.map(function (slideElement, slideIndex) {
-    return '<button class="slideshow-dot" type="button" data-slide-index="' + slideIndex + '" aria-label="Afficher la photo ' + (slideIndex + 1) + '"><span></span></button>';
-  }).join("");
-  const dotElements = Array.from(dotsContainerElement.querySelectorAll(".slideshow-dot"));
+  captionElement.replaceChildren(figureNumberElement, captionTextNode);
+  const dotElements = slideElements.map(function (slideElement, slideIndex) { return createSlideshowDotElement(slideIndex); });
+  dotsContainerElement.replaceChildren(...dotElements);
   const showSlide = function (targetSlideIndex) {
     activeSlideIndex = (targetSlideIndex + slideElements.length) % slideElements.length;
     slideElements.forEach(function (slideElement, slideIndex) {
@@ -233,7 +245,7 @@ function initializeHeroSlideshow() {
         dotElement.setAttribute("aria-current", "true");
       }
     });
-    captionElement.textContent = String(activeSlideIndex + 1).padStart(2, "0") + " / " + String(slideElements.length).padStart(2, "0") + " — " + slideElements[activeSlideIndex].dataset.caption;
+    captionTextNode.textContent = " — " + slideElements[activeSlideIndex].dataset.caption + " · " + String(activeSlideIndex + 1).padStart(2, "0") + "/" + String(slideElements.length).padStart(2, "0");
   };
   dotsContainerElement.addEventListener("click", function (clickEvent) {
     const dotElement = clickEvent.target.closest("[data-slide-index]");

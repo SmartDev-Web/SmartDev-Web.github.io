@@ -3,44 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prestations & tarifs — Lumen Studio</title>
-  <meta name="description" content="Formules de reportage de mariage Essentiel, Signature et Prestige, comparatif et configurateur de prix en ligne.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
+  <title>Prestations & tarifs 2027 — Lumen Studio</title>
+  <meta name="description" content="Formules de reportage de mariage Essentiel, Signature et Prestige, tableau comparatif et configurateur de prix en ligne de Lumen Studio à Marseille.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&amp;family=IBM+Plex+Mono:wght@300;400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <a class="visually-hidden skip-link" href="#contenu">Aller au contenu</a>
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i></i><span>Studio</span></a>
+      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i class="brand__dot" aria-hidden="true"></i>Studio</a>
       <nav class="main-nav" aria-label="Navigation principale">
-        <ul class="main-nav__list" id="main-navigation">
-          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
-          <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
-          <li><a class="main-nav__link" href="prestations.html" aria-current="page">Prestations</a></li>
-          <li><a class="main-nav__link" href="avis.html">Avis</a></li>
-          <li><a class="main-nav__link main-nav__cta" href="contact.html">Réserver</a></li>
-        </ul>
-        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu"><span></span><span></span></button>
+        <div class="main-nav__panel" id="main-navigation">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+            <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
+            <li><a class="main-nav__link" href="prestations.html" aria-current="page">Prestations</a></li>
+          </ul>
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="avis.html">Avis</a></li>
+            <li><a class="main-nav__link" href="contact.html">Réserver</a></li>
+          </ul>
+        </div>
+        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
       </nav>
     </div>
   </header>
 
   <main id="contenu">
     <section class="page-intro">
-      <div class="container">
-        <p class="kicker">Prestations & tarifs</p>
-        <h1>Des formules <em>claires</em>, une attention sur-mesure</h1>
+      <div class="container page-intro__grid">
+        <p class="kicker">N° 03 — Prestations & tarifs</p>
+        <h1>Des formules claires, une attention sur-mesure</h1>
         <p class="lead">Tarifs 2027 TTC, déplacements inclus dans les Bouches-du-Rhône et le Var. Un acompte de 30 % confirme la réservation de votre date.</p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
+        <div class="section-heading section-heading--split reveal">
+          <div>
+            <p class="kicker">Formules</p>
+            <h2>Trois formules de reportage</h2>
+          </div>
+          <p class="lead">Des forfaits pensés pour les mariages les plus courants. Pour un projet différent, composez votre reportage avec le configurateur plus bas.</p>
+        </div>
         <div class="packages-grid">
           <article class="package-card reveal" data-package="essentiel">
+            <p class="package-card__number">Formule 01</p>
             <h3>Essentiel</h3>
             <p class="package-card__subtitle">Mariage civil, elopement ou petit comité</p>
             <p class="package-card__price">1 490 € <small>TTC</small></p>
@@ -50,10 +65,10 @@
               <li>Galerie privée en ligne</li>
               <li>Un rendez-vous de préparation</li>
             </ul>
-            <a class="button button--ghost" href="contact.html?devis=Formule%20Essentiel&amp;total=1490">Choisir Essentiel</a>
+            <a class="text-link" href="contact.html?formule=essentiel">Choisir Essentiel</a>
           </article>
-          <article class="package-card package-card--featured reveal" data-package="signature" style="--reveal-delay:.1s">
-            <span class="package-card__badge">La plus choisie</span>
+          <article class="package-card reveal reveal--delay-1" data-package="signature">
+            <p class="package-card__badge">Formule 02 · la plus choisie</p>
             <h3>Signature</h3>
             <p class="package-card__subtitle">La journée, des préparatifs à la première danse</p>
             <p class="package-card__price">2 490 € <small>TTC</small></p>
@@ -64,9 +79,10 @@
               <li>Album Classique 25×25, 30 pages</li>
               <li>Deux rendez-vous de préparation</li>
             </ul>
-            <a class="button" href="contact.html?devis=Formule%20Signature&amp;total=2490">Choisir Signature</a>
+            <a class="text-link" href="contact.html?formule=signature">Choisir Signature</a>
           </article>
-          <article class="package-card reveal" data-package="prestige" style="--reveal-delay:.2s">
+          <article class="package-card reveal reveal--delay-2" data-package="prestige">
+            <p class="package-card__number">Formule 03</p>
             <h3>Prestige</h3>
             <p class="package-card__subtitle">Tout, à deux regards, jusqu'au bout de la nuit</p>
             <p class="package-card__price">3 690 € <small>TTC</small></p>
@@ -74,20 +90,20 @@
               <li>12 heures de reportage</li>
               <li>Second photographe</li>
               <li>900 photographies retouchées</li>
-              <li>Album Signature 30×30 en lin</li>
-              <li>Livraison express en 3 semaines</li>
+              <li>Album Signature 30×30 en lin, 50 pages</li>
+              <li>Livraison en 3 semaines</li>
             </ul>
-            <a class="button button--ghost" href="contact.html?devis=Formule%20Prestige&amp;total=3690">Choisir Prestige</a>
+            <a class="text-link" href="contact.html?formule=prestige">Choisir Prestige</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section section--stone">
+    <section class="section section--ruled">
       <div class="container">
         <div class="section-heading reveal">
           <p class="kicker">Comparatif</p>
-          <h2>Chaque formule <em>en détail</em></h2>
+          <h2>Chaque formule en détail</h2>
         </div>
         <div class="comparison-wrapper reveal" tabindex="0" aria-label="Tableau comparatif des formules, défilable horizontalement">
           <table class="comparison-table">
@@ -107,27 +123,29 @@
       </div>
     </section>
 
-    <section class="section" id="configurateur">
+    <section class="section section--ruled" id="configurateur">
       <div class="container">
-        <div class="section-heading reveal">
-          <p class="kicker">Configurateur</p>
-          <h2>Composez <em>votre</em> reportage</h2>
-          <p class="lead">Ajustez la durée et les options : votre estimation se met à jour en direct et reste mémorisée sur cet appareil.</p>
+        <div class="section-heading section-heading--split reveal">
+          <div>
+            <p class="kicker">Configurateur</p>
+            <h2>Composez votre reportage</h2>
+          </div>
+          <p class="lead">Ajustez la durée et les options : votre estimation à la carte se met à jour en direct et reste mémorisée sur cet appareil.</p>
         </div>
         <div class="configurator">
-          <form class="configurator__panel" id="price-configurator" aria-label="Configurateur de prix">
+          <form class="configurator__panel" id="price-configurator" aria-label="Configurateur de prix" autocomplete="off">
             <div class="config-group">
               <label class="config-group__label" for="coverage-hours">Durée de présence <span class="config-group__value" id="hours-output">8 h</span></label>
               <input type="range" id="coverage-hours" name="heures" min="2" max="12" step="1" value="8">
               <div class="range-scale"><span>2 h</span><span>12 h</span></div>
-              <p id="hours-hint" style="font-size:.9rem;color:var(--color-muted);margin-top:10px"></p>
+              <p class="config-group__hint" id="hours-hint"></p>
             </div>
             <fieldset class="config-group">
               <legend>Album</legend>
               <div class="option-cards">
                 <div class="option-card"><input type="radio" name="album" id="album-none" value="aucun" checked><label for="album-none"><strong>Sans album</strong><span>Fichiers numériques</span></label></div>
                 <div class="option-card"><input type="radio" name="album" id="album-classic" value="classique"><label for="album-classic"><strong>Classique</strong><span>25×25, 30 pages · 450 €</span></label></div>
-                <div class="option-card"><input type="radio" name="album" id="album-signature" value="signature"><label for="album-signature"><strong>Signature</strong><span>30×30 lin, 50 p. · 790 €</span></label></div>
+                <div class="option-card"><input type="radio" name="album" id="album-signature" value="signature"><label for="album-signature"><strong>Signature</strong><span>30×30 lin, 50 pages · 790 €</span></label></div>
               </div>
             </fieldset>
             <fieldset class="config-group">
@@ -138,25 +156,25 @@
               <label class="switch-row"><span>Coffret de tirages<small>15 tirages fine art 20×30 · 240 €</small></span><span class="switch"><input type="checkbox" name="tirages" value="oui"><span></span></span></label>
               <label class="switch-row"><span>Déplacement hors Provence<small>Forfait France métropolitaine · 150 €</small></span><span class="switch"><input type="checkbox" name="deplacement" value="oui"><span></span></span></label>
             </fieldset>
-            <button class="text-link" type="button" id="reset-configurator" style="border:0;cursor:pointer;font-family:inherit">Réinitialiser</button>
+            <button class="text-link text-link--plain configurator__reset" type="button" id="reset-configurator">Réinitialiser</button>
           </form>
           <aside class="quote-summary" aria-live="polite">
             <p class="kicker">Votre estimation</p>
             <h3>Récapitulatif</h3>
             <ul class="quote-summary__lines" id="quote-lines"></ul>
             <div class="quote-summary__total"><span>Total TTC</span><span class="quote-summary__total-amount" id="quote-total">0 €</span></div>
-            <p class="quote-summary__note">Acompte de réservation (30 %) : <strong id="quote-deposit" style="color:#fff">0 €</strong>. Devis définitif remis après notre rencontre.</p>
+            <p class="quote-summary__note">Acompte de réservation (30 %) : <strong id="quote-deposit">0 €</strong>. Devis définitif remis après notre rencontre.</p>
             <a class="button button--block" id="quote-booking-link" href="contact.html">Réserver avec cette configuration</a>
           </aside>
         </div>
       </div>
     </section>
 
-    <section class="section section--stone">
-      <div class="container" style="max-width:860px">
+    <section class="section section--ruled">
+      <div class="container faq-layout">
         <div class="section-heading reveal">
           <p class="kicker">Questions fréquentes</p>
-          <h2>Bon à <em>savoir</em></h2>
+          <h2>Bon à savoir</h2>
         </div>
         <div class="faq-list reveal">
           <details><summary>Combien de temps à l'avance faut-il réserver ?</summary><p>Pour un samedi entre mai et septembre, comptez douze à dix-huit mois. Les dates en semaine et hors saison restent souvent disponibles quelques mois avant.</p></details>
@@ -167,15 +185,16 @@
       </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__grid">
         <div>
-          <a class="brand" href="index.html">Lumen<i></i><span>Studio</span></a>
+          <p class="site-footer__title">Colophon</p>
           <p>Photographie de mariage et de portrait à Marseille, en Provence et partout où l'amour vous emmène. Une approche documentaire, lumineuse et sans artifice.</p>
         </div>
         <div>
-          <h3>Explorer</h3>
+          <p class="site-footer__title">Explorer</p>
           <ul>
             <li><a href="galerie.html">Galerie</a></li>
             <li><a href="prestations.html">Prestations & tarifs</a></li>
@@ -184,30 +203,32 @@
           </ul>
         </div>
         <div>
-          <h3>Studio</h3>
+          <p class="site-footer__title">Studio</p>
           <ul>
-            <li>24 rue Sainte<br>13001 Marseille</li>
+            <li>9 passage des Cyanotypes-Bleus<br>13001 Marseille</li>
             <li>Sur rendez-vous uniquement</li>
           </ul>
         </div>
         <div>
-          <h3>Contact</h3>
+          <p class="site-footer__title">Contact</p>
           <ul>
-            <li><a href="tel:+33491335218">04 91 33 52 18</a></li>
-            <li><a href="mailto:bonjour@lumen-studio.fr">bonjour@lumen-studio.fr</a></li>
-            <li>Instagram · @lumen.studio.mrs</li>
+            <li><a href="tel:+33465713824">04 65 71 38 24</a></li>
+            <li><a href="mailto:bonjour@lumen-studio.example">bonjour@lumen-studio.example</a></li>
+            <li><a href="#" aria-label="Instagram de Lumen Studio (lien fictif)">Instagram</a></li>
           </ul>
         </div>
       </div>
+      <p class="site-footer__wordmark" aria-hidden="true">Lumen Studio</p>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe. Site de démonstration.</span>
-        <span>Mentions légales · Confidentialité</span>
+        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe · SIRET 000 000 000 00000</span>
+        <span>Mentions légales · Confidentialité · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>
   <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
 
   <script src="js/main.js"></script>
+  <script src="js/pricing.js"></script>
   <script src="js/prestations.js"></script>
 </body>
 </html>

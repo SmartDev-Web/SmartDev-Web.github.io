@@ -3,85 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avis clients — Lumen Studio</title>
-  <meta name="description" content="Témoignages et avis vérifiés des mariés et clients portrait de Lumen Studio, photographe à Marseille.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
+  <title>Avis clients — Lumen Studio, photographe à Marseille</title>
+  <meta name="description" content="Témoignages de mariés, de couples et de clients portrait photographiés par Camille Roux, Lumen Studio, à Marseille et en Provence.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&amp;family=IBM+Plex+Mono:wght@300;400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <a class="visually-hidden skip-link" href="#contenu">Aller au contenu</a>
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i></i><span>Studio</span></a>
+      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i class="brand__dot" aria-hidden="true"></i>Studio</a>
       <nav class="main-nav" aria-label="Navigation principale">
-        <ul class="main-nav__list" id="main-navigation">
-          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
-          <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
-          <li><a class="main-nav__link" href="prestations.html">Prestations</a></li>
-          <li><a class="main-nav__link" href="avis.html" aria-current="page">Avis</a></li>
-          <li><a class="main-nav__link main-nav__cta" href="contact.html">Réserver</a></li>
-        </ul>
-        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu"><span></span><span></span></button>
+        <div class="main-nav__panel" id="main-navigation">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+            <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
+            <li><a class="main-nav__link" href="prestations.html">Prestations</a></li>
+          </ul>
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="avis.html" aria-current="page">Avis</a></li>
+            <li><a class="main-nav__link" href="contact.html">Réserver</a></li>
+          </ul>
+        </div>
+        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
       </nav>
     </div>
   </header>
 
   <main id="contenu">
     <section class="page-intro">
-      <div class="container">
-        <p class="kicker">Avis clients</p>
-        <h1>Ce qu'ils <em>en disent</em></h1>
-        <p class="lead">Plus de 180 avis vérifiés sur Google et Mariages.net. Voici quelques mots de celles et ceux qui m'ont confié leur histoire.</p>
+      <div class="container page-intro__grid">
+        <p class="kicker">N° 04 — Avis clients</p>
+        <h1>Ce qu'ils en disent</h1>
+        <p class="lead">Plus de 180 avis vérifiés, recueillis après chaque reportage. Voici quelques mots de celles et ceux qui m'ont confié leur histoire.</p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--compact-top">
       <div class="container">
         <div class="rating-summary reveal">
           <div>
-            <p class="rating-summary__score">4,98</p>
-            <p class="stars" aria-label="Note moyenne 4,98 sur 5">★★★★★</p>
-            <p style="color:var(--color-muted);margin:0">Basé sur <span data-counter-target="184">0</span> avis vérifiés</p>
+            <p class="rating-summary__score">4,96</p>
+            <p class="stars" aria-label="Note moyenne 4,96 sur 5">★★★★★</p>
+            <p class="rating-summary__count">Sur <span data-counter-target="184">0</span> avis vérifiés</p>
           </div>
           <ul class="rating-bars" aria-label="Répartition des notes">
-              <li><span>5 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill" style="--fill-ratio:0.96"></span></span><span>96 %</span></li>
-              <li><span>4 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill" style="--fill-ratio:0.04"></span></span><span>4 %</span></li>
-              <li><span>3 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill" style="--fill-ratio:0.0"></span></span><span>0 %</span></li>
-              <li><span>2 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill" style="--fill-ratio:0.0"></span></span><span>0 %</span></li>
-              <li><span>1 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill" style="--fill-ratio:0.0"></span></span><span>0 %</span></li>
+            <li><span>5 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill rating-bars__fill--96"></span></span><span>96 %</span></li>
+            <li><span>4 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill rating-bars__fill--4"></span></span><span>4 %</span></li>
+            <li><span>3 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill rating-bars__fill--0"></span></span><span>0 %</span></li>
+            <li><span>2 étoiles</span><span class="rating-bars__track"><span class="rating-bars__fill rating-bars__fill--0"></span></span><span>0 %</span></li>
+            <li><span>1 étoile</span><span class="rating-bars__track"><span class="rating-bars__fill rating-bars__fill--0"></span></span><span>0 %</span></li>
           </ul>
         </div>
 
-        <div class="featured-carousel section--ink" style="padding:clamp(28px,5vw,64px);margin-bottom:72px">
+        <div class="featured-carousel">
+          <p class="kicker">À la une</p>
           <div class="featured-carousel__track" id="featured-track" tabindex="0" aria-label="Témoignages à la une, utilisez les flèches pour naviguer">
             <figure class="featured-carousel__slide" aria-roledescription="diapositive" aria-label="1 sur 3">
-              <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80" alt="Photographie du mariage de Manon & Victor" loading="lazy">
-              <div class="quote-block" style="text-align:left;margin:0">
-                <blockquote>« Nous avons ouvert l'album le soir de la livraison et nous ne l'avons pas refermé avant minuit. Tout y est : les regards, les larmes, la lumière dorée de fin de journée. »</blockquote>
-                <cite>Manon & Victor — Château de la Barben, 2026</cite>
+              <div class="hover-frame"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&amp;fit=crop&amp;w=800&amp;h=1000&amp;q=80" alt="Tablée du dîner de mariage de Manon et Victor" width="800" height="1000" loading="lazy"></div>
+              <div class="quote-block">
+                <blockquote>«&nbsp;Nous avons ouvert l'album le soir de la livraison et nous ne l'avons pas refermé avant minuit. Tout y est : les regards, les larmes, la lumière dorée de fin de journée.&nbsp;»</blockquote>
+                <cite>Manon & Victor — Château des Quatre-Vents, mai 2026</cite>
               </div>
             </figure>
             <figure class="featured-carousel__slide" aria-roledescription="diapositive" aria-label="2 sur 3">
-              <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=900&q=80" alt="Photographie du mariage de Aurélie & Karim" loading="lazy">
-              <div class="quote-block" style="text-align:left;margin:0">
-                <blockquote>« Camille est devenue une amie le temps d'une journée. Ma mère, très réservée, n'a même pas remarqué l'appareil : ses portraits sont les plus beaux qu'on ait d'elle. »</blockquote>
-                <cite>Aurélie & Karim — Mas de la Rose, 2025</cite>
+              <div class="hover-frame"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&amp;fit=crop&amp;w=800&amp;h=1000&amp;q=80" alt="Sortie des mariés Aurélie et Karim sous les confettis" width="800" height="1000" loading="lazy"></div>
+              <div class="quote-block">
+                <blockquote>«&nbsp;Camille est devenue une amie le temps d'une journée. Ma mère, très réservée, n'a même pas remarqué l'appareil : ses portraits sont les plus beaux qu'on ait d'elle.&nbsp;»</blockquote>
+                <cite>Aurélie & Karim — Mas de la Cigale-Blanche, septembre 2025</cite>
               </div>
             </figure>
             <figure class="featured-carousel__slide" aria-roledescription="diapositive" aria-label="3 sur 3">
-              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=80" alt="Photographie du mariage de Zoé & Adam" loading="lazy">
-              <div class="quote-block" style="text-align:left;margin:0">
-                <blockquote>« Un elopement à deux sur la plage des Catalans, et pourtant on a l'impression que tous nos proches étaient là tant les images sont pleines d'émotion. »</blockquote>
-                <cite>Zoé & Adam — Marseille, 2026</cite>
+              <div class="hover-frame"><img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&amp;fit=crop&amp;w=800&amp;h=1000&amp;q=80" alt="Elopement de Zoé et Adam au bord de la mer" width="800" height="1000" loading="lazy"></div>
+              <div class="quote-block">
+                <blockquote>«&nbsp;Un elopement à deux sur la plage des Catalans, et pourtant on a l'impression que tous nos proches étaient là tant les images sont pleines d'émotion.&nbsp;»</blockquote>
+                <cite>Zoé & Adam — Marseille, avril 2026</cite>
               </div>
             </figure>
           </div>
           <div class="featured-carousel__nav">
-            <button class="round-button" type="button" id="carousel-previous" aria-label="Témoignage précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="round-button" type="button" id="carousel-previous" aria-label="Témoignage précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
             <span class="carousel-counter" id="carousel-counter" aria-live="polite">01 / 03</span>
-            <button class="round-button" type="button" id="carousel-next" aria-label="Témoignage suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+            <button class="round-button" type="button" id="carousel-next" aria-label="Témoignage suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
           </div>
         </div>
 
@@ -94,47 +102,47 @@
         <p class="visually-hidden" id="review-status" aria-live="polite"></p>
         <div class="testimonial-grid">
           <article class="testimonial reveal" data-review-type="mariage">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Léa & Hugo</strong><span>Mas de la Rose · Juin 2026</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Léa & Hugo</strong><span>Mas de la Cigale-Blanche · Juin 2026</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Camille a ce don rare de se rendre invisible. En découvrant nos photos, nous avons revécu des moments que nous n'avions même pas remarqués, comme le fou rire de ma grand-mère pendant les discours.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="portrait">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Antoine Mercadier</strong><span>Portrait professionnel · Mars 2026</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Antoine Mercadier</strong><span>Portrait professionnel · Mars 2026</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>J'appréhendais la séance, je déteste être pris en photo. Camille m'a mis à l'aise en cinq minutes. Mes nouveaux portraits ont totalement changé l'image de mon cabinet.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="mariage">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Sarah & Yanis</strong><span>Château Grand Boise · Septembre 2025</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Sarah & Yanis</strong><span>Château de Sainte-Ondine · Septembre 2025</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Nous avions un mariage de 180 invités et une météo capricieuse. Camille et son second photographe ont tout capté, même l'orage qui a fini en danse sous la pluie. L'album est sublime.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="couple">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Julien & Margaux</strong><span>Séance aux Goudes · Mai 2026</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Julien & Margaux</strong><span>Séance aux Goudes · Mai 2026</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Une balade au coucher du soleil qui ressemblait davantage à un rendez-vous amoureux qu'à une séance photo. Les images sont d'une douceur incroyable.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="mariage">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Inès & Thomas</strong><span>Domaine de Fontenille · Juillet 2026</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Inès & Thomas</strong><span>Domaine des Oliviers-Bleus · Juillet 2026</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Réactive, attentionnée, d'une organisation impeccable. Elle avait repéré les lieux la veille pour trouver la meilleure lumière. Livraison en avance, nous étions bouleversés.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="portrait">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Nadia Benali</strong><span>Portrait éditorial · Janvier 2026</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Nadia Benali</strong><span>Portrait éditorial · Janvier 2026</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Séance dans les ruelles du Panier pour la sortie de mon livre. Le résultat est élégant, intemporel, et ressemble vraiment à qui je suis.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="couple">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Paul & Clémence</strong><span>Anniversaire de mariage · Octobre 2025</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Paul & Clémence</strong><span>Anniversaire de mariage · Octobre 2025</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Vingt ans de mariage célébrés dans les calanques. Nos enfants ont pleuré en voyant les photos. Merci Camille pour ce cadeau inestimable.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="mariage">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Chloé & Mehdi</strong><span>Bastide de Gordes · Août 2025</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Chloé & Mehdi</strong><span>Bastide des Cyprès-Noirs · Août 2025</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Le meilleur investissement de notre mariage, sans hésiter. Chaque photo raconte quelque chose. Nos familles nous demandent encore le lien de la galerie.</blockquote>
           </article>
           <article class="testimonial reveal" data-review-type="mariage">
-            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy"><div><strong>Romain & Élise</strong><span>Cassis · Juin 2025</span></div></div>
+            <div class="testimonial__header"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=80" alt="" width="48" height="48" loading="lazy"><div><strong>Romain & Élise</strong><span>Cassis · Juin 2025</span></div></div>
             <p class="stars" aria-label="Note : 5 sur 5">★★★★★</p>
             <blockquote>Nous voulions des photos naturelles, sans poses interminables : pari réussi. Les portraits de couple ont pris vingt minutes et ce sont nos préférés.</blockquote>
           </article>
@@ -143,24 +151,30 @@
     </section>
 
     <section class="cta-panel">
-      <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1600&q=80" alt="" loading="lazy">
-      <div class="reveal">
-        <p class="kicker">Votre histoire</p>
-        <h2>Et si la prochaine <em>était la vôtre</em> ?</h2>
-        <p>Parlez-moi de votre projet : lieu, date, envies. Je vous réponds personnellement sous 48 heures.</p>
-        <a class="button button--light" href="contact.html">Vérifier mes disponibilités</a>
+      <div class="container cta-panel__grid">
+        <div class="cta-panel__text reveal">
+          <p class="kicker">Votre histoire</p>
+          <h2>Et si la prochaine était la vôtre ?</h2>
+          <p>Parlez-moi de votre projet : lieu, date, envies. Je vous réponds personnellement sous 48 heures.</p>
+          <a class="text-link" href="contact.html">Vérifier mes disponibilités</a>
+        </div>
+        <figure class="reveal reveal--delay-1">
+          <div class="hover-frame"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&amp;fit=crop&amp;w=700&amp;h=875&amp;q=80" alt="Détail d'une robe de mariée en dentelle" width="700" height="875" loading="lazy"></div>
+          <figcaption class="figure-caption"><span class="figure-caption__number">Fig. 10</span> — Détail, préparatifs de la mariée</figcaption>
+        </figure>
       </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__grid">
         <div>
-          <a class="brand" href="index.html">Lumen<i></i><span>Studio</span></a>
+          <p class="site-footer__title">Colophon</p>
           <p>Photographie de mariage et de portrait à Marseille, en Provence et partout où l'amour vous emmène. Une approche documentaire, lumineuse et sans artifice.</p>
         </div>
         <div>
-          <h3>Explorer</h3>
+          <p class="site-footer__title">Explorer</p>
           <ul>
             <li><a href="galerie.html">Galerie</a></li>
             <li><a href="prestations.html">Prestations & tarifs</a></li>
@@ -169,24 +183,25 @@
           </ul>
         </div>
         <div>
-          <h3>Studio</h3>
+          <p class="site-footer__title">Studio</p>
           <ul>
-            <li>24 rue Sainte<br>13001 Marseille</li>
+            <li>9 passage des Cyanotypes-Bleus<br>13001 Marseille</li>
             <li>Sur rendez-vous uniquement</li>
           </ul>
         </div>
         <div>
-          <h3>Contact</h3>
+          <p class="site-footer__title">Contact</p>
           <ul>
-            <li><a href="tel:+33491335218">04 91 33 52 18</a></li>
-            <li><a href="mailto:bonjour@lumen-studio.fr">bonjour@lumen-studio.fr</a></li>
-            <li>Instagram · @lumen.studio.mrs</li>
+            <li><a href="tel:+33465713824">04 65 71 38 24</a></li>
+            <li><a href="mailto:bonjour@lumen-studio.example">bonjour@lumen-studio.example</a></li>
+            <li><a href="#" aria-label="Instagram de Lumen Studio (lien fictif)">Instagram</a></li>
           </ul>
         </div>
       </div>
+      <p class="site-footer__wordmark" aria-hidden="true">Lumen Studio</p>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe. Site de démonstration.</span>
-        <span>Mentions légales · Confidentialité</span>
+        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe · SIRET 000 000 000 00000</span>
+        <span>Mentions légales · Confidentialité · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

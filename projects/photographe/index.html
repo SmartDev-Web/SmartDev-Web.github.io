@@ -3,63 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Lumen Studio — Photographe mariage & portrait à Marseille</title>
-  <meta name="description" content="Lumen Studio, Camille Roux photographe de mariage et de portrait à Marseille et en Provence. Reportage documentaire et lumière naturelle.">
+  <meta name="description" content="Lumen Studio, Camille Roux photographe de mariage et de portrait à Marseille et en Provence : reportage documentaire, lumière naturelle et livres photo.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&amp;family=IBM+Plex+Mono:wght@300;400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="has-dark-hero">
+<body>
   <a class="visually-hidden skip-link" href="#contenu">Aller au contenu</a>
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i></i><span>Studio</span></a>
+      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i class="brand__dot" aria-hidden="true"></i>Studio</a>
       <nav class="main-nav" aria-label="Navigation principale">
-        <ul class="main-nav__list" id="main-navigation">
-          <li><a class="main-nav__link" href="index.html" aria-current="page">Accueil</a></li>
-          <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
-          <li><a class="main-nav__link" href="prestations.html">Prestations</a></li>
-          <li><a class="main-nav__link" href="avis.html">Avis</a></li>
-          <li><a class="main-nav__link main-nav__cta" href="contact.html">Réserver</a></li>
-        </ul>
-        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu"><span></span><span></span></button>
+        <div class="main-nav__panel" id="main-navigation">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="index.html" aria-current="page">Accueil</a></li>
+            <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
+            <li><a class="main-nav__link" href="prestations.html">Prestations</a></li>
+          </ul>
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="avis.html">Avis</a></li>
+            <li><a class="main-nav__link" href="contact.html">Réserver</a></li>
+          </ul>
+        </div>
+        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
       </nav>
     </div>
   </header>
 
   <main id="contenu">
-    <section class="hero" data-hero-slideshow aria-roledescription="carrousel" aria-label="Photographies récentes">
-      <figure class="hero__slide" data-caption="Mariage au Château de la Barben"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80" alt="Mariage au Château de la Barben" fetchpriority="high"></figure>
-      <figure class="hero__slide" data-caption="Alliances et bouquet, Cassis"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920&q=80" alt="Alliances et bouquet, Cassis"></figure>
-      <figure class="hero__slide" data-caption="Arche fleurie, cérémonie en plein air"><img src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1920&q=80" alt="Arche fleurie, cérémonie en plein air"></figure>
-      <figure class="hero__slide" data-caption="Portrait éditorial, Le Panier"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1920&q=80" alt="Portrait éditorial, Le Panier"></figure>
-      <figure class="hero__slide" data-caption="Mariage au Domaine de Fontenille"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80" alt="Mariage au Domaine de Fontenille"></figure>
-      <div class="hero__content container">
-        <p class="kicker">Photographe mariage & portrait · Marseille</p>
-        <h1>La lumière vraie <em>des jours</em> qui comptent</h1>
-        <p class="hero__tagline">Des images sincères, pensées comme un livre que l'on ouvrira encore dans trente ans.</p>
-        <div class="hero__actions">
-          <a class="button" href="galerie.html">Voir la galerie</a>
-          <a class="button button--light" href="contact.html">Vérifier une date</a>
+    <section class="hero-spread" aria-labelledby="hero-title">
+      <div class="container hero-spread__grid">
+        <p class="running-head hero-spread__meta"><span>Lumen Studio — Monographie, saison 2027</span><span>Mariage & portrait · Marseille, Provence</span></p>
+        <h1 class="hero-spread__title" id="hero-title">
+          <span class="hero-spread__line hero-spread__line--first">La lumière</span>
+          <span class="hero-spread__line hero-spread__line--second">vraie des jours</span>
+          <span class="hero-spread__line hero-spread__line--third">qui comptent</span>
+        </h1>
+        <figure class="hero-spread__figure hero-spread__figure--primary" data-hero-slideshow>
+          <div class="hero-spread__frame">
+            <img class="hero-spread__slide" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&amp;fit=crop&amp;w=1000&amp;h=1250&amp;q=80" data-caption="Mariage, Château des Quatre-Vents" alt="Bouquet de la mariée à la lumière du soir, Château des Quatre-Vents" width="1000" height="1250" fetchpriority="high">
+            <img class="hero-spread__slide" src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&amp;fit=crop&amp;w=1000&amp;h=1250&amp;q=80" data-caption="Alliances, cérémonie à Cassis" alt="Alliances et bouquet posés sur une table, cérémonie à Cassis" width="1000" height="1250">
+            <img class="hero-spread__slide" src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&amp;fit=crop&amp;w=1000&amp;h=1250&amp;q=80" data-caption="Cérémonie, Lourmarin" alt="Arche fleurie face aux collines, cérémonie à Lourmarin" width="1000" height="1250">
+          </div>
+          <figcaption class="figure-caption hero-spread__caption-row">
+            <span class="slideshow-caption"><span class="figure-caption__number">Fig. 01</span> — Mariage, Château des Quatre-Vents</span>
+            <span class="slideshow-dots"></span>
+          </figcaption>
+        </figure>
+        <figure class="hero-spread__figure hero-spread__figure--secondary">
+          <div class="hover-frame"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&amp;fit=crop&amp;w=600&amp;h=800&amp;q=80" alt="Portrait éditorial d'une femme en lumière naturelle, atelier de la Cour-aux-Lucioles" width="600" height="800"></div>
+          <figcaption class="figure-caption"><span class="figure-caption__number">Fig. 02</span> — Portrait, atelier de la Cour-aux-Lucioles</figcaption>
+        </figure>
+        <figure class="hero-spread__figure hero-spread__figure--tertiary">
+          <div class="hover-frame"><img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&amp;fit=crop&amp;w=900&amp;h=600&amp;q=80" alt="Elopement d'un couple au bord de la mer, crique des Sables-Gris" width="900" height="600"></div>
+          <figcaption class="figure-caption"><span class="figure-caption__number">Fig. 03</span> — Elopement, crique des Sables-Gris</figcaption>
+        </figure>
+        <div class="hero-spread__intro">
+          <p>Des images sincères, pensées comme un livre que l'on ouvrira encore dans trente ans.</p>
+          <p class="link-row"><a class="text-link" href="galerie.html">Voir la galerie</a><a class="text-link" href="contact.html">Vérifier une date</a></p>
         </div>
       </div>
-      <div class="slideshow-controls">
-        <p class="slideshow-caption" aria-live="polite"></p>
-        <div class="slideshow-dots"></div>
-      </div>
-      <span class="scroll-cue" aria-hidden="true"></span>
     </section>
 
     <section class="section" id="a-propos">
       <div class="container about-grid">
         <div class="about-photos">
-          <img class="reveal-image" src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=900&q=80" alt="Appareil photo levé face au soleil couchant" loading="lazy">
-          <img class="reveal-image" src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=500&q=80" alt="Appareil photo argentique posé sur une table" loading="lazy">
+          <figure>
+            <div class="hover-frame reveal-image"><img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&amp;fit=crop&amp;w=900&amp;h=1125&amp;q=80" alt="Appareil photo levé face au soleil couchant" width="900" height="1125" loading="lazy"></div>
+            <figcaption class="figure-caption"><span class="figure-caption__number">Fig. 04</span> — Repérage de lumière, fin de journée</figcaption>
+          </figure>
+          <figure>
+            <div class="hover-frame reveal-image"><img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&amp;fit=crop&amp;w=500&amp;h=667&amp;q=80" alt="Appareil photo argentique posé sur une table" width="500" height="667" loading="lazy"></div>
+            <figcaption class="figure-caption"><span class="figure-caption__number">Fig. 05</span> — Le boîtier argentique de l'atelier</figcaption>
+          </figure>
         </div>
-        <div class="reveal">
-          <p class="kicker">À propos</p>
-          <h2>Bonjour, je suis <em>Camille</em></h2>
+        <div class="about-text reveal">
+          <p class="kicker">N° 01 — À propos</p>
+          <h2>Bonjour, je suis Camille</h2>
           <p class="lead">Photographe depuis 2014, installée au cœur de Marseille, je raconte les mariages comme on écrit un journal intime : sans poses forcées, avec beaucoup de lumière naturelle et une attention particulière aux instants que personne n'a vus.</p>
           <p>Formée à l'École nationale supérieure de la photographie d'Arles, j'ai longtemps travaillé pour la presse avant de me consacrer aux histoires d'amour. Je ne couvre que vingt-deux mariages par an pour offrir à chacun le temps qu'il mérite, de notre premier café à la livraison de votre album.</p>
           <div class="stats-row">
@@ -72,73 +97,85 @@
       </div>
     </section>
 
-    <section class="section section--stone">
+    <section class="section section--ruled">
       <div class="container">
-        <div class="section-heading reveal">
-          <p class="kicker">Ce que je propose</p>
-          <h2>Trois façons de <em>se raconter</em></h2>
+        <div class="section-heading section-heading--split reveal">
+          <div>
+            <p class="kicker">N° 02 — Ce que je propose</p>
+            <h2>Trois façons de se raconter</h2>
+          </div>
           <p class="lead">Chaque prestation commence par une rencontre, autour d'un café sur le Vieux-Port ou en visio.</p>
         </div>
         <div class="services-grid">
           <a class="service-card reveal" href="prestations.html">
-            <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80" alt="Mariés riant ensemble sous les palmiers" loading="lazy">
+            <div class="hover-frame"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&amp;fit=crop&amp;w=800&amp;h=1000&amp;q=80" alt="Mariés riant ensemble sous les palmiers" width="800" height="1000" loading="lazy"></div>
             <div class="service-card__body">
-              <span class="service-card__index">01</span>
+              <span class="service-card__index">Fig. 06 — 01</span>
               <h3>Mariages</h3>
               <p>Des préparatifs à la soirée, un reportage documentaire de 4 à 12 heures. À partir de 1 490 €.</p>
+              <span class="service-card__more">Voir les formules</span>
             </div>
           </a>
-          <a class="service-card reveal" href="prestations.html" style="--reveal-delay:.12s">
-            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80" alt="Silhouettes formant un cœur avec leurs mains au coucher du soleil" loading="lazy">
+          <a class="service-card reveal reveal--delay-1" href="prestations.html#configurateur">
+            <div class="hover-frame"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&amp;fit=crop&amp;w=800&amp;h=1000&amp;q=80" alt="Silhouettes formant un cœur avec leurs mains au coucher du soleil" width="800" height="1000" loading="lazy"></div>
             <div class="service-card__body">
-              <span class="service-card__index">02</span>
+              <span class="service-card__index">Fig. 07 — 02</span>
               <h3>Couples</h3>
               <p>Séance engagement ou anniversaire dans les calanques, 1 h 30 de balade. 290 €.</p>
+              <span class="service-card__more">Composer un reportage</span>
             </div>
           </a>
-          <a class="service-card reveal" href="prestations.html" style="--reveal-delay:.24s">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Portrait d'une femme en lumière naturelle" loading="lazy">
+          <a class="service-card reveal reveal--delay-2" href="contact.html">
+            <div class="hover-frame"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&amp;fit=crop&amp;w=800&amp;h=1000&amp;q=80" alt="Portrait d'une femme en lumière naturelle" width="800" height="1000" loading="lazy"></div>
             <div class="service-card__body">
-              <span class="service-card__index">03</span>
+              <span class="service-card__index">Fig. 08 — 03</span>
               <h3>Portraits</h3>
-              <p>Portraits éditoriaux et professionnels, en studio rue Sainte ou en extérieur. Dès 220 €.</p>
+              <p>Portraits éditoriaux et professionnels, au studio ou en extérieur. Dès 220 €.</p>
+              <span class="service-card__more">Demander une séance</span>
             </div>
           </a>
         </div>
       </div>
     </section>
 
-    <section class="section section--ink">
-      <div class="container">
+    <section class="section section--ruled quote-section">
+      <div class="container editorial-grid">
+        <p class="kicker">N° 03 — Ils m'ont confié leur journée</p>
         <figure class="quote-block reveal">
-          <blockquote>« Camille a ce don rare de se rendre invisible. En découvrant nos photos, nous avons revécu des moments que nous n'avions même pas remarqués. »</blockquote>
-          <cite>Léa & Hugo — Mariage au Mas de la Rose, juin 2026</cite>
+          <blockquote>«&nbsp;Camille a ce don rare de se rendre invisible. En découvrant nos photos, nous avons revécu des moments que nous n'avions même pas remarqués.&nbsp;»</blockquote>
+          <cite>Léa & Hugo — Mariage au Mas de la Cigale-Blanche, juin 2026</cite>
         </figure>
-        <div class="press-row reveal" aria-label="Publications">
-          <span>Mariages Magazine</span><span>Junebug Weddings</span><span>La Provence</span><span>Vogue Sposa</span>
-        </div>
+        <p class="press-row reveal" aria-label="Publications">
+          <span class="press-row__label">Publié dans —</span><span>Revue Lumière d'Été</span><span>Carnet des Mariées</span><span>Cahiers du Littoral</span><span>Atelier Noces</span>
+        </p>
       </div>
     </section>
 
     <section class="cta-panel">
-      <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1600&q=80" alt="" loading="lazy">
-      <div class="reveal">
-        <p class="kicker">Votre histoire</p>
-        <h2>Racontons <em>la vôtre</em></h2>
-        <p>Les dates de la saison 2027 s'ouvrent : écrivez-moi quelques mots sur votre projet, je vous réponds personnellement sous 48 heures.</p>
-        <a class="button button--light" href="contact.html">Vérifier mes disponibilités</a>
+      <div class="container cta-panel__grid">
+        <div class="cta-panel__text reveal">
+          <p class="kicker">N° 04 — Votre histoire</p>
+          <h2>Racontons la vôtre</h2>
+          <p>Les dates de la saison 2027 sont ouvertes : écrivez-moi quelques mots sur votre projet, je vous réponds personnellement sous 48 heures.</p>
+          <a class="text-link" href="contact.html">Vérifier mes disponibilités</a>
+        </div>
+        <figure class="reveal reveal--delay-1">
+          <div class="hover-frame"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&amp;fit=crop&amp;w=700&amp;h=875&amp;q=80" alt="Mains enlacées d'un couple dans les ombres de fin de journée" width="700" height="875" loading="lazy"></div>
+          <figcaption class="figure-caption"><span class="figure-caption__number">Fig. 09</span> — Mains enlacées, fin de journée</figcaption>
+        </figure>
       </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__grid">
         <div>
-          <a class="brand" href="index.html">Lumen<i></i><span>Studio</span></a>
+          <p class="site-footer__title">Colophon</p>
           <p>Photographie de mariage et de portrait à Marseille, en Provence et partout où l'amour vous emmène. Une approche documentaire, lumineuse et sans artifice.</p>
         </div>
         <div>
-          <h3>Explorer</h3>
+          <p class="site-footer__title">Explorer</p>
           <ul>
             <li><a href="galerie.html">Galerie</a></li>
             <li><a href="prestations.html">Prestations & tarifs</a></li>
@@ -147,24 +184,25 @@
           </ul>
         </div>
         <div>
-          <h3>Studio</h3>
+          <p class="site-footer__title">Studio</p>
           <ul>
-            <li>24 rue Sainte<br>13001 Marseille</li>
+            <li>9 passage des Cyanotypes-Bleus<br>13001 Marseille</li>
             <li>Sur rendez-vous uniquement</li>
           </ul>
         </div>
         <div>
-          <h3>Contact</h3>
+          <p class="site-footer__title">Contact</p>
           <ul>
-            <li><a href="tel:+33491335218">04 91 33 52 18</a></li>
-            <li><a href="mailto:bonjour@lumen-studio.fr">bonjour@lumen-studio.fr</a></li>
-            <li>Instagram · @lumen.studio.mrs</li>
+            <li><a href="tel:+33465713824">04 65 71 38 24</a></li>
+            <li><a href="mailto:bonjour@lumen-studio.example">bonjour@lumen-studio.example</a></li>
+            <li><a href="#" aria-label="Instagram de Lumen Studio (lien fictif)">Instagram</a></li>
           </ul>
         </div>
       </div>
+      <p class="site-footer__wordmark" aria-hidden="true">Lumen Studio</p>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe. Site de démonstration.</span>
-        <span>Mentions légales · Confidentialité</span>
+        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe · SIRET 000 000 000 00000</span>
+        <span>Mentions légales · Confidentialité · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

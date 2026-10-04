@@ -1,53 +1,19 @@
-/* Lumen Studio - services page: interactive price configurator */
+/* Lumen Studio - services page: interactive price configurator (pricing logic lives in pricing.js) */
 
 const CONFIGURATOR_STORAGE_KEY = "lumen-studio-configuration";
-const HOURLY_COVERAGE_RATE = 210;
-const SECOND_SHOOTER_HOURLY_RATE = 95;
-const FULL_DAY_THRESHOLD_HOURS = 10;
-const FULL_DAY_DISCOUNT_RATIO = 0.05;
-const ALBUM_OPTIONS = {
-  aucun: { label: "Sans album", price: 0 },
-  classique: { label: "Album Classique 25×25", price: 450 },
-  signature: { label: "Album Signature 30×30 lin", price: 790 }
-};
-const EXTRA_OPTIONS = {
-  engagement: { label: "Séance engagement", price: 290 },
-  express: { label: "Livraison express (15 jours)", price: 190 },
-  tirages: { label: "Coffret 15 tirages fine art", price: 240 },
-  deplacement: { label: "Déplacement hors Provence", price: 150 }
-};
 
 const configuratorFormElement = document.getElementById("price-configurator");
 let displayedTotalAmount = 0;
 
-/* Reads the configurator form into a plain configuration object */
+/* Reads the configurator form into a validated configuration object */
 function readConfiguration() {
   const formData = new FormData(configuratorFormElement);
-  return {
+  return sanitizeConfiguration({
     hours: Number(formData.get("heures")),
-    album: formData.get("album") || "aucun",
+    album: formData.get("album"),
     secondShooter: formData.get("second") === "oui",
     extras: Object.keys(EXTRA_OPTIONS).filter(function (extraKey) { return formData.get(extraKey) === "oui"; })
-  };
-}
-
-/* Computes priced lines and the total for a configuration */
-function computeQuote(configuration) {
-  const quoteLines = [{ label: configuration.hours + " h de reportage", amount: configuration.hours * HOURLY_COVERAGE_RATE }];
-  if (configuration.secondShooter) {
-    quoteLines.push({ label: "Second photographe (" + configuration.hours + " h)", amount: configuration.hours * SECOND_SHOOTER_HOURLY_RATE });
-  }
-  if (ALBUM_OPTIONS[configuration.album].price) {
-    quoteLines.push({ label: ALBUM_OPTIONS[configuration.album].label, amount: ALBUM_OPTIONS[configuration.album].price });
-  }
-  configuration.extras.forEach(function (extraKey) {
-    quoteLines.push({ label: EXTRA_OPTIONS[extraKey].label, amount: EXTRA_OPTIONS[extraKey].price });
   });
-  const subtotalAmount = quoteLines.reduce(function (runningTotal, quoteLine) { return runningTotal + quoteLine.amount; }, 0);
-  if (configuration.hours >= FULL_DAY_THRESHOLD_HOURS) {
-    quoteLines.push({ label: "Remise journée complète (−5 %)", amount: -Math.round(subtotalAmount * FULL_DAY_DISCOUNT_RATIO) });
-  }
-  return { lines: quoteLines, total: quoteLines.reduce(function (runningTotal, quoteLine) { return runningTotal + quoteLine.amount; }, 0) };
 }
 
 /* Animates the displayed total towards a target amount */
@@ -77,26 +43,52 @@ function persistConfiguration(configuration) {
   }
 }
 
+/* Loads the stored configuration, validated, or null when absent or unreadable */
+function loadStoredConfiguration() {
+  try {
+    const storedValue = localStorage.getItem(CONFIGURATOR_STORAGE_KEY);
+    return storedValue ? sanitizeConfiguration(JSON.parse(storedValue)) : null;
+  } catch (storageError) {
+    return null;
+  }
+}
+
 /* Restores a stored configuration into the form */
 function restoreConfiguration() {
-  let storedConfiguration = null;
-  try {
-    storedConfiguration = JSON.parse(localStorage.getItem(CONFIGURATOR_STORAGE_KEY));
-  } catch (storageError) {
-    storedConfiguration = null;
-  }
+  const storedConfiguration = loadStoredConfiguration();
   if (!storedConfiguration) {
     return;
   }
-  configuratorFormElement.elements.heures.value = storedConfiguration.hours || 8;
-  const albumRadioElement = configuratorFormElement.querySelector("input[name='album'][value='" + storedConfiguration.album + "']");
-  if (albumRadioElement) {
-    albumRadioElement.checked = true;
-  }
-  configuratorFormElement.elements.second.checked = Boolean(storedConfiguration.secondShooter);
-  Object.keys(EXTRA_OPTIONS).forEach(function (extraKey) {
-    configuratorFormElement.elements[extraKey].checked = (storedConfiguration.extras || []).includes(extraKey);
+  configuratorFormElement.elements.heures.value = storedConfiguration.hours;
+  Array.from(configuratorFormElement.elements.album).forEach(function (albumRadioElement) {
+    albumRadioElement.checked = albumRadioElement.value === storedConfiguration.album;
   });
+  configuratorFormElement.elements.second.checked = storedConfiguration.secondShooter;
+  Object.keys(EXTRA_OPTIONS).forEach(function (extraKey) {
+    configuratorFormElement.elements[extraKey].checked = storedConfiguration.extras.includes(extraKey);
+  });
+}
+
+/* Builds one summary line element with a label and a formatted amount */
+function createQuoteLineElement(quoteLine) {
+  const lineElement = document.createElement("li");
+  const labelElement = document.createElement("span");
+  const amountElement = document.createElement("span");
+  labelElement.textContent = quoteLine.label;
+  amountElement.textContent = quoteLine.amount < 0 ? "− " + formatEuros(-quoteLine.amount) : formatEuros(quoteLine.amount);
+  lineElement.append(labelElement, amountElement);
+  return lineElement;
+}
+
+/* Returns the hint matching a coverage duration */
+function describeCoverageHours(coverageHours) {
+  if (coverageHours <= 3) {
+    return "Idéal pour une cérémonie civile ou un elopement.";
+  }
+  if (coverageHours <= 7) {
+    return "Des préparatifs jusqu'au cocktail.";
+  }
+  return coverageHours < FULL_DAY_THRESHOLD_HOURS ? "Des préparatifs à la première danse." : "Journée complète, jusqu'à la soirée dansante — remise de 5 % appliquée.";
 }
 
 /* Refreshes the summary, total and booking link from the form */
@@ -104,12 +96,10 @@ function updateConfigurator() {
   const configuration = readConfiguration();
   const quote = computeQuote(configuration);
   document.getElementById("hours-output").textContent = configuration.hours + " h";
-  document.getElementById("hours-hint").textContent = configuration.hours <= 3 ? "Idéal pour une cérémonie civile ou un elopement." : configuration.hours <= 7 ? "Des préparatifs jusqu'au cocktail." : configuration.hours < FULL_DAY_THRESHOLD_HOURS ? "Des préparatifs à la première danse." : "Journée complète, jusqu'à la soirée dansante — remise de 5 % appliquée.";
-  document.getElementById("quote-lines").innerHTML = quote.lines.map(function (quoteLine) {
-    return "<li><span>" + quoteLine.label + "</span><span>" + (quoteLine.amount < 0 ? "− " + formatEuros(-quoteLine.amount) : formatEuros(quoteLine.amount)) + "</span></li>";
-  }).join("");
-  document.getElementById("quote-deposit").textContent = formatEuros(Math.round(quote.total * 0.3));
-  document.getElementById("quote-booking-link").href = "contact.html?devis=" + encodeURIComponent(quote.lines.map(function (quoteLine) { return quoteLine.label; }).join(", ")) + "&total=" + quote.total;
+  document.getElementById("hours-hint").textContent = describeCoverageHours(configuration.hours);
+  document.getElementById("quote-lines").replaceChildren(...quote.lines.map(createQuoteLineElement));
+  document.getElementById("quote-deposit").textContent = formatEuros(Math.round(quote.total * DEPOSIT_RATIO));
+  document.getElementById("quote-booking-link").href = "contact.html?" + buildConfigurationQuery(configuration);
   animateTotalAmount(quote.total);
   persistConfiguration(configuration);
 }

@@ -3,53 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Contact & réservation — Lumen Studio</title>
-  <meta name="description" content="Réservez votre photographe de mariage ou de portrait à Marseille : vérifiez la disponibilité de votre date et envoyez votre demande.">
+  <meta name="description" content="Vérifiez la disponibilité de votre date et envoyez votre demande de reportage mariage, couple ou portrait à Lumen Studio, Marseille.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&amp;family=IBM+Plex+Mono:wght@300;400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <a class="visually-hidden skip-link" href="#contenu">Aller au contenu</a>
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i></i><span>Studio</span></a>
+      <a class="brand" href="index.html" aria-label="Lumen Studio, accueil">Lumen<i class="brand__dot" aria-hidden="true"></i>Studio</a>
       <nav class="main-nav" aria-label="Navigation principale">
-        <ul class="main-nav__list" id="main-navigation">
-          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
-          <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
-          <li><a class="main-nav__link" href="prestations.html">Prestations</a></li>
-          <li><a class="main-nav__link" href="avis.html">Avis</a></li>
-          <li><a class="main-nav__link main-nav__cta" href="contact.html" aria-current="page">Réserver</a></li>
-        </ul>
-        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu"><span></span><span></span></button>
+        <div class="main-nav__panel" id="main-navigation">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+            <li><a class="main-nav__link" href="galerie.html">Galerie</a></li>
+            <li><a class="main-nav__link" href="prestations.html">Prestations</a></li>
+          </ul>
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="avis.html">Avis</a></li>
+            <li><a class="main-nav__link" href="contact.html" aria-current="page">Réserver</a></li>
+          </ul>
+        </div>
+        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
       </nav>
     </div>
   </header>
 
   <main id="contenu">
     <section class="page-intro">
-      <div class="container">
-        <p class="kicker">Réservation</p>
-        <h1>Parlons de <em>votre jour</em></h1>
+      <div class="container page-intro__grid">
+        <p class="kicker">N° 05 — Réservation</p>
+        <h1>Parlons de votre jour</h1>
         <p class="lead">Indiquez votre date : sa disponibilité s'affiche immédiatement. Je reviens vers vous sous 48 heures avec une proposition personnalisée.</p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--compact-top">
       <div class="container contact-layout">
-        <div class="reveal">
-          <img class="reveal-image" src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80" alt="Photographe tenant son appareil" loading="lazy" style="aspect-ratio:4/5;object-fit:cover;width:100%">
+        <div class="contact-aside reveal">
+          <figure class="contact-aside__figure">
+            <div class="hover-frame"><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&amp;fit=crop&amp;w=800&amp;h=1000&amp;q=80" alt="Photographe tenant son appareil" width="800" height="1000" loading="lazy"></div>
+            <figcaption class="figure-caption"><span class="figure-caption__number">Fig. 11</span> — L'atelier, passage des Cyanotypes-Bleus</figcaption>
+          </figure>
           <ul class="contact-details">
-            <li><strong>Téléphone</strong><a href="tel:+33491335218">04 91 33 52 18</a></li>
-            <li><strong>E-mail</strong><a href="mailto:bonjour@lumen-studio.fr">bonjour@lumen-studio.fr</a></li>
-            <li><strong>Studio</strong>24 rue Sainte, 13001 Marseille<br>Métro Vieux-Port · sur rendez-vous</li>
+            <li><strong>Téléphone</strong><a href="tel:+33465713824">04 65 71 38 24</a></li>
+            <li><strong>E-mail</strong><a href="mailto:bonjour@lumen-studio.example">bonjour@lumen-studio.example</a></li>
+            <li><strong>Studio</strong>9 passage des Cyanotypes-Bleus, 13001 Marseille<br>Sur rendez-vous uniquement</li>
           </ul>
         </div>
 
-        <div class="booking-card reveal" style="--reveal-delay:.1s">
-          <p class="kicker" id="quote-notice" hidden>Votre configuration a été ajoutée au message</p>
+        <div class="booking-card reveal reveal--delay-1">
+          <p class="kicker booking-card__notice" id="quote-notice" hidden>Votre configuration a été ajoutée au message</p>
           <form id="booking-form" data-validate data-success-target="booking-success">
             <div class="form-grid">
               <fieldset class="form-field form-field--full event-type-picker">
@@ -59,33 +69,33 @@
               </fieldset>
               <div class="form-field">
                 <label for="booking-firstname">Prénom</label>
-                <input id="booking-firstname" name="prenom" type="text" autocomplete="given-name" required minlength="2">
+                <input id="booking-firstname" name="prenom" type="text" autocomplete="given-name" required minlength="2" maxlength="60">
                 <span class="form-error" aria-live="polite"></span>
               </div>
               <div class="form-field">
                 <label for="booking-lastname">Nom</label>
-                <input id="booking-lastname" name="nom" type="text" autocomplete="family-name" required minlength="2">
+                <input id="booking-lastname" name="nom" type="text" autocomplete="family-name" required minlength="2" maxlength="60">
                 <span class="form-error" aria-live="polite"></span>
               </div>
               <div class="form-field">
                 <label for="booking-email">E-mail</label>
-                <input id="booking-email" name="email" type="email" autocomplete="email" required>
+                <input id="booking-email" name="email" type="email" autocomplete="email" required maxlength="120">
                 <span class="form-error" aria-live="polite"></span>
               </div>
               <div class="form-field">
                 <label for="booking-phone">Téléphone</label>
-                <input id="booking-phone" name="telephone" type="tel" autocomplete="tel" required pattern="^(?:\+33\s?|0)[1-9](?:[\s.\-]?\d{2}){4}$" data-pattern-message="Numéro français attendu (ex. : 06 12 34 56 78).">
+                <input id="booking-phone" name="telephone" type="tel" autocomplete="tel" required maxlength="20" pattern="^(?:\+33\s?|0)[1-9](?:[\s.\-]?\d{2}){4}$" data-pattern-message="Numéro français attendu (ex. : 06 39 98 12 34).">
                 <span class="form-error" aria-live="polite"></span>
               </div>
               <div class="form-field">
                 <label for="booking-date">Date de l'événement</label>
-                <input id="booking-date" name="date" type="date" required data-range-message="Merci de choisir une date future." aria-describedby="date-availability">
+                <input id="booking-date" name="date" type="date" autocomplete="off" required data-range-message="Merci de choisir une date future." aria-describedby="date-availability">
                 <span class="availability-status" id="date-availability" aria-live="polite"></span>
                 <span class="form-error" aria-live="polite"></span>
               </div>
               <div class="form-field">
                 <label for="booking-guests">Nombre d'invités</label>
-                <select id="booking-guests" name="invites" required>
+                <select id="booking-guests" name="invites" autocomplete="off" required>
                   <option value="">Choisir…</option>
                   <option>Moins de 20</option>
                   <option>20 à 60</option>
@@ -96,23 +106,23 @@
               </div>
               <div class="form-field form-field--full">
                 <label for="booking-location">Lieu(x)</label>
-                <input id="booking-location" name="lieu" type="text" required minlength="3" placeholder="Ex. : Mairie du 7e puis Château de la Barben">
+                <input id="booking-location" name="lieu" type="text" autocomplete="off" required minlength="3" maxlength="160" placeholder="Ex. : mairie du 7e puis Château des Quatre-Vents">
                 <span class="form-error" aria-live="polite"></span>
               </div>
               <div class="form-field form-field--full">
                 <label for="booking-message">Votre histoire</label>
-                <textarea id="booking-message" name="message" required minlength="20" placeholder="Comment vous êtes-vous rencontrés ? Quelle ambiance imaginez-vous ?"></textarea>
+                <textarea id="booking-message" name="message" autocomplete="off" required minlength="20" maxlength="2000" placeholder="Comment vous êtes-vous rencontrés ? Quelle ambiance imaginez-vous ?"></textarea>
                 <span class="form-error" aria-live="polite"></span>
               </div>
               <div class="form-field form-field--full">
                 <label for="booking-source">Comment m'avez-vous connue ? (facultatif)</label>
-                <select id="booking-source" name="source">
+                <select id="booking-source" name="source" autocomplete="off">
                   <option value="">—</option>
                   <option>Instagram</option>
                   <option>Recommandation d'amis</option>
-                  <option>Mariages.net</option>
+                  <option>Annuaire de mariage en ligne</option>
                   <option>Un lieu de réception</option>
-                  <option>Google</option>
+                  <option>Moteur de recherche</option>
                 </select>
               </div>
               <div class="form-consent form-field--full">
@@ -126,23 +136,24 @@
             </div>
           </form>
           <div class="form-success" id="booking-success" tabindex="-1" hidden>
-            <p class="form-success__mark">Merci</p>
-            <h2 style="font-size:2rem"><span data-success-name></span>, votre demande est bien reçue</h2>
-            <p class="lead" style="margin-inline:auto">Je bloque provisoirement votre date pendant 7 jours et vous réponds personnellement sous 48 heures. En attendant, parcourez la <a href="galerie.html">galerie</a>.</p>
+            <p class="form-success__mark">Demande reçue — merci</p>
+            <h2><span data-success-name></span>, votre demande est bien reçue</h2>
+            <p class="lead">Je bloque provisoirement votre date pendant 7 jours et vous réponds personnellement sous 48 heures. En attendant, parcourez la <a href="galerie.html">galerie</a>.</p>
           </div>
         </div>
       </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__grid">
         <div>
-          <a class="brand" href="index.html">Lumen<i></i><span>Studio</span></a>
+          <p class="site-footer__title">Colophon</p>
           <p>Photographie de mariage et de portrait à Marseille, en Provence et partout où l'amour vous emmène. Une approche documentaire, lumineuse et sans artifice.</p>
         </div>
         <div>
-          <h3>Explorer</h3>
+          <p class="site-footer__title">Explorer</p>
           <ul>
             <li><a href="galerie.html">Galerie</a></li>
             <li><a href="prestations.html">Prestations & tarifs</a></li>
@@ -151,30 +162,32 @@
           </ul>
         </div>
         <div>
-          <h3>Studio</h3>
+          <p class="site-footer__title">Studio</p>
           <ul>
-            <li>24 rue Sainte<br>13001 Marseille</li>
+            <li>9 passage des Cyanotypes-Bleus<br>13001 Marseille</li>
             <li>Sur rendez-vous uniquement</li>
           </ul>
         </div>
         <div>
-          <h3>Contact</h3>
+          <p class="site-footer__title">Contact</p>
           <ul>
-            <li><a href="tel:+33491335218">04 91 33 52 18</a></li>
-            <li><a href="mailto:bonjour@lumen-studio.fr">bonjour@lumen-studio.fr</a></li>
-            <li>Instagram · @lumen.studio.mrs</li>
+            <li><a href="tel:+33465713824">04 65 71 38 24</a></li>
+            <li><a href="mailto:bonjour@lumen-studio.example">bonjour@lumen-studio.example</a></li>
+            <li><a href="#" aria-label="Instagram de Lumen Studio (lien fictif)">Instagram</a></li>
           </ul>
         </div>
       </div>
+      <p class="site-footer__wordmark" aria-hidden="true">Lumen Studio</p>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe. Site de démonstration.</span>
-        <span>Mentions légales · Confidentialité</span>
+        <span>© <span data-current-year>2026</span> Lumen Studio — Camille Roux, photographe · SIRET 000 000 000 00000</span>
+        <span>Mentions légales · Confidentialité · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>
   <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
 
   <script src="js/main.js"></script>
+  <script src="js/pricing.js"></script>
   <script src="js/contact.js"></script>
 </body>
 </html>
