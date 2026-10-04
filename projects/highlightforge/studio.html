@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio — HighlightForge</title>
+  <meta name="description" content="Studio de démonstration HighlightForge : parcourez les temps forts détectés d'une VOD, ajustez les coupes et préparez votre file d'export.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden" href="#main-content">Aller au contenu</a>
+  <header class="site-header" data-site-header>
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient)"/></svg>
+        <span>Highlight<strong>Forge</strong></span>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu" data-burger><span></span><span></span><span></span></button>
+      <nav id="main-navigation" class="main-nav" aria-label="Navigation principale" data-main-nav>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="features.html">Fonctionnalités</a></li>
+          <li><a href="pricing.html">Tarifs</a></li>
+          <li><a href="studio.html" aria-current="page">Studio</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn btn-ghost btn-small" href="login.html">Connexion</a>
+          <a class="btn btn-primary btn-small" href="login.html#inscription">Essai gratuit</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="studio-shell">
+    <div class="container">
+      <div class="studio-toolbar">
+        <div>
+          <span class="eyebrow">Studio de démonstration</span>
+          <h1 data-vod-title>Valorant ranked</h1>
+          <p data-vod-summary>Analyse terminée</p>
+        </div>
+        <label class="field-inline" for="vod-select">
+          VOD analysée
+          <select class="select-input" id="vod-select" data-vod-select></select>
+        </label>
+      </div>
+
+      <div class="studio-grid">
+        <div>
+          <section class="panel" aria-labelledby="preview-heading">
+            <h2 class="panel-title" id="preview-heading">Aperçu du clip <small data-preview-type-label>—</small></h2>
+            <div class="preview-stage">
+              <div class="preview-screen" data-preview-screen data-format="landscape">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80" alt="" data-preview-image>
+                <div class="preview-overlay">
+                  <span class="preview-tag" data-preview-tag>Sélectionnez un temps fort</span>
+                  <div class="preview-bottom">
+                    <button class="play-button" type="button" aria-label="Lire l'aperçu" data-preview-play>
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-play-icon><path d="M7 4v16l13-8z"/></svg>
+                    </button>
+                    <div class="preview-progress" aria-hidden="true"><div class="preview-progress-fill" data-preview-progress></div></div>
+                    <span class="preview-time" data-preview-time>00:00 / 00:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3 style="margin:16px 0 0" data-clip-title>Aucun temps fort sélectionné</h3>
+            <dl class="clip-meta">
+              <div><dt>Début</dt><dd data-clip-start>—</dd></div>
+              <div><dt>Fin</dt><dd data-clip-end>—</dd></div>
+              <div><dt>Durée</dt><dd data-clip-duration>—</dd></div>
+            </dl>
+
+            <div class="trim-label"><span data-trim-window-start>—</span><span>Ajustement de la coupe</span><span data-trim-window-end>—</span></div>
+            <div class="trim-track" data-trim-track>
+              <div class="trim-wave" data-trim-wave aria-hidden="true"></div>
+              <div class="trim-selection" data-trim-selection>
+                <button class="trim-handle" type="button" role="slider" aria-label="Début du clip" data-trim-handle="start"></button>
+                <button class="trim-handle" type="button" role="slider" aria-label="Fin du clip" data-trim-handle="end"></button>
+              </div>
+            </div>
+            <p class="trim-hint">Faites glisser les poignées (ou utilisez les flèches du clavier) pour ajuster le début et la fin. Durée de 5 s à 3 min.</p>
+
+            <fieldset class="format-options">
+              <legend>Format d'export</legend>
+              <label class="format-option"><input type="radio" name="export-format" value="landscape" checked data-format-input><span>16:9 · YouTube</span></label>
+              <label class="format-option"><input type="radio" name="export-format" value="vertical" data-format-input><span>9:16 · Shorts / TikTok</span></label>
+              <label class="format-option"><input type="radio" name="export-format" value="square" data-format-input><span>1:1 · Instagram</span></label>
+            </fieldset>
+
+            <div class="export-actions" style="margin-top:0">
+              <button class="btn btn-ghost" type="button" data-reset-trim>Réinitialiser la coupe</button>
+              <button class="btn btn-primary" type="button" data-add-to-queue>Ajouter à la file d'export</button>
+            </div>
+          </section>
+
+          <section class="panel timeline-panel" aria-labelledby="timeline-heading">
+            <h2 class="panel-title" id="timeline-heading">Timeline de la VOD <small data-visible-count>—</small></h2>
+            <div class="timeline-controls">
+              <div class="filter-chips" data-filter-chips aria-label="Filtrer par type de temps fort"></div>
+              <label class="sensitivity-control" for="sensitivity-input">
+                Score min.
+                <input type="range" id="sensitivity-input" min="50" max="95" step="5" value="60" data-sensitivity-input>
+                <output data-sensitivity-output>60</output>
+              </label>
+            </div>
+            <div class="vod-timeline" data-vod-timeline>
+              <div class="vod-ruler" data-vod-ruler aria-hidden="true"></div>
+              <div class="vod-wave" data-vod-wave aria-hidden="true"></div>
+              <div data-marker-layer></div>
+            </div>
+            <ul class="highlight-list" data-highlight-list></ul>
+          </section>
+        </div>
+
+        <aside class="panel queue-panel" aria-labelledby="queue-heading">
+          <h2 class="panel-title" id="queue-heading">File d'export <small data-queue-count>0 clip</small></h2>
+          <ul class="export-queue" data-export-queue aria-live="polite"></ul>
+          <p class="export-summary" data-export-summary></p>
+          <div class="export-actions">
+            <button class="btn btn-ghost btn-small" type="button" data-clear-ready>Retirer les clips prêts</button>
+            <button class="btn btn-primary btn-small" type="button" data-start-render>Lancer le rendu</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient-footer)"/></svg>
+            <span>Highlight<strong>Forge</strong></span>
+          </a>
+          <p style="margin-top:14px;max-width:320px">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch et YouTube.</p>
+        </div>
+        <div>
+          <h4>Produit</h4>
+          <ul>
+            <li><a href="features.html">Fonctionnalités</a></li>
+            <li><a href="pricing.html">Tarifs</a></li>
+            <li><a href="studio.html">Studio de démonstration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Compte</h4>
+          <ul>
+            <li><a href="login.html">Connexion</a></li>
+            <li><a href="login.html#inscription">Créer un compte</a></li>
+            <li><a href="pricing.html#faq">Questions fréquentes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:bonjour@highlightforge.fr">bonjour@highlightforge.fr</a></li>
+            <li>12 quai des Chartrons<br>33000 Bordeaux</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-current-year>2026</span> HighlightForge SAS — Projet de démonstration.</span>
+        <span>Twitch et YouTube sont des marques de leurs détenteurs respectifs.</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/main.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>

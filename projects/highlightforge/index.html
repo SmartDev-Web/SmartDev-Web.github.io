@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HighlightForge — Vos meilleurs moments de stream, forgés automatiquement</title>
+  <meta name="description" content="HighlightForge repère les temps forts de vos streams Twitch et VOD YouTube et les transforme en clips prêts à publier : détection automatique des temps forts, recadrage vertical, export en un clic.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden" href="#main-content">Aller au contenu</a>
+  <header class="site-header" data-site-header>
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient)"/></svg>
+        <span>Highlight<strong>Forge</strong></span>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu" data-burger><span></span><span></span><span></span></button>
+      <nav id="main-navigation" class="main-nav" aria-label="Navigation principale" data-main-nav>
+        <ul>
+          <li><a href="index.html" aria-current="page">Accueil</a></li>
+          <li><a href="features.html">Fonctionnalités</a></li>
+          <li><a href="pricing.html">Tarifs</a></li>
+          <li><a href="studio.html">Studio</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn btn-ghost btn-small" href="login.html">Connexion</a>
+          <a class="btn btn-primary btn-small" href="login.html#inscription">Essai gratuit</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="grid-backdrop"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Twitch · YouTube · Kick</span>
+          <h1>Vos <span class="text-gradient">temps forts</span> de stream, forgés pendant que vous dormez.</h1>
+          <p class="hero-lead">HighlightForge analyse chaque VOD — pics audio, réactions du chat, kills, clutchs — et vous livre des clips prêts à publier en 16:9 comme en vertical. Fini les nuits passées à scruter quatre heures de rediffusion.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="login.html#inscription">Démarrer gratuitement
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="studio.html">Essayer le studio</a>
+          </div>
+          <div class="hero-proof">
+            <div class="avatar-stack">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Portrait d'une streameuse utilisatrice de HighlightForge">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Portrait d'un streamer utilisateur de HighlightForge">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&q=80" alt="Portrait d'une créatrice de contenu">
+            </div>
+            <span><strong>4 800+ créateurs</strong> forgent leurs clips chaque semaine</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Aperçu de l'analyse d'une VOD">
+          <div class="floating-card is-top"><strong>+312 %</strong>de vues sur les Shorts</div>
+          <div class="hero-visual-bar">
+            <span class="live-dot">ANALYSE</span>
+            <span>VOD #4182 · Valorant ranked · 3 h 12 min</span>
+          </div>
+          <div class="hero-screen">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80" alt="Joueurs concentrés devant leurs écrans lors d'une session de jeu compétitif">
+            <div class="hero-screen-overlay">
+              <span class="detected-chip" data-hero-chip>● Clutch 1v4 détecté · 01:47:12</span>
+            </div>
+          </div>
+          <canvas class="waveform-canvas" data-hero-waveform aria-hidden="true"></canvas>
+          <div class="hero-legend">
+            <span><i class="legend-swatch" style="background:#00f0ff"></i>Audio</span>
+            <span><i class="legend-swatch" style="background:#ff2bd6"></i>Pic du chat</span>
+            <span><i class="legend-swatch" style="background:#b6ff3b"></i>Temps fort retenu</span>
+          </div>
+          <div class="floating-card is-bottom"><strong>14 clips</strong>prêts en 6 min</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="logo-strip">
+      <div class="container logo-strip-inner">
+        <span>Ils nous font confiance</span>
+        <span>Team Lumen</span>
+        <span>Atlas Esport</span>
+        <span>Pixel Arena</span>
+        <span>Nordwave</span>
+        <span>Studio Kraken</span>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading is-centered reveal">
+          <span class="eyebrow">Pourquoi HighlightForge</span>
+          <h2>Toute la chaîne du clip, <span class="text-gradient">de la VOD au post</span>.</h2>
+          <p>Importez un lien, laissez la forge chauffer. Vous gardez la main sur chaque coupe, chaque format et chaque titre.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-8 4 16 3-8h5"/></svg></div>
+            <h3>Détection automatique des temps forts</h3>
+            <p>Volume de la voix, cris du public, rafales de messages, sons de kill : quatorze signaux combinés pour repérer ce qui mérite d'être vu.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon-box is-magenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+            <h3>Recadrage vertical intelligent</h3>
+            <p>La facecam et la zone de jeu sont repérées puis empilées automatiquement pour TikTok, Reels et YouTube Shorts.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon-box is-lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6"/></svg></div>
+            <h3>Sous-titres animés</h3>
+            <p>Transcription française précise à 97 %, styles karaoké prêts à l'emploi et emojis contextuels désactivables.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg></div>
+            <h3>Import en un lien</h3>
+            <p>Collez l'URL d'une VOD Twitch ou YouTube : HighlightForge récupère la vidéo et le chat, même pour des sessions de 12 heures.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon-box is-magenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <h3>Publication programmée</h3>
+            <p>Planifiez vos clips sur TikTok, YouTube et X depuis un seul calendrier, avec les meilleurs créneaux suggérés pour votre audience.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon-box is-lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 1.8 6 5"/></svg></div>
+            <h3>Espace d'équipe</h3>
+            <p>Invitez votre monteur ou votre manager, validez les clips à plusieurs et gardez un historique propre de chaque export.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat reveal"><span class="stat-value text-gradient" data-counter="1.8" data-decimals="1" data-suffix=" M">0</span><span class="stat-label">clips forgés depuis 2024</span></div>
+          <div class="stat reveal"><span class="stat-value text-gradient" data-counter="6" data-suffix=" min">0</span><span class="stat-label">pour analyser 3 h de VOD</span></div>
+          <div class="stat reveal"><span class="stat-value text-gradient" data-counter="92" data-suffix=" %">0</span><span class="stat-label">de temps forts validés sans retouche</span></div>
+          <div class="stat reveal"><span class="stat-value text-gradient" data-counter="11" data-suffix=" h">0</span><span class="stat-label">de montage économisées par semaine</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Comment ça marche</span>
+          <h2>Trois étapes, zéro timeline à scruter.</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <h3>Connectez votre chaîne</h3>
+            <p>Liez Twitch ou YouTube en deux clics. Chaque nouvelle VOD est importée automatiquement à la fin du live.</p>
+          </div>
+          <div class="step reveal">
+            <h3>La forge analyse</h3>
+            <p>Audio, image et chat sont croisés pour attribuer un score à chaque séquence. Les meilleurs passages remontent en tête.</p>
+          </div>
+          <div class="step reveal">
+            <h3>Ajustez et publiez</h3>
+            <p>Affinez les coupes dans le studio, choisissez le format, puis exportez ou programmez la publication.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-heading is-centered reveal">
+          <span class="eyebrow">Témoignages</span>
+          <h2>Ils ont rangé leur logiciel de montage.</h2>
+        </div>
+        <div class="testimonial-grid">
+          <figure class="testimonial reveal">
+            <div class="rating" aria-label="Note : 5 sur 5">★★★★★</div>
+            <blockquote>« Je streame 30 heures par semaine. Avant, je postais deux clips le dimanche. Aujourd'hui j'en publie un par jour et ma chaîne Shorts a passé les 80 000 abonnés. »</blockquote>
+            <figcaption>
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="Portrait de Léa Marchetti">
+              <div><strong>Léa « Kyrielle » Marchetti</strong><span>Streameuse Valorant · 142 k followers</span></div>
+            </figcaption>
+          </figure>
+          <figure class="testimonial reveal">
+            <div class="rating" aria-label="Note : 5 sur 5">★★★★★</div>
+            <blockquote>« Le recadrage vertical est bluffant : la facecam est toujours au bon endroit, même quand je change de scène OBS en plein live. »</blockquote>
+            <figcaption>
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=160&q=80" alt="Portrait de Thomas Ferreira">
+              <div><strong>Thomas « Ferro » Ferreira</strong><span>Créateur speedrun · YouTube</span></div>
+            </figcaption>
+          </figure>
+          <figure class="testimonial reveal">
+            <div class="rating" aria-label="Note : 4,5 sur 5">★★★★½</div>
+            <blockquote>« On gère six joueurs pro et leurs streams perso. Avec l'espace d'équipe, notre community manager valide les clips depuis son téléphone. »</blockquote>
+            <figcaption>
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=160&q=80" alt="Portrait de Camille Roux">
+              <div><strong>Camille Roux</strong><span>Responsable contenu · Atlas Esport</span></div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <span class="eyebrow">Gratuit pendant 14 jours</span>
+          <h2>Votre prochain live mérite mieux qu'une rediffusion oubliée.</h2>
+          <p>Sans carte bancaire. Trois VOD analysées offertes, et vos clips restent à vous même si vous partez.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="login.html#inscription">Créer mon compte</a>
+            <a class="btn btn-ghost" href="pricing.html">Voir les tarifs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient-footer)"/></svg>
+            <span>Highlight<strong>Forge</strong></span>
+          </a>
+          <p style="margin-top:14px;max-width:320px">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch et YouTube.</p>
+        </div>
+        <div>
+          <h4>Produit</h4>
+          <ul>
+            <li><a href="features.html">Fonctionnalités</a></li>
+            <li><a href="pricing.html">Tarifs</a></li>
+            <li><a href="studio.html">Studio de démonstration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Compte</h4>
+          <ul>
+            <li><a href="login.html">Connexion</a></li>
+            <li><a href="login.html#inscription">Créer un compte</a></li>
+            <li><a href="pricing.html#faq">Questions fréquentes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:bonjour@highlightforge.fr">bonjour@highlightforge.fr</a></li>
+            <li>12 quai des Chartrons<br>33000 Bordeaux</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-current-year>2026</span> HighlightForge SAS — Projet de démonstration.</span>
+        <span>Twitch et YouTube sont des marques de leurs détenteurs respectifs.</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/main.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

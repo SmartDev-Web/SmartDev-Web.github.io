@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billetterie — Echoes Festival 2027</title>
+  <meta name="description" content="Achetez vos billets pour Echoes Festival 2027 : pass 3 jours, pass camping, VIP, billets à la journée et options parking ou navette.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden" href="#main-content">Aller au contenu</a>
+  <header class="site-header" data-site-header>
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Echoes Festival, retour à l'accueil">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd23f"/><stop offset=".5" stop-color="#ff3d8b"/><stop offset="1" stop-color="#7b3dff"/></linearGradient></defs><circle cx="20" cy="20" r="18" fill="none" stroke="url(#logo-gradient)" stroke-width="2.5"/><circle cx="20" cy="20" r="11.5" fill="none" stroke="url(#logo-gradient)" stroke-width="2.5"/><circle cx="20" cy="20" r="5" fill="url(#logo-gradient)"/></svg>
+        <span>Echoes<small>Festival 2027</small></span>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu" data-burger><span></span><span></span><span></span></button>
+      <nav id="main-navigation" class="main-nav" aria-label="Navigation principale" data-main-nav>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="lineup.html">Line-up</a></li>
+          <li><a href="programme.html">Programme</a></li>
+          <li><a href="infos.html">Infos pratiques</a></li>
+        </ul>
+        <a class="btn btn-primary btn-small" href="billetterie.html" aria-current="page">Billetterie</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="blob-field" aria-hidden="true">
+        <span class="blob is-yellow"></span>
+        <span class="blob is-pink"></span>
+      </div>
+      <div class="container">
+        <span class="kicker">Billetterie officielle</span>
+        <h1>Vos billets,<br><span class="text-sunset">en trois clics</span>.</h1>
+        <p>Billets nominatifs envoyés par e-mail et dans l'application. Paiement sécurisé, possibilité de payer en trois fois sans frais à partir de 120 €.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:10px">
+      <div class="container ticket-layout">
+        <div data-ticket-catalog></div>
+
+        <aside class="order-summary" aria-labelledby="summary-heading">
+          <div data-cart-panel>
+            <h2 id="summary-heading">Votre commande</h2>
+            <ul class="summary-lines" data-summary-lines></ul>
+            <p class="summary-empty" data-summary-empty>Aucun billet sélectionné. Utilisez les boutons + pour composer votre commande.</p>
+            <form class="promo-form" novalidate data-promo-form>
+              <label class="visually-hidden" for="promo-code">Code promo</label>
+              <input class="text-input" type="text" id="promo-code" name="promo" placeholder="Code promo" autocomplete="off" data-promo-input>
+              <button class="btn btn-outline btn-small" type="submit">Appliquer</button>
+            </form>
+            <p class="promo-message" aria-live="polite" data-promo-message></p>
+            <div class="summary-totals">
+              <div><span>Sous-total</span><span data-total-subtotal>0,00 €</span></div>
+              <div><span>Frais de service</span><span data-total-fees>0,00 €</span></div>
+              <div class="is-discount" data-discount-row hidden><span data-discount-label>Réduction</span><span data-total-discount>0,00 €</span></div>
+              <div class="summary-total"><span>Total</span><span data-total-amount aria-live="polite">0,00 €</span></div>
+            </div>
+            <button class="btn btn-primary btn-block" type="button" style="margin-top:18px" data-open-checkout disabled>Valider ma commande</button>
+          </div>
+
+          <form class="checkout-panel" novalidate hidden data-checkout-form>
+            <h2>Coordonnées</h2>
+            <p style="color:var(--color-text-muted);font-size:.92rem">Les billets seront envoyés à cette adresse. Total à régler : <strong data-checkout-total>0,00 €</strong></p>
+            <div class="form-field">
+              <label for="buyer-firstname">Prénom</label>
+              <input class="text-input" type="text" id="buyer-firstname" name="firstname" autocomplete="given-name" required data-validate="name">
+              <span class="field-error" aria-live="polite"></span>
+            </div>
+            <div class="form-field">
+              <label for="buyer-lastname">Nom</label>
+              <input class="text-input" type="text" id="buyer-lastname" name="lastname" autocomplete="family-name" required data-validate="name">
+              <span class="field-error" aria-live="polite"></span>
+            </div>
+            <div class="form-field">
+              <label for="buyer-email">E-mail</label>
+              <input class="text-input" type="email" id="buyer-email" name="email" autocomplete="email" placeholder="prenom@exemple.fr" required data-validate="email">
+              <span class="field-error" aria-live="polite"></span>
+            </div>
+            <div class="form-field">
+              <label class="checkbox-field" for="buyer-terms"><input type="checkbox" id="buyer-terms" name="terms" required data-validate="checkbox"> J'accepte les conditions générales de vente et je confirme avoir plus de 16 ans (ou être accompagné·e d'un adulte).</label>
+              <span class="field-error" aria-live="polite"></span>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit" data-pay-button>Payer</button>
+            <button class="btn btn-outline btn-block" type="button" style="margin-top:10px" data-back-to-cart>Modifier ma commande</button>
+            <p class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Démonstration : aucun paiement réel n'est effectué.</p>
+          </form>
+
+          <div class="checkout-success" role="status" hidden data-checkout-success>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3.2L17 9"/></svg>
+            <h2>C'est validé&nbsp;!</h2>
+            <p style="color:var(--color-text-muted)" data-success-message>Vos billets arrivent par e-mail.</p>
+            <span class="order-reference" data-order-reference>ECH-27-000000</span>
+            <a class="btn btn-primary btn-block" href="programme.html">Préparer mon planning</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html" aria-label="Echoes Festival, retour à l'accueil">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd23f"/><stop offset=".5" stop-color="#ff3d8b"/><stop offset="1" stop-color="#7b3dff"/></linearGradient></defs><circle cx="20" cy="20" r="18" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.5"/><circle cx="20" cy="20" r="11.5" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.5"/><circle cx="20" cy="20" r="5" fill="url(#logo-gradient-footer)"/></svg>
+            <span>Echoes<small>Festival 2027</small></span>
+          </a>
+          <p class="footer-tagline">Trois jours d'électro et d'indie au bord de l'eau, à 20 minutes de Lyon. 9, 10 et 11 juillet 2027 au Domaine des Grands Étangs, Miribel.</p>
+        </div>
+        <div>
+          <h4>Festival</h4>
+          <ul>
+            <li><a href="lineup.html">Line-up</a></li>
+            <li><a href="programme.html">Programme</a></li>
+            <li><a href="programme.html#mon-planning">Mon planning</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Venir</h4>
+          <ul>
+            <li><a href="billetterie.html">Billetterie</a></li>
+            <li><a href="infos.html#acces">Accès &amp; navettes</a></li>
+            <li><a href="infos.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@echoes-festival.fr">hello@echoes-festival.fr</a></li>
+            <li>Association Échos du Rhône<br>4 rue Paul Bert, 69003 Lyon</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-current-year>2026</span> Echoes Festival — Projet de démonstration, événement fictif.</span>
+        <span>Licences d'entrepreneur de spectacles fictives.</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/main.js"></script>
+  <script src="js/tickets.js"></script>
+</body>
+</html>

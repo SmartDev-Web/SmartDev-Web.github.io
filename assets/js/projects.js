@@ -10,7 +10,7 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Application SaaS",
     description: "Plateforme qui détecte les temps forts des streams et forge des clips prêts à publier, avec un studio de montage interactif.",
     tags: ["Éditeur timeline", "Tarifs dynamiques", "Auth"],
-    accentColor: "#00e5ff",
+    accentColor: "#00f0ff",
     imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=75"
   },
   {
@@ -100,7 +100,7 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Événementiel",
     description: "Festival de musique près de Lyon : compte à rebours, line-up filtrable, planning personnel et billetterie.",
     tags: ["Billetterie", "Planning perso", "Countdown"],
-    accentColor: "#ff3d81",
+    accentColor: "#ff3d8b",
     imageUrl: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=75"
   }
 ];

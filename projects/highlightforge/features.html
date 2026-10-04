@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fonctionnalités — HighlightForge</title>
+  <meta name="description" content="Détection automatique des temps forts, recadrage vertical, sous-titres, publication programmée : découvrez toutes les fonctionnalités de HighlightForge.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden" href="#main-content">Aller au contenu</a>
+  <header class="site-header" data-site-header>
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient)"/></svg>
+        <span>Highlight<strong>Forge</strong></span>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu" data-burger><span></span><span></span><span></span></button>
+      <nav id="main-navigation" class="main-nav" aria-label="Navigation principale" data-main-nav>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="features.html" aria-current="page">Fonctionnalités</a></li>
+          <li><a href="pricing.html">Tarifs</a></li>
+          <li><a href="studio.html">Studio</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn btn-ghost btn-small" href="login.html">Connexion</a>
+          <a class="btn btn-primary btn-small" href="login.html#inscription">Essai gratuit</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="grid-backdrop"></div>
+      <div class="container">
+        <span class="eyebrow">Fonctionnalités</span>
+        <h1>Une forge complète pour <span class="text-gradient">chaque minute de live</span>.</h1>
+        <p>De l'import de la VOD jusqu'à la publication sur vos réseaux, chaque étape a été pensée avec des streamers qui passent plus de temps en live qu'en montage.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:20px">
+      <div class="container">
+        <article class="feature-detail reveal">
+          <div class="feature-detail-media">
+            <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=1200&q=80" alt="Setup de jeu éclairé de néons violets et bleus">
+          </div>
+          <div>
+            <span class="eyebrow">Moteur d'analyse</span>
+            <h2>Détection automatique des temps forts</h2>
+            <p>Chaque VOD est découpée en fenêtres de deux secondes. Pour chacune, HighlightForge mesure quatorze signaux et calcule un score d'intérêt de 0 à 100. Les séquences au-dessus de votre seuil deviennent des clips candidats.</p>
+            <ul class="check-list">
+              <li>Pics de volume et changements brusques d'intonation dans la voix</li>
+              <li>Accélération du chat, emotes « PogChamp », « KEKW » et dons Bits</li>
+              <li>Sons de jeu reconnus : kills, victoires, alertes de fin de manche</li>
+              <li>Profils pré-réglés pour Valorant, League of Legends, Fortnite, CS2 et Just Chatting</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="feature-detail is-reversed reveal">
+          <div class="feature-detail-media">
+            <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Poste de streaming avec écran, clavier et éclairage d'ambiance">
+          </div>
+          <div>
+            <span class="eyebrow">Formats</span>
+            <h2>Recadrage vertical et multi-format</h2>
+            <p>Un même temps fort, trois déclinaisons. La facecam est repérée sur l'image et placée au-dessus de la zone de jeu pour un rendu 9:16 propre, sans bandes noires.</p>
+            <ul class="check-list">
+              <li>Exports 16:9, 9:16 et 1:1 en 1080p ou 1440p à 60 images/s</li>
+              <li>Mises en page enregistrables par scène OBS</li>
+              <li>Habillage à vos couleurs : logo, cadre, écran de fin</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="feature-detail reveal">
+          <div class="feature-detail-media">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Manette de jeu sous une lumière néon">
+          </div>
+          <div>
+            <span class="eyebrow">Studio</span>
+            <h2>Un éditeur pensé pour aller vite</h2>
+            <p>Le studio affiche la timeline de la VOD avec les marqueurs détectés. Un clic pour prévisualiser, deux poignées pour ajuster la coupe, un bouton pour ajouter à la file d'export.</p>
+            <ul class="check-list">
+              <li>Raccourcis clavier inspirés des logiciels de montage pro</li>
+              <li>Seuil de sensibilité réglable en direct</li>
+              <li>File d'export avec rendu parallèle sur nos serveurs</li>
+            </ul>
+            <a class="btn btn-ghost" href="studio.html" style="margin-top:24px">Ouvrir le studio de démonstration</a>
+          </div>
+        </article>
+
+        <article class="feature-detail is-reversed reveal">
+          <div class="feature-detail-media">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80" alt="Console de jeu rétro et manette posées sur une table">
+          </div>
+          <div>
+            <span class="eyebrow">Diffusion</span>
+            <h2>Publication programmée et statistiques</h2>
+            <p>Connectez TikTok, YouTube, Instagram et X. HighlightForge suggère les créneaux où votre audience est la plus active et regroupe les performances de chaque clip dans un tableau de bord unique.</p>
+            <ul class="check-list">
+              <li>Calendrier éditorial glisser-déposer</li>
+              <li>Titres et hashtags proposés à partir du contenu du clip</li>
+              <li>Rapport hebdomadaire envoyé chaque lundi à 9 h</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-heading is-centered reveal">
+          <span class="eyebrow">Pour qui ?</span>
+          <h2>Une forge, trois façons de l'utiliser.</h2>
+        </div>
+        <div class="audience-tabs" role="tablist" aria-label="Profils d'utilisateurs" data-audience-tabs>
+          <button class="audience-tab" type="button" role="tab" id="tab-streamers" aria-controls="panel-streamers" aria-selected="true">Streamers solo</button>
+          <button class="audience-tab" type="button" role="tab" id="tab-teams" aria-controls="panel-teams" aria-selected="false" tabindex="-1">Équipes esport</button>
+          <button class="audience-tab" type="button" role="tab" id="tab-agencies" aria-controls="panel-agencies" aria-selected="false" tabindex="-1">Agences</button>
+        </div>
+        <div class="audience-panel" role="tabpanel" id="panel-streamers" aria-labelledby="tab-streamers">
+          <h3>Publiez tous les jours sans sacrifier vos soirées</h3>
+          <p>Vous finissez votre live, vous allez dormir. Le lendemain matin, une dizaine de clips classés par score vous attendent. Validez ceux qui vous plaisent depuis votre téléphone et programmez-les pour la semaine.</p>
+          <ul class="check-list">
+            <li>Import automatique à la fin de chaque live</li>
+            <li>Notification Discord quand les clips sont prêts</li>
+          </ul>
+        </div>
+        <div class="audience-panel" role="tabpanel" id="panel-teams" aria-labelledby="tab-teams" hidden>
+          <h3>Centralisez les streams de tout votre roster</h3>
+          <p>Suivez les chaînes de vos joueurs, repérez les actions marquantes en tournoi et alimentez les réseaux de la structure avec un circuit de validation clair.</p>
+          <ul class="check-list">
+            <li>Jusqu'à 15 chaînes connectées sur l'offre Studio</li>
+            <li>Rôles éditeur, valideur et lecteur</li>
+          </ul>
+        </div>
+        <div class="audience-panel" role="tabpanel" id="panel-agencies" aria-labelledby="tab-agencies" hidden>
+          <h3>Industrialisez la production de contenus courts</h3>
+          <p>Gérez plusieurs créateurs dans des espaces séparés, appliquez la charte de chaque marque et exportez des rapports de performance prêts à envoyer à vos clients.</p>
+          <ul class="check-list">
+            <li>Espaces clients isolés et facturation regroupée</li>
+            <li>Accès API pour brancher vos propres outils</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading is-centered reveal">
+          <span class="eyebrow">Comparatif</span>
+          <h2>HighlightForge face au montage manuel.</h2>
+          <p>Estimations pour une VOD de 4 heures, mesurées auprès de 120 créateurs de notre programme bêta.</p>
+        </div>
+        <div class="table-wrapper reveal">
+          <table class="comparison-table">
+            <caption class="visually-hidden">Comparaison entre HighlightForge, le montage manuel et les outils de clip natifs</caption>
+            <thead>
+              <tr>
+                <th scope="col">Critère</th>
+                <th scope="col" class="is-highlighted">HighlightForge</th>
+                <th scope="col">Montage manuel</th>
+                <th scope="col">Clips natifs Twitch</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Temps pour trouver les temps forts</th><td class="is-highlighted">6 minutes</td><td>2 h 30</td><td>Dépend des viewers</td></tr>
+              <tr><th scope="row">Analyse du chat</th><td class="is-highlighted"><span class="yes">✔</span> Oui</td><td><span class="no">✘</span> Non</td><td><span class="no">✘</span> Non</td></tr>
+              <tr><th scope="row">Format vertical automatique</th><td class="is-highlighted"><span class="yes">✔</span> Oui</td><td>Manuel</td><td><span class="no">✘</span> Non</td></tr>
+              <tr><th scope="row">Sous-titres français</th><td class="is-highlighted"><span class="yes">✔</span> Animés</td><td>Manuel</td><td><span class="no">✘</span> Non</td></tr>
+              <tr><th scope="row">Publication multi-réseaux</th><td class="is-highlighted"><span class="yes">✔</span> Programmable</td><td>Manuel</td><td><span class="no">✘</span> Non</td></tr>
+              <tr><th scope="row">Coût mensuel indicatif</th><td class="is-highlighted">dès 0 €</td><td>300 à 900 € (monteur)</td><td>Gratuit</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Envie de voir la forge en action ?</h2>
+          <p>Le studio de démonstration contient une vraie VOD analysée. Cliquez sur les marqueurs, ajustez les coupes, remplissez votre file d'export.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="studio.html">Ouvrir le studio</a>
+            <a class="btn btn-ghost" href="pricing.html">Comparer les offres</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient-footer)"/></svg>
+            <span>Highlight<strong>Forge</strong></span>
+          </a>
+          <p style="margin-top:14px;max-width:320px">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch et YouTube.</p>
+        </div>
+        <div>
+          <h4>Produit</h4>
+          <ul>
+            <li><a href="features.html">Fonctionnalités</a></li>
+            <li><a href="pricing.html">Tarifs</a></li>
+            <li><a href="studio.html">Studio de démonstration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Compte</h4>
+          <ul>
+            <li><a href="login.html">Connexion</a></li>
+            <li><a href="login.html#inscription">Créer un compte</a></li>
+            <li><a href="pricing.html#faq">Questions fréquentes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:bonjour@highlightforge.fr">bonjour@highlightforge.fr</a></li>
+            <li>12 quai des Chartrons<br>33000 Bordeaux</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-current-year>2026</span> HighlightForge SAS — Projet de démonstration.</span>
+        <span>Twitch et YouTube sont des marques de leurs détenteurs respectifs.</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/main.js"></script>
+  <script src="js/features.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarifs — HighlightForge</title>
+  <meta name="description" content="Offres HighlightForge : Starter gratuit, Pro et Studio. Facturation mensuelle ou annuelle avec deux mois offerts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden" href="#main-content">Aller au contenu</a>
+  <header class="site-header" data-site-header>
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient)"/></svg>
+        <span>Highlight<strong>Forge</strong></span>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu" data-burger><span></span><span></span><span></span></button>
+      <nav id="main-navigation" class="main-nav" aria-label="Navigation principale" data-main-nav>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="features.html">Fonctionnalités</a></li>
+          <li><a href="pricing.html" aria-current="page">Tarifs</a></li>
+          <li><a href="studio.html">Studio</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn btn-ghost btn-small" href="login.html">Connexion</a>
+          <a class="btn btn-primary btn-small" href="login.html#inscription">Essai gratuit</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="grid-backdrop"></div>
+      <div class="container">
+        <span class="eyebrow">Tarifs</span>
+        <h1>Un prix qui suit <span class="text-gradient">votre rythme de live</span>.</h1>
+        <p>Commencez gratuitement, passez à l'offre supérieure quand votre chaîne décolle. Sans engagement, résiliable en un clic.</p>
+        <div class="billing-toggle">
+          <span class="billing-label is-active" data-billing-label="monthly">Mensuel</span>
+          <button class="switch" type="button" role="switch" aria-checked="false" aria-label="Facturation annuelle" data-billing-switch></button>
+          <span class="billing-label" data-billing-label="yearly">Annuel</span>
+          <span class="saving-pill">−20 %</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:30px">
+      <div class="container">
+        <div class="pricing-grid">
+          <article class="plan reveal" data-plan data-monthly-price="0" data-yearly-price="0">
+            <h3>Starter</h3>
+            <p class="plan-description">Pour tester la forge sur vos premiers lives.</p>
+            <div class="plan-price"><span class="plan-price-amount" data-plan-amount>0</span><span class="plan-price-period">€ / mois</span></div>
+            <p class="plan-billing-note" data-plan-note data-monthly-note="Gratuit pour toujours" data-yearly-note="Gratuit pour toujours">Gratuit pour toujours</p>
+            <ul class="check-list">
+              <li>3 VOD analysées par mois</li>
+              <li>VOD jusqu'à 2 heures</li>
+              <li>Export 720p avec filigrane</li>
+              <li>Formats 16:9 et 9:16</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="login.html#inscription">Commencer</a>
+          </article>
+          <article class="plan is-featured reveal" data-plan data-monthly-price="14" data-yearly-price="11">
+            <span class="plan-badge">Le plus choisi</span>
+            <h3>Pro</h3>
+            <p class="plan-description">Pour les streamers réguliers qui publient chaque jour.</p>
+            <div class="plan-price"><span class="plan-price-amount" data-plan-amount>14</span><span class="plan-price-period">€ / mois</span></div>
+            <p class="plan-billing-note" data-plan-note data-monthly-note="Sans engagement" data-yearly-note="Soit 132 € facturés par an">Sans engagement</p>
+            <ul class="check-list">
+              <li>VOD illimitées jusqu'à 12 heures</li>
+              <li>Export 1080p 60 i/s sans filigrane</li>
+              <li>Sous-titres animés et habillage personnalisé</li>
+              <li>Publication programmée sur 4 réseaux</li>
+              <li>Import automatique après chaque live</li>
+            </ul>
+            <a class="btn btn-primary btn-block" href="login.html#inscription">Essayer 14 jours</a>
+          </article>
+          <article class="plan reveal" data-plan data-monthly-price="39" data-yearly-price="31">
+            <h3>Studio</h3>
+            <p class="plan-description">Pour les équipes esport, agences et créateurs multi-chaînes.</p>
+            <div class="plan-price"><span class="plan-price-amount" data-plan-amount>39</span><span class="plan-price-period">€ / mois</span></div>
+            <p class="plan-billing-note" data-plan-note data-monthly-note="Sans engagement" data-yearly-note="Soit 372 € facturés par an">Sans engagement</p>
+            <ul class="check-list">
+              <li>Tout le plan Pro</li>
+              <li>15 chaînes connectées</li>
+              <li>5 sièges d'équipe et circuit de validation</li>
+              <li>Export 1440p et accès API</li>
+              <li>Support prioritaire en français</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="login.html#inscription">Choisir Studio</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section-heading is-centered reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>Questions fréquentes</h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item reveal" data-faq-item>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-1" data-faq-question>Comment fonctionne la détection automatique des temps forts ?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-answer" id="faq-answer-1" data-faq-answer><div class="faq-answer-inner">HighlightForge combine des mesures audio (volume, intonation), visuelles (changements de scène, interfaces de jeu) et l'activité du chat. Chaque séquence reçoit un score : celles qui dépassent votre seuil deviennent des clips candidats que vous validez ou ajustez.</div></div>
+          </div>
+          <div class="faq-item reveal" data-faq-item>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-2" data-faq-question>Puis-je changer d'offre à tout moment ?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-answer" id="faq-answer-2" data-faq-answer><div class="faq-answer-inner">Oui. Le passage à une offre supérieure est immédiat et calculé au prorata. Un retour à une offre inférieure prend effet à la fin de la période en cours.</div></div>
+          </div>
+          <div class="faq-item reveal" data-faq-item>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-3" data-faq-question>Mes vidéos sont-elles stockées en Europe ?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-answer" id="faq-answer-3" data-faq-answer><div class="faq-answer-inner">Toutes les VOD et tous les clips sont traités et stockés dans des centres de données situés en France (Roubaix et Gravelines). Les VOD sources sont supprimées 30 jours après l'analyse, les clips exportés restent disponibles tant que votre compte est actif.</div></div>
+          </div>
+          <div class="faq-item reveal" data-faq-item>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-4" data-faq-question>Quels jeux sont pris en charge ?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-answer" id="faq-answer-4" data-faq-answer><div class="faq-answer-inner">La détection fonctionne sur tous les contenus. Des profils optimisés existent pour Valorant, League of Legends, CS2, Fortnite, Apex Legends, Rocket League, Minecraft et les streams Just Chatting.</div></div>
+          </div>
+          <div class="faq-item reveal" data-faq-item>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-5" data-faq-question>Proposez-vous une réduction pour les associations et écoles ?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-answer" id="faq-answer-5" data-faq-answer><div class="faq-answer-inner">Oui : les associations esport et les écoles bénéficient de 50 % de réduction sur l'offre Studio. Écrivez-nous à bonjour@highlightforge.fr avec un justificatif.</div></div>
+          </div>
+          <div class="faq-item reveal" data-faq-item>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-6" data-faq-question>Quels moyens de paiement acceptez-vous ?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-answer" id="faq-answer-6" data-faq-answer><div class="faq-answer-inner">Carte bancaire (Visa, Mastercard, CB), PayPal et prélèvement SEPA pour les offres annuelles. Une facture conforme est générée automatiquement chaque mois.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Encore une hésitation ?</h2>
+          <p>Testez le studio de démonstration sans créer de compte : vous verrez exactement ce que la forge produit sur une vraie VOD.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="studio.html">Tester le studio</a>
+            <a class="btn btn-ghost" href="features.html">Revoir les fonctionnalités</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html" aria-label="HighlightForge, retour à l'accueil">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient-footer)"/></svg>
+            <span>Highlight<strong>Forge</strong></span>
+          </a>
+          <p style="margin-top:14px;max-width:320px">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch et YouTube.</p>
+        </div>
+        <div>
+          <h4>Produit</h4>
+          <ul>
+            <li><a href="features.html">Fonctionnalités</a></li>
+            <li><a href="pricing.html">Tarifs</a></li>
+            <li><a href="studio.html">Studio de démonstration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Compte</h4>
+          <ul>
+            <li><a href="login.html">Connexion</a></li>
+            <li><a href="login.html#inscription">Créer un compte</a></li>
+            <li><a href="pricing.html#faq">Questions fréquentes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:bonjour@highlightforge.fr">bonjour@highlightforge.fr</a></li>
+            <li>12 quai des Chartrons<br>33000 Bordeaux</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-current-year>2026</span> HighlightForge SAS — Projet de démonstration.</span>
+        <span>Twitch et YouTube sont des marques de leurs détenteurs respectifs.</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+  <script src="js/main.js"></script>
+  <script src="js/pricing.js"></script>
+</body>
+</html>
