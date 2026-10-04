@@ -18,6 +18,8 @@ const frenchWeekdayNames = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', '
 
 const openStatusElement = document.querySelector('[data-open-status]');
 
+let openingStatusRefreshTimeoutId = 0;
+
 /* Formats minutes since midnight as « 19h » or « 22h30 » */
 function formatMinutesAsFrenchTime(totalMinutes) {
   const hourPart = Math.floor(totalMinutes / 60);
@@ -35,7 +37,17 @@ function findNextOpening(currentWeekday, currentMinutes) {
   return null;
 }
 
-/* Highlights today's row and writes the open / closed status */
+/* Returns the Date at which the open / closed status will next change */
+function getNextStatusChangeDate(currentDate, currentPeriod) {
+  const currentMinutes = currentDate.getHours() * 60 + currentDate.getMinutes();
+  const nextOpening = currentPeriod ? null : findNextOpening(currentDate.getDay(), currentMinutes);
+  const changeDate = new Date(currentDate);
+  changeDate.setDate(changeDate.getDate() + (nextOpening ? nextOpening.dayOffset : 0));
+  changeDate.setHours(0, currentPeriod ? currentPeriod[1] : nextOpening.startMinutes, 0, 0);
+  return changeDate;
+}
+
+/* Highlights today's row, writes the open / closed status and schedules the next status change */
 function renderOpeningStatus() {
   const currentDate = new Date();
   const currentWeekday = currentDate.getDay();
@@ -47,6 +59,8 @@ function renderOpeningStatus() {
     else hoursRowElement.removeAttribute('aria-current');
   });
   const currentPeriod = openingPeriodsByWeekday[currentWeekday].find(([periodStart, periodEnd]) => currentMinutes >= periodStart && currentMinutes < periodEnd);
+  window.clearTimeout(openingStatusRefreshTimeoutId);
+  openingStatusRefreshTimeoutId = window.setTimeout(renderOpeningStatus, getNextStatusChangeDate(currentDate, currentPeriod).getTime() - currentDate.getTime() + 1000);
   openStatusElement.classList.toggle('is-open', Boolean(currentPeriod));
   if (currentPeriod) {
     openStatusElement.textContent = `Ouvert en ce moment · jusqu’à ${formatMinutesAsFrenchTime(currentPeriod[1])}`;
@@ -57,5 +71,8 @@ function renderOpeningStatus() {
   openStatusElement.textContent = `Fermé · réouverture ${nextDayLabel} à ${formatMinutesAsFrenchTime(nextOpening.startMinutes)}`;
 }
 
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') renderOpeningStatus();
+});
+
 renderOpeningStatus();
-setInterval(renderOpeningStatus, 60 * 1000);

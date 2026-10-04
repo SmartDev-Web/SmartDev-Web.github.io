@@ -1,7 +1,7 @@
 /* ==========================================================================
    Maison Ambre — shared behaviours used on every page
    Header state, mobile navigation, page transitions, scroll reveal,
-   animated counters, parallax and form validation helpers.
+   animated counters and form validation helpers.
    ========================================================================== */
 
 const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -122,26 +122,6 @@ function initializeAnimatedCounters() {
   counterElements.forEach((counterElement) => counterObserver.observe(counterElement));
 }
 
-/* Moves parallax layers at a fraction of the scroll speed */
-function initializeParallaxLayers() {
-  const parallaxElements = document.querySelectorAll('[data-parallax-speed]');
-  if (!parallaxElements.length || prefersReducedMotionQuery.matches) return;
-  let isFrameRequested = false;
-  const applyParallaxOffsets = () => {
-    parallaxElements.forEach((parallaxElement) => {
-      const parallaxSpeed = Number(parallaxElement.dataset.parallaxSpeed);
-      parallaxElement.style.transform = `translate3d(0, ${(window.scrollY * parallaxSpeed).toFixed(1)}px, 0)`;
-    });
-    isFrameRequested = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (isFrameRequested) return;
-    isFrameRequested = true;
-    requestAnimationFrame(applyParallaxOffsets);
-  }, { passive: true });
-  applyParallaxOffsets();
-}
-
 /* Returns the validation message for a single field, or an empty string when valid */
 function getFieldValidationMessage(fieldElement) {
   const fieldValue = fieldElement.value.trim();
@@ -223,7 +203,6 @@ initializeMobileNavigation();
 initializePageTransitions();
 initializeScrollReveal();
 initializeAnimatedCounters();
-initializeParallaxLayers();
 initializeLiveValidation();
 initializeSimpleForms();
 renderCurrentYear();

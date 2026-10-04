@@ -76,16 +76,42 @@ function isTimeSlotInPast(dateString, timeLabel) {
   return slotDateTime.getTime() < Date.now() + 60 * 60 * 1000;
 }
 
+/* Creates the informative paragraph displayed in place of the slot grid */
+function createTimeSlotsMessage(messageText) {
+  const messageElement = document.createElement('p');
+  messageElement.className = 'time-slots__message';
+  messageElement.textContent = messageText;
+  return messageElement;
+}
+
+/* Creates one selectable time slot: a visually hidden radio input and its printed label */
+function createTimeSlotElement(serviceLabel, timeLabel, isUnavailable, slotRenderIndex) {
+  const slotLabelElement = document.createElement('label');
+  const slotRadioElement = document.createElement('input');
+  const slotTextElement = document.createElement('span');
+  slotLabelElement.className = 'time-slot';
+  slotRadioElement.type = 'radio';
+  slotRadioElement.name = 'time';
+  slotRadioElement.value = timeLabel;
+  slotRadioElement.dataset.service = serviceLabel;
+  slotRadioElement.disabled = isUnavailable;
+  slotRadioElement.checked = reservationState.selectedTime === timeLabel && !isUnavailable;
+  slotTextElement.style.setProperty('--item-index', String(slotRenderIndex));
+  slotTextElement.textContent = timeLabel.replace(':', 'h');
+  slotLabelElement.append(slotRadioElement, slotTextElement);
+  return slotLabelElement;
+}
+
 /* Renders the available time slots for the selected date */
 function renderTimeSlots() {
   timeSlotsContainerElement.replaceChildren();
   if (!reservationState.selectedDate) {
-    timeSlotsContainerElement.innerHTML = '<p class="time-slots__message">Sélectionnez une date pour afficher les créneaux disponibles.</p>';
+    timeSlotsContainerElement.appendChild(createTimeSlotsMessage('Sélectionnez une date pour afficher les créneaux disponibles.'));
     return;
   }
   const dayServices = servicesByWeekday[parseInputDate(reservationState.selectedDate).getDay()];
   if (!dayServices.length) {
-    timeSlotsContainerElement.innerHTML = '<p class="time-slots__message">Le restaurant est fermé le lundi. Choisissez un autre jour : nous serons ravis de vous accueillir.</p>';
+    timeSlotsContainerElement.appendChild(createTimeSlotsMessage('Le restaurant est fermé le lundi. Choisissez un autre jour : nous serons ravis de vous accueillir.'));
     return;
   }
   let slotRenderIndex = 0;
@@ -101,9 +127,7 @@ function renderTimeSlots() {
     slotGridElement.setAttribute('aria-label', `Créneaux du ${dayService.label.toLowerCase()}`);
     dayService.times.forEach((timeLabel) => {
       const isUnavailable = isTimeSlotFullyBooked(reservationState.selectedDate, timeLabel) || isTimeSlotInPast(reservationState.selectedDate, timeLabel);
-      const slotLabelElement = document.createElement('label');
-      slotLabelElement.className = 'time-slot';
-      slotLabelElement.innerHTML = `<input type="radio" name="time" value="${timeLabel}" data-service="${dayService.label}"${isUnavailable ? ' disabled' : ''}${reservationState.selectedTime === timeLabel && !isUnavailable ? ' checked' : ''}><span style="--item-index:${slotRenderIndex}">${timeLabel.replace(':', 'h')}</span>`;
+      const slotLabelElement = createTimeSlotElement(dayService.label, timeLabel, isUnavailable, slotRenderIndex);
       if (isUnavailable) slotLabelElement.title = 'Complet';
       else availableSlotCount += 1;
       slotRenderIndex += 1;
@@ -113,10 +137,7 @@ function renderTimeSlots() {
     timeSlotsContainerElement.appendChild(serviceWrapperElement);
   });
   if (!availableSlotCount) {
-    const fullMessageElement = document.createElement('p');
-    fullMessageElement.className = 'time-slots__message';
-    fullMessageElement.textContent = 'Tous les créneaux de cette journée sont complets. Essayez une autre date ou appelez-nous pour la liste d’attente.';
-    timeSlotsContainerElement.appendChild(fullMessageElement);
+    timeSlotsContainerElement.appendChild(createTimeSlotsMessage('Tous les créneaux de cette journée sont complets. Essayez une autre date ou appelez-nous pour la liste d’attente.'));
   }
 }
 
@@ -139,16 +160,27 @@ function validateSelectedTimeSlot() {
   return !errorMessage;
 }
 
-/* Reads the persisted reservation, if any */
+/* Returns true when a restored record has the exact shape written by persistReservation */
+function isValidStoredReservation(storedReservation) {
+  if (!storedReservation || typeof storedReservation !== 'object') return false;
+  const hasValidReference = typeof storedReservation.reference === 'string' && /^MA-[A-Z0-9]{5}$/.test(storedReservation.reference);
+  const hasValidDate = typeof storedReservation.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(storedReservation.date) && !Number.isNaN(parseInputDate(storedReservation.date).getTime());
+  const hasValidTime = typeof storedReservation.time === 'string' && /^\d{2}:\d{2}$/.test(storedReservation.time);
+  const hasValidPartySize = Number.isInteger(storedReservation.partySize) && storedReservation.partySize >= minimumPartySize && storedReservation.partySize <= maximumPartySize;
+  return hasValidReference && hasValidDate && hasValidTime && hasValidPartySize;
+}
+
+/* Reads the persisted reservation, if any, discarding malformed data */
 function loadStoredReservation() {
   try {
-    return JSON.parse(localStorage.getItem(reservationStorageKey));
+    const storedReservation = JSON.parse(localStorage.getItem(reservationStorageKey));
+    return isValidStoredReservation(storedReservation) ? storedReservation : null;
   } catch (storageError) {
     return null;
   }
 }
 
-/* Stores the reservation and refreshes the reminder banner */
+/* Stores the booking reminder (no personal details) and refreshes the reminder banner */
 function persistReservation(reservationRecord) {
   try {
     if (reservationRecord) localStorage.setItem(reservationStorageKey, JSON.stringify(reservationRecord));
@@ -252,7 +284,7 @@ reservationFormElement.addEventListener('submit', (submitEvent) => {
     email: reservationFormData.get('email').trim(),
     occasion: reservationFormData.get('occasion'),
   };
-  persistReservation(reservationRecord);
+  persistReservation({ reference: reservationRecord.reference, date: reservationRecord.date, time: reservationRecord.time, partySize: reservationRecord.partySize });
   showReservationConfirmation(reservationRecord);
 });
 
