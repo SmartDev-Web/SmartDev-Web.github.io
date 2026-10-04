@@ -192,12 +192,25 @@
     counterAnimationFrames.set(counterElement, requestAnimationFrame(renderCounterFrame));
   }
 
+  /**
+   * Derives each counter target from the number of elements matching its data-count-selector,
+   * so the displayed statistics always reflect the lists published on the page.
+   */
+  function synchronizeCounterTargets() {
+    document.querySelectorAll(".counter[data-count-selector]").forEach((counterElement) => {
+      const countedElementTotal = document.querySelectorAll(counterElement.dataset.countSelector).length;
+      counterElement.dataset.target = String(countedElementTotal);
+      counterElement.textContent = String(countedElementTotal);
+    });
+  }
+
   function initializeCounters() {
+    synchronizeCounterTargets();
     if (prefersReducedMotion) return;
     const counterObserver = createReplayableObserver({
       onEnter: animateCounter,
       onReset: (counterElement) => resetCounter(counterElement),
-      observerOptions: { threshold: 0.6 }
+      observerOptions: { threshold: 0.2 }
     });
     document.querySelectorAll(".counter").forEach((counterElement) => {
       resetCounter(counterElement);

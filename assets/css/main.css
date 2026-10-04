@@ -445,6 +445,7 @@ body.has-pointer .cursor-glow {
 
 .hero__rotator-word {
   grid-area: 1 / 1;
+  white-space: nowrap;
   background: var(--gradient-brand);
   -webkit-background-clip: text;
   background-clip: text;
@@ -1751,6 +1752,85 @@ body.has-pointer .cursor-glow {
 
 /* ---------- Skills ---------- */
 
+.tech-stack {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2fr);
+  gap: 40px;
+  margin-bottom: 28px;
+  padding: 36px;
+  border-radius: var(--radius-large);
+  border: 1px solid var(--color-border);
+  background: radial-gradient(circle at 0% 0%, rgba(124, 92, 255, 0.18), transparent 50%), var(--color-background-elevated);
+  overflow: hidden;
+}
+
+.tech-stack__intro h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 0 0 14px;
+}
+
+.tech-stack__intro p {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.tech-stack__columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.tech-column h4 {
+  margin: 0 0 14px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+.tech-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-list li {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s var(--easing-out);
+}
+
+.tech-list li:hover {
+  border-color: rgba(0, 229, 255, 0.45);
+  color: var(--color-secondary);
+  transform: translateY(-2px);
+}
+
+.tech-stack.is-visible .tech-list li {
+  animation: tech-chip-in 0.6s var(--easing-out) both;
+}
+
+.tech-stack.is-visible .tech-list li:nth-child(2n) { animation-delay: 0.08s; }
+.tech-stack.is-visible .tech-list li:nth-child(3n) { animation-delay: 0.16s; }
+.tech-stack.is-visible .tech-list li:nth-child(5n) { animation-delay: 0.24s; }
+
+@keyframes tech-chip-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.94); }
+}
+
+
 .skill-groups {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1762,10 +1842,6 @@ body.has-pointer .cursor-glow {
   border-radius: var(--radius-large);
   border: 1px solid var(--color-border);
   background: var(--color-surface);
-}
-
-.skill-group--wide {
-  grid-column: 1 / -1;
 }
 
 .skill-group h3 {
@@ -2061,7 +2137,8 @@ body.has-pointer .cursor-glow {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1024px) {
-  .expertise {
+  .expertise,
+  .tech-stack {
     grid-template-columns: 1fr;
   }
   .skill-groups {
@@ -2121,8 +2198,12 @@ body.has-pointer .cursor-glow {
 
 @media (max-width: 640px) {
   .expertise__pillars,
-  .skill-groups {
+  .skill-groups,
+  .tech-stack__columns {
     grid-template-columns: 1fr;
+  }
+  .tech-stack {
+    padding: 24px;
   }
   .profile-card {
     padding: 24px;

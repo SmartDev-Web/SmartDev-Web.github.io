@@ -26,12 +26,12 @@ projects/<slug>/            Un site de démonstration autonome par dossier
 
 | Section | Contenu |
 | --- | --- |
-| Accueil | Positionnement, accroche animée et chiffres clés |
+| Accueil | Positionnement, accroche animée et chiffres clés calculés à partir des listes de technologies et de domaines d'expertise |
 | 01 — Expertise | Profil de Samuel Martin et ses quatre spécialités : sécurité, SEO, performances, UI/UX design |
 | 02 — Services | Vitrine animée pilotée par le défilement : sites vitrines, e-commerce, applications web, communautés, audit & refonte |
 | 03 — Projets | Liste interactive des dix démos : au survol, l'aperçu du site apparaît dans la ligne et se fond dans la couleur du projet ; filtres animés |
 | 04 — Méthode | Processus en quatre étapes avec frise de progression |
-| 05 — Compétences | Compétences regroupées par domaine, sans niveau chiffré |
+| 05 — Compétences | Technologies choisies selon chaque projet (langages, frameworks et bibliothèques, bases de données et outils) et compétences regroupées par domaine, sans niveau chiffré |
 | 06 — Contact | Formulaire validé côté client, envoi via Mailjet ou client mail |
 
 Les animations de révélation et les compteurs se réinitialisent lorsqu'un élément sort par le bas de l'écran : elles se rejouent à chaque nouvelle descente.
