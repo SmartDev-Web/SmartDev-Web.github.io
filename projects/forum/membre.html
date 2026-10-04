@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Profil membre · DevAgora</title>
   <meta name="description" content="Profil d'un membre de DevAgora : réputation, badges et activité récente.">
   <meta name="theme-color" content="#7c5cff">
@@ -94,14 +97,15 @@
       <div>
         <h2 class="footer-title">Contact</h2>
         <ul class="footer-links">
-          <li><a href="mailto:bonjour@devagora.fr">bonjour@devagora.fr</a></li>
-          <li>Association DevAgora<br>14 rue de la République, 69002 Lyon</li>
+          <li><a href="mailto:bonjour@devagora.example">bonjour@devagora.example</a></li>
+          <li>Association DevAgora<br>9 traverse des Accolades-Fermantes, 69002 Lyon</li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
       <p>© 2026 DevAgora · Contenus publiés sous licence CC BY-SA 4.0</p>
       <p>Fait avec soin à Lyon, pour toute la francophonie.</p>
+      <p class="footer-demo"><a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></p>
     </div>
   </footer>
   <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>

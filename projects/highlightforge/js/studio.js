@@ -6,6 +6,9 @@ const STUDIO_STORAGE_KEY = "highlightforge.studio.v1";
 const MINIMUM_CLIP_DURATION = 5;
 const MAXIMUM_CLIP_DURATION = 180;
 const TRIM_CONTEXT_SECONDS = 45;
+const MAXIMUM_QUEUE_LENGTH = 40;
+const MINIMUM_SENSITIVITY_SCORE = 50;
+const MAXIMUM_SENSITIVITY_SCORE = 95;
 
 const highlightTypeCatalog = {
   clutch: { label: "Clutch", color: "#00f0ff" },
@@ -25,7 +28,7 @@ const vodCatalog = [
     id: "vod-valorant",
     title: "Valorant ranked — Road to Radiant, jour 42",
     channel: "twitch.tv/kyrielle",
-    recordedOn: "12 mars 2026",
+    recordedOn: "29 septembre 2026",
     durationSeconds: 11520,
     imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80",
     highlights: [
@@ -42,15 +45,15 @@ const vodCatalog = [
   {
     id: "vod-lol",
     title: "League of Legends — Clash entre abonnés",
-    channel: "twitch.tv/ferro_tv",
-    recordedOn: "8 mars 2026",
+    channel: "twitch.tv/nordwave_tv",
+    recordedOn: "26 septembre 2026",
     durationSeconds: 14700,
     imageUrl: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=1200&q=80",
     highlights: [
       { id: "h1", title: "First blood niveau 1 au buisson", type: "multikill", start: 520, end: 548, score: 61 },
       { id: "h2", title: "Vol de Baron au Smite", type: "clutch", start: 2875, end: 2912, score: 94 },
       { id: "h3", title: "Pentakill de l'abonné Mistral", type: "multikill", start: 4630, end: 4672, score: 96 },
-      { id: "h4", title: "Débat enflammé sur le patch 26.5", type: "chat", start: 6100, end: 6158, score: 66 },
+      { id: "h4", title: "Débat enflammé sur le patch 26.19", type: "chat", start: 6100, end: 6158, score: 66 },
       { id: "h5", title: "Backdoor surprise en fin de partie", type: "clutch", start: 9022, end: 9065, score: 89 },
       { id: "h6", title: "Réaction au skin légendaire", type: "reaction", start: 11240, end: 11268, score: 72 },
       { id: "h7", title: "Victoire du tournoi et cris de joie", type: "chat", start: 14210, end: 14260, score: 90 }
@@ -60,7 +63,7 @@ const vodCatalog = [
     id: "vod-chatting",
     title: "Just Chatting — Réaction aux clips de la commu",
     channel: "youtube.com/@pixelarena",
-    recordedOn: "2 mars 2026",
+    recordedOn: "21 septembre 2026",
     durationSeconds: 8400,
     imageUrl: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=1200&q=80",
     highlights: [
@@ -160,16 +163,83 @@ function persistStudioState() {
   }
 }
 
+/* Finds a catalog highlight from its VOD and highlight identifiers. */
+function findCatalogHighlight(vodId, highlightId) {
+  const vodEntry = vodCatalog.find((candidateVod) => candidateVod.id === vodId);
+  const highlightEntry = vodEntry ? vodEntry.highlights.find((candidateHighlight) => candidateHighlight.id === highlightId) : null;
+  return vodEntry && highlightEntry ? { vodEntry, highlightEntry } : null;
+}
+
+/* Returns true when a start/end pair is a valid trim for a catalog highlight. */
+function isValidTrimForHighlight(vodEntry, highlightEntry, trimStart, trimEnd) {
+  if (!Number.isInteger(trimStart) || !Number.isInteger(trimEnd)) return false;
+  const windowStart = Math.max(0, highlightEntry.start - TRIM_CONTEXT_SECONDS);
+  const windowEnd = Math.min(vodEntry.durationSeconds, highlightEntry.end + TRIM_CONTEXT_SECONDS);
+  const clipLength = trimEnd - trimStart;
+  return trimStart >= windowStart && trimEnd <= windowEnd && clipLength >= MINIMUM_CLIP_DURATION && clipLength <= MAXIMUM_CLIP_DURATION;
+}
+
+/* Keeps only the stored trims that match a catalog highlight and its limits. */
+function sanitizeStoredTrimOverrides(storedTrimOverrides) {
+  const sanitizedOverrides = {};
+  if (!storedTrimOverrides || typeof storedTrimOverrides !== "object") return sanitizedOverrides;
+  Object.entries(storedTrimOverrides).forEach(([trimKey, storedTrim]) => {
+    const [vodId, highlightId] = trimKey.split(":");
+    const catalogMatch = findCatalogHighlight(vodId, highlightId);
+    if (!catalogMatch || !storedTrim || typeof storedTrim !== "object") return;
+    if (!isValidTrimForHighlight(catalogMatch.vodEntry, catalogMatch.highlightEntry, storedTrim.start, storedTrim.end)) return;
+    sanitizedOverrides[getTrimKey(vodId, highlightId)] = { start: storedTrim.start, end: storedTrim.end };
+  });
+  return sanitizedOverrides;
+}
+
+/* Rebuilds stored queue items from the catalog so that only known clips and values are kept. */
+function sanitizeStoredExportQueue(storedExportQueue) {
+  if (!Array.isArray(storedExportQueue)) return [];
+  const usedQueueIds = new Set();
+  return storedExportQueue.slice(0, MAXIMUM_QUEUE_LENGTH).reduce((sanitizedQueue, storedItem) => {
+    if (!storedItem || typeof storedItem !== "object") return sanitizedQueue;
+    const catalogMatch = findCatalogHighlight(storedItem.vodId, storedItem.highlightId);
+    const hasValidId = typeof storedItem.queueId === "string" && /^clip-[a-z0-9]{1,16}$/.test(storedItem.queueId) && !usedQueueIds.has(storedItem.queueId);
+    if (!catalogMatch || !hasValidId || !exportFormatCatalog[storedItem.format]) return sanitizedQueue;
+    if (!isValidTrimForHighlight(catalogMatch.vodEntry, catalogMatch.highlightEntry, storedItem.start, storedItem.end)) return sanitizedQueue;
+    usedQueueIds.add(storedItem.queueId);
+    sanitizedQueue.push(createQueueItem(catalogMatch.vodEntry, catalogMatch.highlightEntry, { start: storedItem.start, end: storedItem.end }, storedItem.format, storedItem.queueId, storedItem.status === "ready" ? "ready" : "queued"));
+    return sanitizedQueue;
+  }, []);
+}
+
+/* Builds an export queue item from catalog data. */
+function createQueueItem(vodEntry, highlightEntry, clipTrim, exportFormat, queueId, queueStatus) {
+  return {
+    queueId,
+    vodId: vodEntry.id,
+    highlightId: highlightEntry.id,
+    title: highlightEntry.title,
+    type: highlightEntry.type,
+    start: clipTrim.start,
+    end: clipTrim.end,
+    format: exportFormat,
+    status: queueStatus,
+    progress: queueStatus === "ready" ? 100 : 0
+  };
+}
+
+/* Returns true when a value is an allowed position of the sensitivity slider. */
+function isValidMinimumScore(candidateScore) {
+  return Number.isInteger(candidateScore) && candidateScore >= MINIMUM_SENSITIVITY_SCORE && candidateScore <= MAXIMUM_SENSITIVITY_SCORE && candidateScore % 5 === 0;
+}
+
 /* Restores the persistent part of the studio state from localStorage. */
 function restoreStudioState() {
   try {
     const storedState = JSON.parse(localStorage.getItem(STUDIO_STORAGE_KEY) || "null");
-    if (!storedState) return;
+    if (!storedState || typeof storedState !== "object") return;
     if (vodCatalog.some((vodEntry) => vodEntry.id === storedState.selectedVodId)) studioState.selectedVodId = storedState.selectedVodId;
-    if (typeof storedState.minimumScore === "number") studioState.minimumScore = storedState.minimumScore;
-    if (exportFormatCatalog[storedState.exportFormat]) studioState.exportFormat = storedState.exportFormat;
-    studioState.trimOverrides = storedState.trimOverrides || {};
-    studioState.exportQueue = (storedState.exportQueue || []).map((queueItem) => queueItem.status === "rendering" ? { ...queueItem, status: "queued", progress: 0 } : queueItem);
+    if (isValidMinimumScore(storedState.minimumScore)) studioState.minimumScore = storedState.minimumScore;
+    if (Object.prototype.hasOwnProperty.call(exportFormatCatalog, storedState.exportFormat)) studioState.exportFormat = storedState.exportFormat;
+    studioState.trimOverrides = sanitizeStoredTrimOverrides(storedState.trimOverrides);
+    studioState.exportQueue = sanitizeStoredExportQueue(storedState.exportQueue);
   } catch (storageError) {
     console.warn("Studio state could not be restored.", storageError);
   }
@@ -222,7 +292,7 @@ function cacheStudioElements() {
 
 /* Fills the VOD dropdown with the catalog entries. */
 function renderVodOptions() {
-  studioElements.vodSelect.innerHTML = vodCatalog.map((vodEntry) => `<option value="${vodEntry.id}">${vodEntry.title}</option>`).join("");
+  studioElements.vodSelect.innerHTML = vodCatalog.map((vodEntry) => `<option value="${escapeHtml(vodEntry.id)}">${escapeHtml(vodEntry.title)}</option>`).join("");
   studioElements.vodSelect.value = studioState.selectedVodId;
 }
 
@@ -230,7 +300,7 @@ function renderVodOptions() {
 function renderFilterChips() {
   studioElements.filterChips.innerHTML = Object.entries(highlightTypeCatalog).map(([typeKey, typeInfo]) => `
     <button class="filter-chip" type="button" style="color:${typeInfo.color}" aria-pressed="${studioState.activeTypes.includes(typeKey)}" data-filter-type="${typeKey}">
-      <span class="filter-chip-dot" style="background:${typeInfo.color}"></span><span style="color:var(--color-text)">${typeInfo.label}</span>
+      <span class="filter-chip-dot" style="background:${typeInfo.color}"></span><span style="color:var(--color-text)">${escapeHtml(typeInfo.label)}</span>
     </button>`).join("");
 }
 
@@ -254,13 +324,13 @@ function renderVodTimeline() {
     const typeInfo = highlightTypeCatalog[highlightEntry.type];
     const leftPercent = (highlightEntry.start / selectedVod.durationSeconds) * 100;
     const widthPercent = ((highlightEntry.end - highlightEntry.start) / selectedVod.durationSeconds) * 100;
-    return `<button class="highlight-marker" type="button" style="--marker-color:${typeInfo.color};left:${leftPercent}%;width:${widthPercent}%" data-marker-index="${highlightIndex + 1}" data-highlight-id="${highlightEntry.id}" aria-label="Temps fort ${highlightIndex + 1} : ${highlightEntry.title}, ${typeInfo.label}, score ${highlightEntry.score}"></button>`;
+    return `<button class="highlight-marker" type="button" style="--marker-color:${typeInfo.color};left:${leftPercent}%;width:${widthPercent}%" data-marker-index="${highlightIndex + 1}" data-highlight-id="${escapeHtml(highlightEntry.id)}" aria-label="Temps fort ${highlightIndex + 1} : ${escapeHtml(highlightEntry.title)}, ${escapeHtml(typeInfo.label)}, score ${highlightEntry.score}"></button>`;
   }).join("");
   studioElements.highlightList.innerHTML = selectedVod.highlights.map((highlightEntry, highlightIndex) => {
     const typeInfo = highlightTypeCatalog[highlightEntry.type];
-    return `<li data-list-item="${highlightEntry.id}"><button class="highlight-list-button" type="button" style="--marker-color:${typeInfo.color}" data-highlight-id="${highlightEntry.id}">
+    return `<li data-list-item="${escapeHtml(highlightEntry.id)}"><button class="highlight-list-button" type="button" style="--marker-color:${typeInfo.color}" data-highlight-id="${escapeHtml(highlightEntry.id)}">
       <span class="list-index">${highlightIndex + 1}</span>
-      <span>${highlightEntry.title}<small>${formatTimecode(highlightEntry.start)} · ${typeInfo.label}</small></span>
+      <span>${escapeHtml(highlightEntry.title)}<small>${formatTimecode(highlightEntry.start)} · ${escapeHtml(typeInfo.label)}</small></span>
       <span class="list-score">${highlightEntry.score}</span>
     </button></li>`;
   }).join("");
@@ -487,18 +557,11 @@ function addSelectedHighlightToQueue() {
     showToastMessage("Ce clip est déjà dans la file avec ces réglages.");
     return;
   }
-  studioState.exportQueue.push({
-    queueId: "clip-" + Date.now().toString(36),
-    vodId: selectedVod.id,
-    highlightId: selectedHighlight.id,
-    title: selectedHighlight.title,
-    type: selectedHighlight.type,
-    start: clipTrim.start,
-    end: clipTrim.end,
-    format: studioState.exportFormat,
-    status: "queued",
-    progress: 0
-  });
+  if (studioState.exportQueue.length >= MAXIMUM_QUEUE_LENGTH) {
+    showToastMessage(`La file d'export est limitée à ${MAXIMUM_QUEUE_LENGTH} clips.`);
+    return;
+  }
+  studioState.exportQueue.push(createQueueItem(selectedVod, selectedHighlight, clipTrim, studioState.exportFormat, "clip-" + Date.now().toString(36), "queued"));
   persistStudioState();
   renderExportQueue();
   showToastMessage(`« ${selectedHighlight.title} » ajouté à la file d'export.`);
@@ -521,12 +584,12 @@ function renderExportQueue() {
     studioElements.exportQueue.innerHTML = queueItems.map((queueItem) => {
       const typeInfo = highlightTypeCatalog[queueItem.type];
       return `<li class="export-item" style="border-left:3px solid ${typeInfo.color}">
-        <span class="export-item-title">${queueItem.title}</span>
-        <span class="export-item-meta">${formatTimecode(queueItem.start)} → ${formatTimecode(queueItem.end)} · ${exportFormatCatalog[queueItem.format]} · <span data-queue-status="${queueItem.queueId}">${getQueueStatusLabel(queueItem)}</span></span>
-        <button class="export-item-remove" type="button" aria-label="Retirer ${queueItem.title} de la file" data-remove-queue-item="${queueItem.queueId}" ${queueItem.status === "rendering" ? "disabled" : ""}>
+        <span class="export-item-title">${escapeHtml(queueItem.title)}</span>
+        <span class="export-item-meta">${formatTimecode(queueItem.start)} → ${formatTimecode(queueItem.end)} · ${exportFormatCatalog[queueItem.format]} · <span data-queue-status="${escapeHtml(queueItem.queueId)}">${getQueueStatusLabel(queueItem)}</span></span>
+        <button class="export-item-remove" type="button" aria-label="Retirer ${escapeHtml(queueItem.title)} de la file" data-remove-queue-item="${escapeHtml(queueItem.queueId)}" ${queueItem.status === "rendering" ? "disabled" : ""}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <div class="export-item-progress" aria-hidden="true"><span data-queue-progress="${queueItem.queueId}" style="width:${queueItem.status === "ready" ? 100 : queueItem.progress}%"></span></div>
+        <div class="export-item-progress" aria-hidden="true"><span data-queue-progress="${escapeHtml(queueItem.queueId)}" style="width:${queueItem.status === "ready" ? 100 : queueItem.progress}%"></span></div>
       </li>`;
     }).join("");
   }
@@ -608,12 +671,15 @@ function bindStudioEvents() {
     applyHighlightFilters();
   });
   studioElements.sensitivityInput.addEventListener("input", () => {
-    studioState.minimumScore = parseInt(studioElements.sensitivityInput.value, 10);
+    const requestedScore = parseInt(studioElements.sensitivityInput.value, 10);
+    if (!isValidMinimumScore(requestedScore)) return;
+    studioState.minimumScore = requestedScore;
     applyHighlightFilters();
     persistStudioState();
   });
   studioElements.formatInputs.forEach((formatInputElement) => {
     formatInputElement.addEventListener("change", () => {
+      if (!Object.prototype.hasOwnProperty.call(exportFormatCatalog, formatInputElement.value)) return;
       studioState.exportFormat = formatInputElement.value;
       studioElements.previewScreen.dataset.format = studioState.exportFormat;
       persistStudioState();

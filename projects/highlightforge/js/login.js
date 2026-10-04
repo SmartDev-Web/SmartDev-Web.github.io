@@ -120,6 +120,12 @@ function initializeAuthForms() {
   });
   const strengthSourceElement = document.querySelector("[data-strength-source]");
   strengthSourceElement.addEventListener("input", () => renderPasswordStrength(strengthSourceElement.value));
+  const forgotPasswordButtonElement = document.querySelector("[data-forgot-password]");
+  if (forgotPasswordButtonElement) {
+    forgotPasswordButtonElement.addEventListener("click", () => {
+      showToastMessage("La réinitialisation du mot de passe est indisponible dans cette démonstration.");
+    });
+  }
   document.querySelectorAll("[data-social-login]").forEach((socialButtonElement) => {
     socialButtonElement.addEventListener("click", () => {
       showToastMessage(`Connexion via ${socialButtonElement.dataset.socialLogin} indisponible dans cette démonstration.`);

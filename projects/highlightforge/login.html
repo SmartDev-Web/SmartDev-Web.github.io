@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Connexion — HighlightForge</title>
   <meta name="description" content="Connectez-vous à HighlightForge ou créez votre compte gratuit pour forger vos premiers clips.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +39,7 @@
 
   <main id="main-content" class="auth-layout">
     <div class="auth-aside">
-      <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=1200&q=80" alt="Streamer installé devant son poste de jeu éclairé">
+      <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=1200&q=80" alt="Streamer installé devant son poste de jeu éclairé" width="1200" height="800">
       <div class="auth-aside-content">
         <span class="eyebrow">Espace créateur</span>
         <h2>Reprenez là où votre dernier live s'est arrêté.</h2>
@@ -46,6 +49,7 @@
 
     <div class="auth-main">
       <div class="auth-card">
+        <h1 class="visually-hidden">Connexion et inscription à HighlightForge</h1>
         <div class="auth-tabs" role="tablist" aria-label="Choix du formulaire" data-auth-tabs data-active-tab="login">
           <span class="auth-tab-indicator" aria-hidden="true"></span>
           <button class="auth-tab" type="button" role="tab" id="tab-login" aria-controls="login-form" aria-selected="true" data-auth-tab="login">Connexion</button>
@@ -53,16 +57,16 @@
         </div>
 
         <form class="auth-form" id="login-form" role="tabpanel" aria-labelledby="tab-login" novalidate data-auth-form="login">
-          <h1 style="font-size:1.8rem">Bon retour parmi nous</h1>
+          <h2 class="auth-form-title">Bon retour parmi nous</h2>
           <div class="form-field">
             <label for="login-email">Adresse e-mail</label>
-            <input class="text-input" type="email" id="login-email" name="email" autocomplete="email" placeholder="vous@exemple.fr" required data-validate="email">
+            <input class="text-input" type="email" id="login-email" name="email" autocomplete="email" maxlength="254" placeholder="vous@exemple.example" required data-validate="email">
             <span class="field-error" aria-live="polite"></span>
           </div>
           <div class="form-field">
             <label for="login-password">Mot de passe</label>
             <div class="password-wrapper">
-              <input class="text-input" type="password" id="login-password" name="password" autocomplete="current-password" required data-validate="required">
+              <input class="text-input" type="password" id="login-password" name="password" autocomplete="current-password" maxlength="128" required data-validate="required">
               <button class="password-toggle" type="button" aria-label="Afficher le mot de passe" data-password-toggle>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
@@ -70,8 +74,8 @@
             <span class="field-error" aria-live="polite"></span>
           </div>
           <div class="form-row-between">
-            <label class="checkbox-field" style="margin:0"><input type="checkbox" name="remember"> Rester connecté</label>
-            <a href="login.html">Mot de passe oublié ?</a>
+            <label class="checkbox-field checkbox-field-inline"><input type="checkbox" name="remember"> Rester connecté</label>
+            <button class="link-button" type="button" data-forgot-password>Mot de passe oublié ?</button>
           </div>
           <button class="btn btn-primary btn-block" type="submit">Se connecter</button>
           <div class="divider">ou continuer avec</div>
@@ -86,15 +90,15 @@
         </form>
 
         <form class="auth-form" id="signup-form" role="tabpanel" aria-labelledby="tab-signup" novalidate hidden data-auth-form="signup">
-          <h1 style="font-size:1.8rem">Créez votre forge</h1>
+          <h2 class="auth-form-title">Créez votre forge</h2>
           <div class="form-field">
             <label for="signup-name">Pseudo de streamer</label>
-            <input class="text-input" type="text" id="signup-name" name="pseudo" autocomplete="nickname" placeholder="ex. Kyrielle" required minlength="3" data-validate="pseudo">
+            <input class="text-input" type="text" id="signup-name" name="pseudo" autocomplete="nickname" placeholder="ex. Kyrielle" required minlength="3" maxlength="24" data-validate="pseudo">
             <span class="field-error" aria-live="polite"></span>
           </div>
           <div class="form-field">
             <label for="signup-email">Adresse e-mail</label>
-            <input class="text-input" type="email" id="signup-email" name="email" autocomplete="email" placeholder="vous@exemple.fr" required data-validate="email">
+            <input class="text-input" type="email" id="signup-email" name="email" autocomplete="email" maxlength="254" placeholder="vous@exemple.example" required data-validate="email">
             <span class="field-error" aria-live="polite"></span>
           </div>
           <div class="form-field">
@@ -111,7 +115,7 @@
           <div class="form-field">
             <label for="signup-password">Mot de passe</label>
             <div class="password-wrapper">
-              <input class="text-input" type="password" id="signup-password" name="password" autocomplete="new-password" required aria-describedby="password-strength-text" data-validate="password" data-strength-source>
+              <input class="text-input" type="password" id="signup-password" name="password" autocomplete="new-password" maxlength="128" required aria-describedby="password-strength-text" data-validate="password" data-strength-source>
               <button class="password-toggle" type="button" aria-label="Afficher le mot de passe" data-password-toggle>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
@@ -122,7 +126,7 @@
           </div>
           <div class="form-field">
             <label for="signup-confirm">Confirmer le mot de passe</label>
-            <input class="text-input" type="password" id="signup-confirm" name="confirm" autocomplete="new-password" required data-validate="confirm">
+            <input class="text-input" type="password" id="signup-confirm" name="confirm" autocomplete="new-password" maxlength="128" required data-validate="confirm">
             <span class="field-error" aria-live="polite"></span>
           </div>
           <div class="form-field">
@@ -150,10 +154,10 @@
             <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient-footer)"/></svg>
             <span>Highlight<strong>Forge</strong></span>
           </a>
-          <p style="margin-top:14px;max-width:320px">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch et YouTube.</p>
+          <p class="footer-tagline">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch, YouTube et Kick.</p>
         </div>
         <div>
-          <h4>Produit</h4>
+          <h2 class="footer-title">Produit</h2>
           <ul>
             <li><a href="features.html">Fonctionnalités</a></li>
             <li><a href="pricing.html">Tarifs</a></li>
@@ -161,7 +165,7 @@
           </ul>
         </div>
         <div>
-          <h4>Compte</h4>
+          <h2 class="footer-title">Compte</h2>
           <ul>
             <li><a href="login.html">Connexion</a></li>
             <li><a href="login.html#inscription">Créer un compte</a></li>
@@ -169,16 +173,18 @@
           </ul>
         </div>
         <div>
-          <h4>Contact</h4>
+          <h2 class="footer-title">Contact</h2>
           <ul>
-            <li><a href="mailto:bonjour@highlightforge.fr">bonjour@highlightforge.fr</a></li>
-            <li>12 quai des Chartrons<br>33000 Bordeaux</li>
+            <li><a href="mailto:bonjour@highlightforge.example">bonjour@highlightforge.example</a></li>
+            <li><a href="tel:+33536490000">05 36 49 00 00</a></li>
+            <li>27 allée des Pixels-Fondus<br>33300 Bordeaux</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span data-current-year>2026</span> HighlightForge SAS — Projet de démonstration.</span>
-        <span>Twitch et YouTube sont des marques de leurs détenteurs respectifs.</span>
+        <span>Twitch, YouTube et Kick sont des marques de leurs détenteurs respectifs.</span>
+        <a class="footer-demo" href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a>
       </div>
     </div>
   </footer>

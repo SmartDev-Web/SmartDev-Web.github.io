@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Nouveau sujet · DevAgora</title>
   <meta name="description" content="Créez un nouveau sujet sur DevAgora : choisissez une catégorie, ajoutez des tags et rédigez en markdown.">
   <meta name="theme-color" content="#7c5cff">
@@ -64,14 +67,14 @@
               <label for="thread-title">Titre <span aria-hidden="true">*</span></label>
               <span class="char-count" data-title-counter>0 / 120</span>
             </div>
-            <input type="text" id="thread-title" name="title" placeholder="Ex. : Erreur CORS uniquement en production avec Nginx" required autocomplete="off">
+            <input type="text" id="thread-title" name="title" maxlength="120" placeholder="Ex. : Erreur CORS uniquement en production avec Nginx" required autocomplete="off">
             <p class="field-error" data-error-for="title" role="alert"></p>
           </div>
           <div class="field">
             <label for="thread-tags">Tags <span class="field__hint">(1 à 5, validez avec Entrée ou virgule)</span></label>
             <div class="tag-field" data-tag-field>
               <ul class="tag-field__chips" data-tag-chips></ul>
-              <input type="text" id="thread-tags" name="tags" autocomplete="off" placeholder="Ajouter un tag puis Entrée">
+              <input type="text" id="thread-tags" name="tags" maxlength="40" autocomplete="off" placeholder="Ajouter un tag puis Entrée">
             </div>
             <ul class="tag-suggestions" data-tag-suggestions aria-label="Tags suggérés"></ul>
             <p class="field-error" data-error-for="tags" role="alert"></p>
@@ -95,9 +98,9 @@
                   </div>
                 </div>
                 <label class="visually-hidden" for="thread-body">Message du sujet</label>
-                <textarea id="thread-body" name="body" rows="10" placeholder="Décrivez le contexte, ce que vous attendez et ce que vous obtenez…"></textarea>
+                <textarea id="thread-body" name="body" rows="10" maxlength="10000" autocomplete="off" placeholder="Décrivez le contexte, ce que vous attendez et ce que vous obtenez…"></textarea>
                 <div class="md-editor__preview markdown-body" hidden></div>
-                <p class="md-editor__hint">Markdown simplifié : <code>**gras**</code> <code>*italique*</code> <code>`code`</code> <code>```bloc```</code> <code>&gt; citation</code> <code>- liste</code></p>
+                <p class="md-editor__hint">Markdown simplifié : <code>**gras**</code> <code>*italique*</code> <code>`code`</code> <code>```bloc```</code> <code>&gt; citation</code> <code>- liste</code> <code>[lien](https://…)</code></p>
               </div>
             <p class="field-error" data-error-for="body" role="alert"></p>
           </div>
@@ -145,14 +148,15 @@
       <div>
         <h2 class="footer-title">Contact</h2>
         <ul class="footer-links">
-          <li><a href="mailto:bonjour@devagora.fr">bonjour@devagora.fr</a></li>
-          <li>Association DevAgora<br>14 rue de la République, 69002 Lyon</li>
+          <li><a href="mailto:bonjour@devagora.example">bonjour@devagora.example</a></li>
+          <li>Association DevAgora<br>9 traverse des Accolades-Fermantes, 69002 Lyon</li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
       <p>© 2026 DevAgora · Contenus publiés sous licence CC BY-SA 4.0</p>
       <p>Fait avec soin à Lyon, pour toute la francophonie.</p>
+      <p class="footer-demo"><a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></p>
     </div>
   </footer>
   <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>

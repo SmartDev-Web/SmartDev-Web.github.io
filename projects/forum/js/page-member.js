@@ -86,7 +86,8 @@ function renderUnknownMember() {
   memberPageElements.pageRoot.innerHTML = renderEmptyState(
     "Membre introuvable",
     requestedMemberId ? "Ce profil n'existe pas ou a été désactivé par son propriétaire." : "Aucun membre n'a été précisé dans l'adresse.",
-    `<a class="button button--primary" href="membre.html?id=${encodeURIComponent(DevAgoraStore.getCurrentUser().id)}">Voir mon profil</a><a class="button button--ghost" href="index.html">Retour à l'accueil</a>`
+    `<a class="button button--primary" href="membre.html?id=${encodeURIComponent(DevAgoraStore.getCurrentUser().id)}">Voir mon profil</a><a class="button button--ghost" href="index.html">Retour à l'accueil</a>`,
+    "h1"
   );
 }
 

@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Tarifs — HighlightForge</title>
   <meta name="description" content="Offres HighlightForge : Starter gratuit, Pro et Studio. Facturation mensuelle ou annuelle avec deux mois offerts.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,6 +55,7 @@
 
     <section class="section" style="padding-top:30px">
       <div class="container">
+        <h2 class="visually-hidden">Nos trois offres</h2>
         <div class="pricing-grid">
           <article class="plan reveal" data-plan data-monthly-price="0" data-yearly-price="0">
             <h3>Starter</h3>
@@ -124,7 +128,7 @@
           </div>
           <div class="faq-item reveal" data-faq-item>
             <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-5" data-faq-question>Proposez-vous une réduction pour les associations et écoles ?<span class="faq-icon" aria-hidden="true"></span></button>
-            <div class="faq-answer" id="faq-answer-5" data-faq-answer><div class="faq-answer-inner">Oui : les associations esport et les écoles bénéficient de 50 % de réduction sur l'offre Studio. Écrivez-nous à bonjour@highlightforge.fr avec un justificatif.</div></div>
+            <div class="faq-answer" id="faq-answer-5" data-faq-answer><div class="faq-answer-inner">Oui : les associations esport et les écoles bénéficient de 50 % de réduction sur l'offre Studio. Écrivez-nous à bonjour@highlightforge.example avec un justificatif.</div></div>
           </div>
           <div class="faq-item reveal" data-faq-item>
             <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-6" data-faq-question>Quels moyens de paiement acceptez-vous ?<span class="faq-icon" aria-hidden="true"></span></button>
@@ -156,10 +160,10 @@
             <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient></defs><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="none" stroke="url(#logo-gradient-footer)" stroke-width="2.2"/><path d="M13 10.5v11l9-5.5z" fill="url(#logo-gradient-footer)"/></svg>
             <span>Highlight<strong>Forge</strong></span>
           </a>
-          <p style="margin-top:14px;max-width:320px">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch et YouTube.</p>
+          <p class="footer-tagline">La forge à temps forts des créateurs de contenu gaming. Conçu à Bordeaux, hébergé en France, pensé pour Twitch, YouTube et Kick.</p>
         </div>
         <div>
-          <h4>Produit</h4>
+          <h2 class="footer-title">Produit</h2>
           <ul>
             <li><a href="features.html">Fonctionnalités</a></li>
             <li><a href="pricing.html">Tarifs</a></li>
@@ -167,7 +171,7 @@
           </ul>
         </div>
         <div>
-          <h4>Compte</h4>
+          <h2 class="footer-title">Compte</h2>
           <ul>
             <li><a href="login.html">Connexion</a></li>
             <li><a href="login.html#inscription">Créer un compte</a></li>
@@ -175,16 +179,18 @@
           </ul>
         </div>
         <div>
-          <h4>Contact</h4>
+          <h2 class="footer-title">Contact</h2>
           <ul>
-            <li><a href="mailto:bonjour@highlightforge.fr">bonjour@highlightforge.fr</a></li>
-            <li>12 quai des Chartrons<br>33000 Bordeaux</li>
+            <li><a href="mailto:bonjour@highlightforge.example">bonjour@highlightforge.example</a></li>
+            <li><a href="tel:+33536490000">05 36 49 00 00</a></li>
+            <li>27 allée des Pixels-Fondus<br>33300 Bordeaux</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span data-current-year>2026</span> HighlightForge SAS — Projet de démonstration.</span>
-        <span>Twitch et YouTube sont des marques de leurs détenteurs respectifs.</span>
+        <span>Twitch, YouTube et Kick sont des marques de leurs détenteurs respectifs.</span>
+        <a class="footer-demo" href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a>
       </div>
     </div>
   </footer>

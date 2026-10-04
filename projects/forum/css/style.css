@@ -501,6 +501,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer-links a:hover { color: var(--color-accent-strong); }
 .footer-bottom { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 0.82rem; }
 .footer-bottom p { margin: 0; }
+.footer-demo { flex-basis: 100%; }
+.footer-demo a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.footer-demo a:hover { color: var(--color-accent); }
 
 /* Toasts */
 .toast-region { position: fixed; right: 20px; bottom: 20px; z-index: 400; display: grid; gap: 10px; }

@@ -127,15 +127,31 @@
     document.querySelectorAll("main section[id]").forEach((sectionElement) => sectionObserver.observe(sectionElement));
   }
 
-  /* ---------- Reveal on scroll and counters ---------- */
+  /* ---------- Replayable scroll animations ---------- */
 
-  const revealObserver = new IntersectionObserver((observedEntries) => {
-    observedEntries.forEach((observedEntry) => {
-      if (!observedEntry.isIntersecting) return;
-      observedEntry.target.classList.add("is-visible");
-      revealObserver.unobserve(observedEntry.target);
-    });
-  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  /**
+   * Observes elements and calls onEnter when they scroll into view, and onReset when they leave
+   * through the bottom of the viewport, so every animation replays on the next scroll down.
+   */
+  function createReplayableObserver({ onEnter, onReset, observerOptions }) {
+    const replayableObserver = new IntersectionObserver((observedEntries) => {
+      observedEntries.forEach((observedEntry) => {
+        if (observedEntry.isIntersecting) {
+          onEnter(observedEntry.target);
+          return;
+        }
+        const hasLeftThroughBottom = observedEntry.boundingClientRect.top > (observedEntry.rootBounds?.bottom ?? window.innerHeight) - 1;
+        if (hasLeftThroughBottom) onReset(observedEntry.target);
+      });
+    }, observerOptions);
+    return replayableObserver;
+  }
+
+  const revealObserver = createReplayableObserver({
+    onEnter: (revealElement) => revealElement.classList.add("is-visible"),
+    onReset: (revealElement) => revealElement.classList.remove("is-visible"),
+    observerOptions: { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+  });
 
   /**
    * Registers elements for scroll reveal, staggering siblings that share the same parent.
@@ -148,32 +164,45 @@
     });
   }
 
+  const counterAnimationFrames = new WeakMap();
+
+  /**
+   * Stops any running animation of the counter and displays the given value.
+   */
+  function resetCounter(counterElement, displayedValue = 0) {
+    cancelAnimationFrame(counterAnimationFrames.get(counterElement));
+    counterElement.textContent = String(displayedValue);
+  }
+
   /**
    * Animates a numeric counter from zero to its data-target value with an ease-out curve.
    */
   function animateCounter(counterElement) {
     const targetValue = Number(counterElement.dataset.target);
-    const animationDuration = prefersReducedMotion ? 1 : 1600;
+    const animationDuration = 1600;
     let animationStartTime = null;
     const renderCounterFrame = (frameTimestamp) => {
       animationStartTime ??= frameTimestamp;
       const animationProgress = Math.min((frameTimestamp - animationStartTime) / animationDuration, 1);
       const easedProgress = 1 - Math.pow(1 - animationProgress, 3);
       counterElement.textContent = Math.round(targetValue * easedProgress).toString();
-      if (animationProgress < 1) requestAnimationFrame(renderCounterFrame);
+      if (animationProgress < 1) counterAnimationFrames.set(counterElement, requestAnimationFrame(renderCounterFrame));
     };
-    requestAnimationFrame(renderCounterFrame);
+    resetCounter(counterElement);
+    counterAnimationFrames.set(counterElement, requestAnimationFrame(renderCounterFrame));
   }
 
   function initializeCounters() {
-    const counterObserver = new IntersectionObserver((observedEntries) => {
-      observedEntries.forEach((observedEntry) => {
-        if (!observedEntry.isIntersecting) return;
-        animateCounter(observedEntry.target);
-        counterObserver.unobserve(observedEntry.target);
-      });
-    }, { threshold: 0.6 });
-    document.querySelectorAll(".counter").forEach((counterElement) => counterObserver.observe(counterElement));
+    if (prefersReducedMotion) return;
+    const counterObserver = createReplayableObserver({
+      onEnter: animateCounter,
+      onReset: (counterElement) => resetCounter(counterElement),
+      observerOptions: { threshold: 0.6 }
+    });
+    document.querySelectorAll(".counter").forEach((counterElement) => {
+      resetCounter(counterElement);
+      counterObserver.observe(counterElement);
+    });
   }
 
   /* ---------- Hero: rotating words ---------- */
@@ -355,39 +384,76 @@
     });
   }
 
-  /* ---------- Projects grid and filters ---------- */
-
-  const arrowIconMarkup = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  /* ---------- Services showcase ---------- */
 
   /**
-   * Builds the markup of a single project card.
+   * Activates one service in the list and its matching animated visual in the sticky stage.
    */
-  function createProjectCardElement(projectData, projectIndex) {
-    const cardElement = document.createElement("article");
-    cardElement.className = "project-card reveal";
-    cardElement.dataset.category = projectData.category;
-    cardElement.style.setProperty("--card-accent", projectData.accentColor);
-    cardElement.innerHTML = `
-      <div class="project-card__media">
-        <img src="${projectData.imageUrl}" alt="Aperçu du site ${projectData.title}" loading="lazy" width="900" height="563">
-        <span class="project-card__index">${String(projectIndex + 1).padStart(2, "0")}</span>
-        <span class="project-card__category">${projectData.categoryLabel}</span>
-      </div>
-      <div class="project-card__body">
-        <h3 class="project-card__title">${projectData.title}</h3>
-        <p class="project-card__description">${projectData.description}</p>
-        <ul class="project-card__tags">${projectData.tags.map((tagLabel) => `<li>${tagLabel}</li>`).join("")}</ul>
-        <a class="project-card__link" href="projects/${projectData.slug}/index.html" aria-label="Explorer le site ${projectData.title}">Explorer le site ${arrowIconMarkup}</a>
-      </div>`;
-    attachTiltEffect(cardElement);
-    return cardElement;
+  function activateService(showcaseElement, serviceIndex) {
+    showcaseElement.querySelectorAll("[data-service-index]").forEach((serviceElement) => {
+      const isSelected = serviceElement.dataset.serviceIndex === serviceIndex;
+      serviceElement.classList.toggle("is-active", isSelected);
+      serviceElement.querySelector(".service-item__trigger")?.setAttribute("aria-pressed", String(isSelected));
+    });
   }
 
-  function renderProjectCards() {
-    const projectsGridElement = document.getElementById("projectsGrid");
-    const projectCardElements = PORTFOLIO_PROJECTS.map(createProjectCardElement);
-    projectsGridElement.replaceChildren(...projectCardElements);
-    observeRevealElements(projectCardElements);
+  /**
+   * Drives the services showcase from the scroll position, pointer hover and keyboard focus.
+   */
+  function initializeServicesShowcase() {
+    const showcaseElement = document.getElementById("servicesShowcase");
+    const serviceItemElements = [...showcaseElement.querySelectorAll(".service-item")];
+    const serviceObserver = new IntersectionObserver((observedEntries) => {
+      observedEntries.forEach((observedEntry) => {
+        if (observedEntry.isIntersecting) activateService(showcaseElement, observedEntry.target.dataset.serviceIndex);
+      });
+    }, { rootMargin: "-48% 0px -48% 0px" });
+    serviceItemElements.forEach((serviceItemElement) => {
+      const activateThisService = () => activateService(showcaseElement, serviceItemElement.dataset.serviceIndex);
+      serviceObserver.observe(serviceItemElement);
+      serviceItemElement.querySelector(".service-item__trigger").addEventListener("click", activateThisService);
+      serviceItemElement.addEventListener("focusin", activateThisService);
+      if (hasFinePointer) serviceItemElement.addEventListener("pointerenter", activateThisService);
+    });
+  }
+
+  /* ---------- Project list, floating preview and filters ---------- */
+
+  /**
+   * Shows a floating preview of the hovered project that eases toward the pointer.
+   */
+  function initializeProjectPreview() {
+    const projectListElement = document.getElementById("projectList");
+    const previewElement = document.getElementById("projectPreview");
+    const previewImageElement = previewElement.querySelector(".project-preview__image");
+    const previewPosition = { currentX: 0, currentY: 0, targetX: 0, targetY: 0 };
+    let previewFrameRequest = 0;
+    if (!hasFinePointer || prefersReducedMotion) return;
+    const renderPreviewFrame = () => {
+      previewPosition.currentX += (previewPosition.targetX - previewPosition.currentX) * 0.18;
+      previewPosition.currentY += (previewPosition.targetY - previewPosition.currentY) * 0.18;
+      previewElement.style.transform = `translate3d(${previewPosition.currentX}px, ${previewPosition.currentY}px, 0)`;
+      const isSettled = Math.abs(previewPosition.targetX - previewPosition.currentX) < 0.5 && Math.abs(previewPosition.targetY - previewPosition.currentY) < 0.5;
+      previewFrameRequest = isSettled ? 0 : requestAnimationFrame(renderPreviewFrame);
+    };
+    const movePreviewTarget = (pointerEvent) => {
+      previewPosition.targetX = pointerEvent.clientX + 28;
+      previewPosition.targetY = pointerEvent.clientY - previewElement.offsetHeight / 2;
+      if (!previewFrameRequest) previewFrameRequest = requestAnimationFrame(renderPreviewFrame);
+    };
+    projectListElement.addEventListener("pointerover", (pointerEvent) => {
+      const hoveredRowElement = pointerEvent.target.closest(".project-row");
+      if (!hoveredRowElement) return;
+      const rowThumbnailElement = hoveredRowElement.querySelector(".project-row__thumb");
+      if (previewImageElement.getAttribute("src") !== rowThumbnailElement.getAttribute("src")) previewImageElement.src = rowThumbnailElement.getAttribute("src");
+      if (!previewElement.classList.contains("is-visible")) {
+        previewPosition.currentX = pointerEvent.clientX + 28;
+        previewPosition.currentY = pointerEvent.clientY - previewElement.offsetHeight / 2;
+      }
+      previewElement.classList.add("is-visible");
+    });
+    projectListElement.addEventListener("pointermove", movePreviewTarget, { passive: true });
+    projectListElement.addEventListener("pointerleave", () => previewElement.classList.remove("is-visible"));
   }
 
   /**
@@ -401,10 +467,10 @@
   }
 
   /**
-   * Filters the project cards and animates the layout change with the FLIP technique.
+   * Filters the project rows and animates the layout change with the FLIP technique.
    */
   function applyProjectFilter(selectedCategory) {
-    const projectCardElements = [...document.querySelectorAll(".project-card")];
+    const projectCardElements = [...document.querySelectorAll(".project-row")];
     const initialPositions = new Map(projectCardElements.filter((cardElement) => !cardElement.hidden).map((cardElement) => [cardElement, cardElement.getBoundingClientRect()]));
     projectCardElements.forEach((cardElement) => {
       cardElement.hidden = selectedCategory !== "all" && cardElement.dataset.category !== selectedCategory;
@@ -434,7 +500,7 @@
       filterButtons.forEach((filterButton) => {
         const isSelected = filterButton === clickedFilterButton;
         filterButton.classList.toggle("is-active", isSelected);
-        filterButton.setAttribute("aria-selected", String(isSelected));
+        filterButton.setAttribute("aria-pressed", String(isSelected));
       });
       moveFilterIndicator(clickedFilterButton);
       applyProjectFilter(clickedFilterButton.dataset.filter);
@@ -464,17 +530,54 @@
     return isFieldValid;
   }
 
+  const contactRecipientAddress = "smart.developpement.web@gmail.com";
+
+  /**
+   * Opens the visitor's mail client with a prefilled message.
+   */
+  function openContactMailClient(formValues) {
+    const mailSubject = encodeURIComponent(`[${formValues.projectType}] Demande de ${formValues.name}`);
+    const mailBody = encodeURIComponent(`${formValues.message}\n\n${formValues.name} — ${formValues.email}`);
+    window.location.href = `mailto:${contactRecipientAddress}?subject=${mailSubject}&body=${mailBody}`;
+  }
+
+  /**
+   * Sends the contact request to the configured mail relay endpoint and resolves once it is accepted.
+   */
+  async function sendContactRequest(endpointUrl, formValues, formOpenedAt) {
+    const relayResponse = await fetch(endpointUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...formValues, elapsedMilliseconds: Math.round(performance.now() - formOpenedAt) }),
+      credentials: "omit",
+      referrerPolicy: "strict-origin-when-cross-origin"
+    });
+    if (!relayResponse.ok) throw new Error(`Contact relay answered with status ${relayResponse.status}`);
+  }
+
+  /**
+   * Displays a status message under the contact form.
+   */
+  function showContactStatus(statusElement, statusMessage, isError) {
+    statusElement.textContent = statusMessage;
+    statusElement.classList.toggle("is-error", isError);
+    statusElement.hidden = false;
+  }
+
   function initializeContactForm() {
     const contactFormElement = document.getElementById("contactForm");
-    const contactSuccessElement = document.getElementById("contactSuccess");
-    const contactFieldElements = [...contactFormElement.querySelectorAll("input, select, textarea")];
+    const contactStatusElement = document.getElementById("contactStatus");
+    const contactSubmitButton = document.getElementById("contactSubmit");
+    const contactEndpointUrl = contactFormElement.dataset.endpoint.trim();
+    const contactFieldElements = [...contactFormElement.querySelectorAll("input, select, textarea")].filter((fieldElement) => fieldElement.name in contactValidationRules);
+    const formOpenedAt = performance.now();
     contactFieldElements.forEach((fieldElement) => {
       fieldElement.addEventListener("blur", () => validateContactField(fieldElement));
       fieldElement.addEventListener("input", () => {
         if (fieldElement.closest(".field").classList.contains("has-error")) validateContactField(fieldElement);
       });
     });
-    contactFormElement.addEventListener("submit", (submitEvent) => {
+    contactFormElement.addEventListener("submit", async (submitEvent) => {
       submitEvent.preventDefault();
       const invalidFieldElements = contactFieldElements.filter((fieldElement) => !validateContactField(fieldElement));
       if (invalidFieldElements.length > 0) {
@@ -482,19 +585,29 @@
         return;
       }
       const formValues = Object.fromEntries(new FormData(contactFormElement));
-      const mailSubject = encodeURIComponent(`[${formValues.projectType}] Demande de ${formValues.name}`);
-      const mailBody = encodeURIComponent(`${formValues.message}\n\n${formValues.name} — ${formValues.email}`);
-      contactSuccessElement.hidden = false;
-      window.location.href = `mailto:smart.developpement.web@gmail.com?subject=${mailSubject}&body=${mailBody}`;
-      contactFormElement.reset();
+      if (!contactEndpointUrl) {
+        showContactStatus(contactStatusElement, "Merci ! Votre client mail va s'ouvrir avec votre message prérempli.", false);
+        openContactMailClient(formValues);
+        contactFormElement.reset();
+        return;
+      }
+      contactSubmitButton.disabled = true;
+      try {
+        await sendContactRequest(contactEndpointUrl, formValues, formOpenedAt);
+        showContactStatus(contactStatusElement, "Merci ! Votre message est bien envoyé, je vous réponds sous 48 heures.", false);
+        contactFormElement.reset();
+      } catch {
+        showContactStatus(contactStatusElement, `L'envoi a échoué. Écrivez-moi directement à ${contactRecipientAddress}.`, true);
+      } finally {
+        contactSubmitButton.disabled = false;
+      }
     });
   }
 
   /* ---------- Bootstrap ---------- */
 
   document.getElementById("currentYear").textContent = new Date().getFullYear();
-  renderProjectCards();
-  observeRevealElements([...document.querySelectorAll(".reveal")].filter((revealElement) => !revealElement.classList.contains("project-card")));
+  observeRevealElements([...document.querySelectorAll(".reveal")]);
   document.querySelectorAll(".tilt").forEach(attachTiltEffect);
   document.querySelectorAll(".magnetic").forEach(attachMagneticEffect);
   initializePageTransitions();
@@ -505,6 +618,8 @@
   initializeHeroRotator();
   initializeHeroCanvas();
   initializeCursorGlow();
+  initializeServicesShowcase();
+  initializeProjectPreview();
   initializeProjectFilters();
   initializeContactForm();
   revealPageOnLoad();

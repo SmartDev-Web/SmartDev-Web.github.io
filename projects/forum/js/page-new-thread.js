@@ -1,8 +1,8 @@
 /* Thread creation page: category select, tag chips input, markdown editor, live card preview and validation. */
-const MAXIMUM_TAG_COUNT = 5;
-const MAXIMUM_TAG_LENGTH = 24;
-const MINIMUM_TITLE_LENGTH = 10;
-const MAXIMUM_TITLE_LENGTH = 120;
+const MAXIMUM_TAG_COUNT = FORUM_LIMITS.maximumTagCount;
+const MAXIMUM_TAG_LENGTH = FORUM_LIMITS.maximumTagLength;
+const MINIMUM_TITLE_LENGTH = FORUM_LIMITS.titleMinimumLength;
+const MAXIMUM_TITLE_LENGTH = FORUM_LIMITS.titleMaximumLength;
 const MINIMUM_BODY_LENGTH = 30;
 
 const newThreadElements = {
@@ -161,6 +161,11 @@ function initNewThreadPage() {
       tags: newThreadState.tags.slice(),
       body: bodyEditor.textareaElement.value.trim()
     });
+    if (!createdThreadId) {
+      newThreadElements.formStatus.textContent = "Impossible d'enregistrer ce sujet. Vérifiez sa longueur puis réessayez.";
+      newThreadElements.formStatus.className = "form-status form-status--error";
+      return;
+    }
     newThreadElements.formStatus.textContent = "Sujet publié ! Redirection vers votre discussion…";
     newThreadElements.formStatus.className = "form-status form-status--success";
     newThreadElements.form.querySelector("[type=submit]").disabled = true;

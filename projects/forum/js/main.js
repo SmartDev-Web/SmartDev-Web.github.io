@@ -1,20 +1,64 @@
 /* DevAgora shared module: data store, formatting helpers, markdown rendering and common UI behaviours. */
 
 /* Data store merging seed data with content created by the visitor (persisted in localStorage). */
+const FORUM_LIMITS = {
+  titleMinimumLength: 10,
+  titleMaximumLength: 120,
+  bodyMaximumLength: 10000,
+  maximumTagCount: 5,
+  maximumTagLength: 24
+};
+
 const DevAgoraStore = (() => {
   const USER_STATE_STORAGE_KEY = "devagora-user-state-v1";
   const seedData = window.DevAgoraData;
+  const knownCategoryIds = new Set(seedData.categories.map((category) => category.id));
+  const seedThreadIds = new Set(seedData.threads.map((thread) => thread.id));
   function createEmptyUserState() {
     return { threads: [], posts: [], upvotedPostIds: [] };
+  }
+  function isNonEmptyString(candidateValue, maximumLength) {
+    return typeof candidateValue === "string" && candidateValue.trim().length > 0 && candidateValue.length <= maximumLength;
+  }
+  function isValidTimestamp(candidateValue) {
+    return Number.isFinite(candidateValue) && candidateValue > 0 && candidateValue <= Date.now() + 60000;
+  }
+  function sanitizeStoredThread(storedThread) {
+    if (!storedThread || typeof storedThread !== "object") return null;
+    if (typeof storedThread.id !== "string" || !/^n[a-z0-9]{4,16}$/.test(storedThread.id)) return null;
+    if (!knownCategoryIds.has(storedThread.categoryId) || !isNonEmptyString(storedThread.title, FORUM_LIMITS.titleMaximumLength) || !isValidTimestamp(storedThread.createdAt)) return null;
+    const storedTags = Array.isArray(storedThread.tags) ? storedThread.tags : [];
+    return {
+      id: storedThread.id,
+      categoryId: storedThread.categoryId,
+      title: storedThread.title.trim(),
+      tags: storedTags.filter((tagName) => typeof tagName === "string" && /^[a-z0-9.+-]{1,24}$/.test(tagName)).slice(0, FORUM_LIMITS.maximumTagCount),
+      views: 1,
+      pinned: false,
+      solved: false,
+      authorId: seedData.currentUserId,
+      createdAt: storedThread.createdAt
+    };
+  }
+  function sanitizeStoredPost(storedPost, validThreadIds) {
+    if (!storedPost || typeof storedPost !== "object") return null;
+    if (typeof storedPost.id !== "string" || !/^[a-z0-9-]{3,48}$/.test(storedPost.id)) return null;
+    if (!validThreadIds.has(storedPost.threadId) || !isNonEmptyString(storedPost.body, FORUM_LIMITS.bodyMaximumLength) || !isValidTimestamp(storedPost.createdAt)) return null;
+    return { id: storedPost.id, threadId: storedPost.threadId, authorId: seedData.currentUserId, createdAt: storedPost.createdAt, body: storedPost.body, votes: 0 };
   }
   function readUserState() {
     try {
       const storedState = JSON.parse(localStorage.getItem(USER_STATE_STORAGE_KEY));
-      if (!storedState) return createEmptyUserState();
+      if (!storedState || typeof storedState !== "object") return createEmptyUserState();
+      const restoredThreads = (Array.isArray(storedState.threads) ? storedState.threads : []).map(sanitizeStoredThread).filter(Boolean);
+      const validThreadIds = new Set([...seedThreadIds, ...restoredThreads.map((thread) => thread.id)]);
+      const restoredPosts = (Array.isArray(storedState.posts) ? storedState.posts : []).map((storedPost) => sanitizeStoredPost(storedPost, validThreadIds)).filter(Boolean);
+      const threadIdsWithPosts = new Set(restoredPosts.map((post) => post.threadId));
+      const knownPostIds = new Set([...seedData.posts.map((post) => post.id), ...restoredPosts.map((post) => post.id)]);
       return {
-        threads: Array.isArray(storedState.threads) ? storedState.threads : [],
-        posts: Array.isArray(storedState.posts) ? storedState.posts : [],
-        upvotedPostIds: Array.isArray(storedState.upvotedPostIds) ? storedState.upvotedPostIds : []
+        threads: restoredThreads.filter((thread) => threadIdsWithPosts.has(thread.id)),
+        posts: restoredPosts,
+        upvotedPostIds: (Array.isArray(storedState.upvotedPostIds) ? storedState.upvotedPostIds : []).filter((postId) => knownPostIds.has(postId))
       };
     } catch (storageError) {
       return createEmptyUserState();
@@ -107,6 +151,7 @@ const DevAgoraStore = (() => {
     return Array.from(tagCounts.entries()).sort((firstEntry, secondEntry) => secondEntry[1] - firstEntry[1] || firstEntry[0].localeCompare(secondEntry[0])).slice(0, maximumTagCount).map(([tagName, tagCount]) => ({ tagName, tagCount }));
   }
   function togglePostUpvote(postId) {
+    if (!getAllPosts().some((post) => post.id === postId)) return { upvoted: false, score: 0 };
     if (hasUpvoted(postId)) {
       userState.upvotedPostIds = userState.upvotedPostIds.filter((upvotedId) => upvotedId !== postId);
     } else {
@@ -116,27 +161,24 @@ const DevAgoraStore = (() => {
     const votedPost = getAllPosts().find((post) => post.id === postId);
     return { upvoted: hasUpvoted(postId), score: votedPost ? getPostScore(votedPost) : 0 };
   }
+  function getValidThreadIds() {
+    return new Set([...seedThreadIds, ...userState.threads.map((thread) => thread.id)]);
+  }
   function createThread(threadInput) {
     const creationTimestamp = Date.now();
     const threadId = `n${creationTimestamp.toString(36)}`;
-    userState.threads.push({
-      id: threadId,
-      categoryId: threadInput.categoryId,
-      title: threadInput.title,
-      tags: threadInput.tags,
-      views: 1,
-      pinned: false,
-      solved: false,
-      authorId: seedData.currentUserId,
-      createdAt: creationTimestamp
-    });
-    userState.posts.push({ id: `${threadId}-p1`, threadId, authorId: seedData.currentUserId, createdAt: creationTimestamp, body: threadInput.body, votes: 0 });
+    const createdThread = sanitizeStoredThread({ id: threadId, categoryId: threadInput.categoryId, title: String(threadInput.title).trim(), tags: threadInput.tags, createdAt: creationTimestamp });
+    const openingPost = sanitizeStoredPost({ id: `${threadId}-p1`, threadId, createdAt: creationTimestamp, body: String(threadInput.body).trim().slice(0, FORUM_LIMITS.bodyMaximumLength) }, new Set([threadId]));
+    if (!createdThread || !openingPost) return null;
+    userState.threads.push(createdThread);
+    userState.posts.push(openingPost);
     persistUserState();
     return threadId;
   }
   function createReply(threadId, replyBody) {
     const creationTimestamp = Date.now();
-    const replyPost = { id: `${threadId}-r${creationTimestamp.toString(36)}`, threadId, authorId: seedData.currentUserId, createdAt: creationTimestamp, body: replyBody, votes: 0 };
+    const replyPost = sanitizeStoredPost({ id: `${threadId}-r${creationTimestamp.toString(36)}`, threadId, createdAt: creationTimestamp, body: String(replyBody).trim().slice(0, FORUM_LIMITS.bodyMaximumLength) }, getValidThreadIds());
+    if (!replyPost) return null;
     userState.posts.push(replyPost);
     persistUserState();
     return replyPost;
@@ -200,50 +242,89 @@ function getQueryParameter(parameterName) {
   return new URLSearchParams(window.location.search).get(parameterName);
 }
 
-/* Lightweight markdown renderer: fenced code, inline code, bold, italic, links, quotes and lists. */
-function renderInlineMarkdown(escapedText) {
-  const inlineCodeFragments = [];
-  return escapedText
-    .replace(/`([^`\n]+)`/g, (fullMatch, codeContent) => {
-      inlineCodeFragments.push(codeContent);
-      return `\u0001${inlineCodeFragments.length - 1}\u0001`;
-    })
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>")
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    .replace(/\u0001(\d+)\u0001/g, (fullMatch, fragmentIndex) => `<code>${inlineCodeFragments[Number(fragmentIndex)]}</code>`);
+/* Markdown renderer: the source is HTML-escaped first, then a whitelist of transforms is applied (fenced code, inline code, bold, italic, http(s) links, quotes and lists). */
+const MARKDOWN_PLACEHOLDER_MARKER = "\u0001";
+const CONTROL_CHARACTER_PATTERN = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+const MARKDOWN_LINK_REL = "noopener noreferrer nofollow";
+
+function decodeEscapedHtml(escapedText) {
+  return String(escapedText).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
 }
 
-function renderMarkdownBlock(blockText) {
+function sanitizeLinkUrl(rawUrl) {
+  if (!/^https?:\/\//i.test(rawUrl) || /[\s<>"'`\\]/.test(rawUrl)) return null;
+  try {
+    const parsedUrl = new URL(rawUrl);
+    return parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:" ? parsedUrl.href : null;
+  } catch (urlError) {
+    return null;
+  }
+}
+
+function createPlaceholderStore() {
+  const storedFragments = [];
+  return {
+    store(fragmentMarkup) {
+      storedFragments.push(fragmentMarkup);
+      return `${MARKDOWN_PLACEHOLDER_MARKER}${storedFragments.length - 1}${MARKDOWN_PLACEHOLDER_MARKER}`;
+    },
+    restore(textWithPlaceholders) {
+      const placeholderPattern = new RegExp(`${MARKDOWN_PLACEHOLDER_MARKER}(\\d+)${MARKDOWN_PLACEHOLDER_MARKER}`, "g");
+      let restoredText = textWithPlaceholders;
+      while (placeholderPattern.test(restoredText)) {
+        restoredText = restoredText.replace(placeholderPattern, (fullMatch, fragmentIndex) => storedFragments[Number(fragmentIndex)] || "");
+      }
+      return restoredText;
+    }
+  };
+}
+
+function renderEmphasis(escapedText) {
+  return escapedText
+    .replace(/\*\*([^*\n]+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>");
+}
+
+function renderInlineMarkdown(escapedText) {
+  const inlinePlaceholders = createPlaceholderStore();
+  const textWithoutCode = escapedText.replace(/`([^`\n]+)`/g, (fullMatch, codeContent) => inlinePlaceholders.store(`<code>${codeContent}</code>`));
+  const textWithoutLinks = textWithoutCode.replace(/\[([^\]\n]+)\]\(([^()\s]+)\)/g, (fullMatch, linkLabel, escapedUrl) => {
+    const safeUrl = sanitizeLinkUrl(decodeEscapedHtml(escapedUrl));
+    if (!safeUrl) return linkLabel;
+    return inlinePlaceholders.store(`<a href="${escapeHtml(safeUrl)}" target="_blank" rel="${MARKDOWN_LINK_REL}">${renderEmphasis(linkLabel)}</a>`);
+  });
+  return inlinePlaceholders.restore(renderEmphasis(textWithoutLinks));
+}
+
+function renderMarkdownBlock(escapedBlockText) {
   const lineGroups = [];
-  blockText.split("\n").forEach((lineText) => {
+  escapedBlockText.split("\n").forEach((lineText) => {
     const lineType = /^&gt; ?/.test(lineText) ? "quote" : /^[-*] /.test(lineText) ? "list" : "text";
     const previousGroup = lineGroups[lineGroups.length - 1];
     if (previousGroup && previousGroup.type === lineType) previousGroup.lines.push(lineText);
     else lineGroups.push({ type: lineType, lines: [lineText] });
   });
   return lineGroups.map((lineGroup) => {
-    if (lineGroup.type === "quote") return `<blockquote>${renderInlineMarkdown(lineGroup.lines.map((lineText) => lineText.replace(/^&gt; ?/, "")).join("<br>"))}</blockquote>`;
+    if (lineGroup.type === "quote") return `<blockquote>${lineGroup.lines.map((lineText) => renderInlineMarkdown(lineText.replace(/^&gt; ?/, ""))).join("<br>")}</blockquote>`;
     if (lineGroup.type === "list") return `<ul>${lineGroup.lines.map((lineText) => `<li>${renderInlineMarkdown(lineText.slice(2))}</li>`).join("")}</ul>`;
-    return `<p>${renderInlineMarkdown(lineGroup.lines.join("<br>"))}</p>`;
+    return `<p>${lineGroup.lines.map(renderInlineMarkdown).join("<br>")}</p>`;
   }).join("");
 }
 
 function renderMarkdown(sourceText) {
-  const codeBlockFragments = [];
-  const textWithPlaceholders = escapeHtml(sourceText.replace(/\r\n/g, "\n")).replace(/```([\w-]*)\n([\s\S]*?)```/g, (fullMatch, languageName, codeContent) => {
-    const languageLabel = languageName ? `<span class="code-block__lang">${languageName}</span>` : "";
-    codeBlockFragments.push(`<pre class="code-block">${languageLabel}<code>${codeContent.replace(/\n$/, "")}</code></pre>`);
-    return `\n\n\u0000${codeBlockFragments.length - 1}\u0000\n\n`;
+  const blockPlaceholders = createPlaceholderStore();
+  const cleanSourceText = String(sourceText).replace(/\r\n?/g, "\n").replace(CONTROL_CHARACTER_PATTERN, "");
+  const textWithPlaceholders = cleanSourceText.replace(/```([\w-]{0,20})\n([\s\S]*?)```/g, (fullMatch, languageName, codeContent) => {
+    const languageLabel = languageName ? `<span class="code-block__lang">${escapeHtml(languageName)}</span>` : "";
+    return `\n\n${blockPlaceholders.store(`<pre class="code-block">${languageLabel}<code>${escapeHtml(codeContent.replace(/\n$/, ""))}</code></pre>`)}\n\n`;
   });
-  return textWithPlaceholders.split(/\n{2,}/).map((blockText) => blockText.trim()).filter(Boolean).map((blockText) => {
-    const placeholderMatch = blockText.match(/^\u0000(\d+)\u0000$/);
-    return placeholderMatch ? codeBlockFragments[Number(placeholderMatch[1])] : renderMarkdownBlock(blockText);
-  }).join("");
+  const placeholderOnlyPattern = new RegExp(`^${MARKDOWN_PLACEHOLDER_MARKER}\\d+${MARKDOWN_PLACEHOLDER_MARKER}$`);
+  const renderedMarkup = escapeHtml(textWithPlaceholders).split(/\n{2,}/).map((blockText) => blockText.trim()).filter(Boolean).map((blockText) => (placeholderOnlyPattern.test(blockText) ? blockText : renderMarkdownBlock(blockText))).join("");
+  return blockPlaceholders.restore(renderedMarkup);
 }
 
 function stripMarkdown(sourceText) {
-  return sourceText.replace(/```[\s\S]*?```/g, " [code] ").replace(/\[([^\]]+)\]\(https?:[^)]+\)/g, "$1").replace(/^>\s?/gm, "").replace(/[`*#]/g, "").replace(/\s+/g, " ").trim();
+  return String(sourceText).replace(CONTROL_CHARACTER_PATTERN, "").replace(/```[\s\S]*?```/g, " [code] ").replace(/\[([^\]\n]+)\]\([^()\s]+\)/g, "$1").replace(/^>\s?/gm, "").replace(/[`*#]/g, "").replace(/\s+/g, " ").trim();
 }
 
 /* Shared HTML snippets. */
@@ -311,11 +392,12 @@ function highlightText(rawText, searchQuery) {
   return `${escapeHtml(rawText.slice(0, matchIndex))}<mark>${escapeHtml(rawText.slice(matchIndex, matchIndex + normalizedQuery.length))}</mark>${escapeHtml(rawText.slice(matchIndex + normalizedQuery.length))}`;
 }
 
-function renderEmptyState(titleText, messageText, actionsMarkup = "") {
+function renderEmptyState(titleText, messageText, actionsMarkup = "", headingTagName = "h2") {
+  const safeHeadingTag = headingTagName === "h1" ? "h1" : "h2";
   return `
     <div class="empty-state reveal">
       <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="28" cy="28" r="18" fill="none" stroke="currentColor" stroke-width="4"/><path d="M41 41l13 13" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M21 28h14" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
-      <h2>${titleText}</h2>
+      <${safeHeadingTag}>${escapeHtml(titleText)}</${safeHeadingTag}>
       <p>${messageText}</p>
       <div class="empty-state__actions">${actionsMarkup}</div>
     </div>`;

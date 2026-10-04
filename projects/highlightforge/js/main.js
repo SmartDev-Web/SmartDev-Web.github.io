@@ -9,15 +9,23 @@ function isReducedMotionPreferred() {
   return prefersReducedMotionQuery.matches;
 }
 
-/* Toggles the compact header style once the page is scrolled. */
+/* Toggles the compact header style once a top-of-page sentinel leaves the viewport. */
 function initializeStickyHeader() {
   const siteHeaderElement = document.querySelector("[data-site-header]");
-  if (!siteHeaderElement) return;
-  const updateHeaderState = () => {
-    siteHeaderElement.classList.toggle("is-scrolled", window.scrollY > 24);
-  };
-  updateHeaderState();
-  window.addEventListener("scroll", updateHeaderState, { passive: true });
+  if (!siteHeaderElement || !("IntersectionObserver" in window)) return;
+  const scrollSentinelElement = document.createElement("div");
+  scrollSentinelElement.className = "scroll-sentinel";
+  scrollSentinelElement.setAttribute("aria-hidden", "true");
+  document.body.prepend(scrollSentinelElement);
+  const headerObserver = new IntersectionObserver(([sentinelEntry]) => {
+    siteHeaderElement.classList.toggle("is-scrolled", !sentinelEntry.isIntersecting);
+  });
+  headerObserver.observe(scrollSentinelElement);
+}
+
+/* Escapes a value before it is interpolated into an HTML template. */
+function escapeHtml(rawValue) {
+  return String(rawValue).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
 /* Opens and closes the mobile navigation drawer. */
@@ -146,6 +154,7 @@ function showToastMessage(messageText) {
     toastElement.setAttribute("data-toast", "");
     toastElement.setAttribute("role", "status");
     toastElement.setAttribute("aria-live", "polite");
+    toastElement.addEventListener("animationend", () => toastElement.classList.remove("is-visible"));
     document.body.appendChild(toastElement);
   }
   toastElement.textContent = messageText;

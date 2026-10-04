@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /serverless/
+
+Sitemap: https://smartdev-web.github.io/sitemap.xml

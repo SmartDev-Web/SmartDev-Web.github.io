@@ -885,7 +885,12 @@ p { margin: 0 0 1em; }
   gap: 32px;
 }
 
-.footer-grid h4 {
+.footer-tagline {
+  margin-top: 14px;
+  max-width: 320px;
+}
+
+.footer-grid .footer-title {
   color: var(--color-text);
   font-size: 0.95rem;
   text-transform: uppercase;
@@ -913,6 +918,15 @@ p { margin: 0 0 1em; }
   gap: 12px;
   font-size: 0.82rem;
 }
+
+.footer-demo {
+  flex-basis: 100%;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-demo:hover { color: var(--color-accent); }
 
 @media (max-width: 760px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -1896,6 +1910,10 @@ p { margin: 0 0 1em; }
 
 .export-actions .btn { flex: 1; }
 
+.export-actions-flush { margin-top: 0; }
+
+.clip-title { margin: 16px 0 0; }
+
 .export-summary {
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -2109,6 +2127,24 @@ p { margin: 0 0 1em; }
 
 .checkbox-field input { accent-color: var(--color-accent); margin-top: 4px; width: 16px; height: 16px; }
 
+.checkbox-field-inline { margin: 0; }
+
+.auth-form-title { font-size: 1.8rem; }
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.link-button:hover,
+.link-button:focus-visible { text-decoration: underline; }
+
+.feature-detail-cta { margin-top: 24px; }
+
 .form-row-between {
   display: flex;
   justify-content: space-between;
@@ -2214,3 +2250,12 @@ a.visually-hidden:focus {
 
 .export-actions { flex-wrap: wrap; }
 .export-actions .btn { white-space: normal; text-align: center; min-width: 140px; }
+
+.scroll-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 24px;
+  pointer-events: none;
+}

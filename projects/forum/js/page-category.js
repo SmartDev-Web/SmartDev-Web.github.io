@@ -102,8 +102,9 @@ function renderUnknownCategory() {
   categoryPageElements.breadcrumbCurrent.textContent = "Catégorie introuvable";
   categoryPageElements.pageRoot.innerHTML = renderEmptyState(
     "Catégorie introuvable",
-    requestedCategoryId ? `La catégorie « ${escapeHtml(requestedCategoryId)} » n'existe pas ou a été renommée.` : "Aucune catégorie n'a été précisée dans l'adresse.",
-    '<a class="button button--primary" href="index.html#categories">Voir toutes les catégories</a>'
+    requestedCategoryId ? "Cette catégorie n'existe pas ou a été renommée." : "Aucune catégorie n'a été précisée dans l'adresse.",
+    '<a class="button button--primary" href="index.html#categories">Voir toutes les catégories</a>',
+    "h1"
   );
 }
 

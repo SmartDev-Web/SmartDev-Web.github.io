@@ -163,6 +163,10 @@ function initReplyForm() {
       return;
     }
     const createdReply = DevAgoraStore.createReply(currentThreadId, replyText);
+    if (!createdReply) {
+      threadPageElements.replyError.textContent = `Votre réponse ne peut pas dépasser ${formatNumber(FORUM_LIMITS.bodyMaximumLength)} caractères.`;
+      return;
+    }
     replyEditor.setValue("");
     replyEditor.showWriteTab();
     renderThreadHeader(DevAgoraStore.getThreadById(currentThreadId), DevAgoraStore.getCategoryById(DevAgoraStore.getThreadById(currentThreadId).categoryId));
@@ -182,7 +186,8 @@ function renderUnknownThread() {
   threadPageElements.pageRoot.innerHTML = renderEmptyState(
     "Ce sujet est introuvable",
     requestedThreadId ? "Il a peut-être été supprimé, déplacé, ou le lien est incomplet." : "Aucun sujet n'a été précisé dans l'adresse.",
-    '<a class="button button--primary" href="index.html#discussions">Voir les dernières discussions</a><a class="button button--ghost" href="nouveau-sujet.html">Créer un sujet</a>'
+    '<a class="button button--primary" href="index.html#discussions">Voir les dernières discussions</a><a class="button button--ghost" href="nouveau-sujet.html">Créer un sujet</a>',
+    "h1"
   );
 }
 

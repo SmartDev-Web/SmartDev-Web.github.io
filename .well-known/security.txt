@@ -1,0 +1,4 @@
+Contact: mailto:smart.developpement.web@gmail.com
+Expires: 2027-10-04T00:00:00.000Z
+Preferred-Languages: fr, en
+Canonical: https://smartdev-web.github.io/.well-known/security.txt

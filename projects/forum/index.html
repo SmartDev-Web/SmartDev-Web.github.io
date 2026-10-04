@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>DevAgora · La communauté francophone des développeurs</title>
   <meta name="description" content="Forum d'entraide pour développeurs francophones : JavaScript, back-end, DevOps, mobile, data, accessibilité et carrière.">
   <meta name="theme-color" content="#7c5cff">
@@ -51,7 +54,7 @@
           <div class="search-box reveal" role="search">
             <label class="visually-hidden" for="thread-search">Rechercher dans les discussions</label>
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            <input type="search" id="thread-search" placeholder="Rechercher : react, kubernetes, salaire…" autocomplete="off">
+            <input type="search" id="thread-search" maxlength="100" placeholder="Rechercher : react, kubernetes, salaire…" autocomplete="off">
             <button type="button" class="search-box__clear" data-search-clear hidden aria-label="Effacer la recherche">×</button>
           </div>
           <dl class="hero-stats reveal" data-forum-stats></dl>
@@ -133,14 +136,15 @@
       <div>
         <h2 class="footer-title">Contact</h2>
         <ul class="footer-links">
-          <li><a href="mailto:bonjour@devagora.fr">bonjour@devagora.fr</a></li>
-          <li>Association DevAgora<br>14 rue de la République, 69002 Lyon</li>
+          <li><a href="mailto:bonjour@devagora.example">bonjour@devagora.example</a></li>
+          <li>Association DevAgora<br>9 traverse des Accolades-Fermantes, 69002 Lyon</li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
       <p>© 2026 DevAgora · Contenus publiés sous licence CC BY-SA 4.0</p>
       <p>Fait avec soin à Lyon, pour toute la francophonie.</p>
+      <p class="footer-demo"><a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></p>
     </div>
   </footer>
   <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
