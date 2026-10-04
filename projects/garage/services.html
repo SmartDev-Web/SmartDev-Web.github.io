@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Services et tarifs — Atelier Méca Rivière Nantes</title>
   <meta name="description" content="Tous nos services mécaniques et tarifs TTC : révision, freinage, distribution, diagnostic, climatisation, pneus, embrayage et pré-contrôle technique à Nantes.">
   <meta name="theme-color" content="#111418">
@@ -11,17 +14,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add("js");</script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js"></script>
   <script src="js/services.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
   <div class="top-bar">
     <div class="container top-bar__inner">
-      <span class="status-pill" data-opening-status style="background:transparent;border-color:rgba(20,23,27,0.35);padding:0 10px"><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Ven 8h – 18h30</span></span>
-      <span class="top-bar__secondary">14 quai de la Fosse, 44000 Nantes</span>
-      <a class="top-bar__phone" href="tel:+33240481926">02 40 48 19 26</a>
+      <span class="status-pill status-pill--bar" data-opening-status><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Sam · voir horaires</span></span>
+      <span class="top-bar__secondary">9 impasse des Bielles-Chantantes, 44000 Nantes</span>
+      <a class="top-bar__phone" href="tel:+33261914826">02 61 91 48 26</a>
     </div>
   </div>
   <header class="site-header">
@@ -43,7 +45,7 @@
     </div>
   </header>
   <main id="contenu">
-    <section class="page-hero">
+    <section class="page-hero" data-sheet="Fiche MR-02 · Tarifs atelier">
       <div class="container">
         <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> / Services</nav>
         <h1 class="page-hero__title">Services &amp; <em>tarifs</em></h1>
@@ -93,7 +95,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=vidange">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -103,7 +105,7 @@
               <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-freinage" id="bouton-freinage">
                 <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
                 <span><span class="accordion__title">Freinage</span><span class="accordion__subtitle">Plaquettes, disques, étriers et liquide de frein</span></span>
-                <span class="accordion__from">dès 119 €</span>
+                <span class="accordion__from">dès 109 €</span>
                 <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
               </button>
             </h2>
@@ -124,7 +126,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=plaquettes">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -154,7 +156,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=distribution">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -184,7 +186,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=diagnostic">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -214,7 +216,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=climatisation">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -244,7 +246,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=pneus">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -274,7 +276,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=embrayage">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -304,7 +306,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                  <a class="button button--small" href="devis.html?service=controle">Estimer avec ce service</a>
                 </div>
               </div>
             </div>
@@ -364,16 +366,16 @@
         <div>
           <h2 class="site-footer__title">Contact</h2>
           <ul class="site-footer__list">
-            <li>14 quai de la Fosse, 44000 Nantes</li>
-            <li><a href="tel:+33240481926">02 40 48 19 26</a></li>
-            <li><a href="mailto:atelier@meca-riviere.fr">atelier@meca-riviere.fr</a></li>
-            <li>Tram 1 · arrêt Gare Maritime</li>
+            <li>9 impasse des Bielles-Chantantes, 44000 Nantes</li>
+            <li><a href="tel:+33261914826">02 61 91 48 26</a></li>
+            <li><a href="mailto:atelier@meca-riviere.example">atelier@meca-riviere.example</a></li>
+            <li>Parking client gratuit (8 places)</li>
           </ul>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 412 587 963 00024</span>
-        <span>Mentions légales · Confidentialité · Conditions générales</span>
+        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 000 000 000 00000</span>
+        <span>Mentions légales · Confidentialité · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

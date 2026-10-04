@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Contact et accès — Atelier Méca Rivière Nantes</title>
-  <meta name="description" content="Contactez l'Atelier Méca Rivière, 14 quai de la Fosse à Nantes : horaires d'ouverture, plan d'accès, téléphone et formulaire de contact.">
+  <meta name="description" content="Contactez l'Atelier Méca Rivière, 9 impasse des Bielles-Chantantes à Nantes : horaires d'ouverture, plan d'accès, téléphone et formulaire de contact.">
   <meta name="theme-color" content="#111418">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23ff6b1a'/%3E%3Cpath d='M19.6 8.4a1.3 1.3 0 0 0 0 1.9l2.1 2.1a1.3 1.3 0 0 0 1.9 0l4-4a8 8 0 0 1-10.6 10.6l-7.4 7.4a2.8 2.8 0 0 1-4-4l7.4-7.4A8 8 0 0 1 23.6 4.4z' fill='none' stroke='%2314171b' stroke-width='2.6' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add("js");</script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js"></script>
   <script src="js/contact.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
   <div class="top-bar">
     <div class="container top-bar__inner">
-      <span class="status-pill" data-opening-status style="background:transparent;border-color:rgba(20,23,27,0.35);padding:0 10px"><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Ven 8h – 18h30</span></span>
-      <span class="top-bar__secondary">14 quai de la Fosse, 44000 Nantes</span>
-      <a class="top-bar__phone" href="tel:+33240481926">02 40 48 19 26</a>
+      <span class="status-pill status-pill--bar" data-opening-status><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Sam · voir horaires</span></span>
+      <span class="top-bar__secondary">9 impasse des Bielles-Chantantes, 44000 Nantes</span>
+      <a class="top-bar__phone" href="tel:+33261914826">02 61 91 48 26</a>
     </div>
   </div>
   <header class="site-header">
@@ -43,7 +45,7 @@
     </div>
   </header>
   <main id="contenu">
-    <section class="page-hero">
+    <section class="page-hero" data-sheet="Fiche MR-05 · Accès atelier">
       <div class="container">
         <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> / Contact</nav>
         <h1 class="page-hero__title">Contact &amp; <em>accès</em></h1>
@@ -57,7 +59,7 @@
         <div>
           <div class="info-card reveal">
             <h2 class="info-card__title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Adresse</h2>
-            <p>14 quai de la Fosse<br>44000 Nantes<br>Tram ligne 1, arrêt Gare Maritime · Parking client gratuit (8 places)</p>
+            <p>9 impasse des Bielles-Chantantes<br>44000 Nantes<br>Tram à 5 minutes à pied · Parking client gratuit (8 places)</p>
           </div>
           <div class="info-card reveal">
             <h2 class="info-card__title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Horaires d'ouverture</h2>
@@ -73,31 +75,54 @@
           </div>
           <div class="info-card reveal">
             <h2 class="info-card__title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Téléphone &amp; e-mail</h2>
-            <p><a href="tel:+33240481926">02 40 48 19 26</a><br><a href="mailto:atelier@meca-riviere.fr">atelier@meca-riviere.fr</a><br>Dépannage partenaire 24h/24 : <a href="tel:+33240892211">02 40 89 22 11</a></p>
+            <p><a href="tel:+33261914826">02 61 91 48 26</a><br><a href="mailto:atelier@meca-riviere.example">atelier@meca-riviere.example</a><br>Dépannage partenaire 24h/24 : <a href="tel:+33261912211">02 61 91 22 11</a></p>
           </div>
         </div>
 
         <div>
-          <div class="map-frame reveal">
-            <iframe title="Plan d'accès à l'Atelier Méca Rivière, quai de la Fosse à Nantes" src="https://www.openstreetmap.org/export/embed.html?bbox=-1.5752%2C47.2072%2C-1.5592%2C47.2152&amp;layer=mapnik&amp;marker=47.2112%2C-1.5672" loading="lazy" referrerpolicy="no-referrer"></iframe>
-          </div>
+          <figure class="map-frame map-frame--blueprint reveal" aria-labelledby="legende-plan">
+            <svg class="map-frame__drawing" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Plan stylisé de l'accès à l'atelier, impasse des Bielles-Chantantes, avec le parking client et l'arrêt de tram le plus proche">
+              <path class="map-frame__river" d="M-20 300 C 120 250, 220 330, 360 280 S 560 230, 680 270 L 680 380 L -20 380 Z"/>
+              <path class="map-frame__road map-frame__road--major" d="M-20 196 H 680"/>
+              <path class="map-frame__road map-frame__road--major" d="M232 -20 V 380"/>
+              <path class="map-frame__road" d="M232 120 H 520 V -20"/>
+              <path class="map-frame__road" d="M420 196 V 120"/>
+              <path class="map-frame__road" d="M80 -20 L 150 196"/>
+              <path class="map-frame__tram" d="M-20 236 H 680"/>
+              <rect class="map-frame__block" x="262" y="136" width="130" height="40" rx="3"/>
+              <rect class="map-frame__block" x="446" y="136" width="54" height="40" rx="3"/>
+              <rect class="map-frame__block" x="20" y="40" width="40" height="120" rx="3"/>
+              <rect class="map-frame__block" x="262" y="20" width="230" height="80" rx="3"/>
+              <rect class="map-frame__parking" x="300" y="210" width="90" height="16" rx="2"/>
+              <circle class="map-frame__stop" cx="150" cy="236" r="7"/>
+              <g class="map-frame__pin" transform="translate(328 150)">
+                <circle r="26" class="map-frame__pin-halo"/>
+                <circle r="11"/>
+              </g>
+            </svg>
+            <figcaption class="map-frame__legend" id="legende-plan">
+              <span><i class="map-frame__key map-frame__key--pin" aria-hidden="true"></i>Atelier · 9 impasse des Bielles-Chantantes</span>
+              <span><i class="map-frame__key map-frame__key--parking" aria-hidden="true"></i>Parking client</span>
+              <span><i class="map-frame__key map-frame__key--tram" aria-hidden="true"></i>Tram à 5 min</span>
+            </figcaption>
+          </figure>
           <div class="panel reveal" style="margin-top:20px">
             <form data-contact-form novalidate>
               <h2 class="panel__title">Écrivez-nous</h2>
               <div class="form-grid">
                 <div class="form-field">
                   <label for="contact-nom">Nom</label>
-                  <input id="contact-nom" name="contactName" type="text" autocomplete="name" required>
+                  <input id="contact-nom" name="contactName" type="text" autocomplete="name" maxlength="80" required>
                   <span class="form-field__error"></span>
                 </div>
                 <div class="form-field">
                   <label for="contact-telephone">Téléphone</label>
-                  <input id="contact-telephone" name="contactPhone" type="tel" autocomplete="tel" placeholder="02 40 00 00 00" required>
+                  <input id="contact-telephone" name="contactPhone" type="tel" autocomplete="tel" maxlength="20" placeholder="02 61 91 00 00" required>
                   <span class="form-field__error"></span>
                 </div>
                 <div class="form-field form-field--full">
                   <label for="contact-email">E-mail</label>
-                  <input id="contact-email" name="contactEmail" type="email" autocomplete="email" required>
+                  <input id="contact-email" name="contactEmail" type="email" autocomplete="email" maxlength="120" required>
                   <span class="form-field__error"></span>
                 </div>
                 <div class="form-field form-field--full">
@@ -164,16 +189,16 @@
         <div>
           <h2 class="site-footer__title">Contact</h2>
           <ul class="site-footer__list">
-            <li>14 quai de la Fosse, 44000 Nantes</li>
-            <li><a href="tel:+33240481926">02 40 48 19 26</a></li>
-            <li><a href="mailto:atelier@meca-riviere.fr">atelier@meca-riviere.fr</a></li>
-            <li>Tram 1 · arrêt Gare Maritime</li>
+            <li>9 impasse des Bielles-Chantantes, 44000 Nantes</li>
+            <li><a href="tel:+33261914826">02 61 91 48 26</a></li>
+            <li><a href="mailto:atelier@meca-riviere.example">atelier@meca-riviere.example</a></li>
+            <li>Parking client gratuit (8 places)</li>
           </ul>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 412 587 963 00024</span>
-        <span>Mentions légales · Confidentialité · Conditions générales</span>
+        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 000 000 000 00000</span>
+        <span>Mentions légales · Confidentialité · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

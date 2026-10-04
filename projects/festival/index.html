@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Echoes Festival 2027 — 9, 10 &amp; 11 juillet près de Lyon</title>
   <meta name="description" content="Echoes Festival : trois jours d'électro et d'indie au Domaine des Grands Étangs à Miribel, à 20 minutes de Lyon. 24 artistes, 3 scènes, du 9 au 11 juillet 2027.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +37,7 @@
   <main id="main-content">
     <section class="hero">
       <div class="hero-photo">
-        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80" alt="Foule devant une scène de concert baignée de lumières">
+        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80" alt="Foule devant une scène de concert baignée de lumières" width="1600" height="1067" fetchpriority="high">
       </div>
       <div class="blob-field" aria-hidden="true">
         <span class="blob is-yellow"></span>
@@ -43,7 +46,8 @@
       </div>
       <div class="container hero-content">
         <p class="hero-dates"><span>9 · 10 · 11 juillet 2027</span><span>Miribel — Grand Lyon</span></p>
-        <h1 class="hero-title"><span>Echoes</span><small>Festival · 3ᵉ édition</small></h1>
+        <h1 class="hero-title"><span>Echoes</span><small>Festival · Édition 03</small></h1>
+        <a class="hero-sticker" href="billetterie.html" aria-label="Tarif early bird : pass 3 jours à 149 euros, jusqu'au 31 janvier 2027"><span>Early bird</span><strong>149 €</strong><span>Pass 3 jours</span></a>
         <p class="hero-lead">Trois jours d'électro et d'indie au bord des étangs, trois scènes, vingt-quatre artistes et des couchers de soleil qu'on n'oublie pas.</p>
         <div class="countdown" role="timer" aria-label="Compte à rebours avant l'ouverture du festival" data-countdown data-countdown-target="2027-07-09T16:00:00+02:00">
           <div class="countdown-unit"><span class="countdown-value" data-countdown-unit="days">000</span><span class="countdown-label">Jours</span></div>
@@ -76,7 +80,23 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
+    <section class="section section-flush-top" aria-labelledby="poster-heading">
+      <div class="container">
+        <div class="lineup-poster reveal">
+          <span class="poster-tape" aria-hidden="true"></span>
+          <p class="poster-sticker" aria-hidden="true">Programmation<br>complète</p>
+          <div class="lineup-poster-header">
+            <span class="kicker">L'affiche</span>
+            <h2 id="poster-heading">Echoes <span class="text-sunset">2027</span></h2>
+            <p>9 · 10 · 11 juillet · Domaine des Grands Étangs · Miribel</p>
+          </div>
+          <div class="lineup-poster-days" data-lineup-poster></div>
+          <p class="lineup-poster-footer">Scène Soleil · Le Hangar · La Clairière — camping, plages et navettes de nuit vers Lyon</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-flush-top">
       <div class="container">
         <div class="stats-band reveal">
           <div><span class="stat-value" data-counter="3">0</span><span class="stat-label">jours de musique</span></div>
@@ -94,7 +114,7 @@
           <h2>Un festival entre <span class="text-sunset">forêt et étangs</span>.</h2>
           <p style="color:var(--color-text-muted)">Le Domaine des Grands Étangs s'étend sur 60 hectares de nature à Miribel, à 20 minutes du centre de Lyon. Plages de sable, sous-bois ombragés et pontons : tout est pensé pour passer la journée sur place.</p>
           <ul class="fact-list">
-            <li><span class="fact-bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><strong>Domaine des Grands Étangs</strong><span>Chemin de la Baisse, 01700 Miribel</span></div></li>
+            <li><span class="fact-bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><strong>Domaine des Grands Étangs</strong><span>Chemin des Lucioles-Vagabondes, 01700 Miribel</span></div></li>
             <li><span class="fact-bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 11h16M8 21l-2-4M16 21l2-4"/></svg></span><div><strong>Navettes depuis Lyon Part-Dieu</strong><span>Toutes les 10 minutes de 14 h à 5 h</span></div></li>
             <li><span class="fact-bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20l9-15 9 15z"/><path d="M12 20v-6"/></svg></span><div><strong>Camping au bord de l'eau</strong><span>Ouvert du jeudi 18 h au lundi midi</span></div></li>
           </ul>
@@ -132,14 +152,14 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
+    <section class="section section-flush-top">
       <div class="container">
         <div class="cta-poster reveal">
           <div class="blob-field" aria-hidden="true">
             <span class="blob is-pink"></span>
             <span class="blob is-coral"></span>
           </div>
-          <span class="kicker">Tarif early bird jusqu'au 31 janvier</span>
+          <span class="kicker">Tarif early bird jusqu'au 31 janvier 2027</span>
           <h2>Pass 3 jours à <span class="text-sunset">149 €</span></h2>
           <p>Moins de 50 € la journée pour 24 concerts, l'accès aux plages et aux navettes de nuit. Paiement en trois fois sans frais.</p>
           <div class="hero-actions">
@@ -162,7 +182,7 @@
           <p class="footer-tagline">Trois jours d'électro et d'indie au bord de l'eau, à 20 minutes de Lyon. 9, 10 et 11 juillet 2027 au Domaine des Grands Étangs, Miribel.</p>
         </div>
         <div>
-          <h4>Festival</h4>
+          <h2 class="footer-title">Festival</h2>
           <ul>
             <li><a href="lineup.html">Line-up</a></li>
             <li><a href="programme.html">Programme</a></li>
@@ -170,7 +190,7 @@
           </ul>
         </div>
         <div>
-          <h4>Venir</h4>
+          <h2 class="footer-title">Venir</h2>
           <ul>
             <li><a href="billetterie.html">Billetterie</a></li>
             <li><a href="infos.html#acces">Accès &amp; navettes</a></li>
@@ -178,16 +198,16 @@
           </ul>
         </div>
         <div>
-          <h4>Contact</h4>
+          <h2 class="footer-title">Contact</h2>
           <ul>
-            <li><a href="mailto:hello@echoes-festival.fr">hello@echoes-festival.fr</a></li>
-            <li>Association Échos du Rhône<br>4 rue Paul Bert, 69003 Lyon</li>
+            <li><a href="mailto:hello@echoes-festival.example">hello@echoes-festival.example</a></li>
+            <li>Association Échos du Rhône<br>12 traverse des Échos-Perdus, 69003 Lyon<br><a href="tel:+33465712727">04 65 71 27 27</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span data-current-year>2026</span> Echoes Festival — Projet de démonstration, événement fictif.</span>
-        <span>Licences d'entrepreneur de spectacles fictives.</span>
+        <span>Licences d'entrepreneur de spectacles n° 0-000000 (fictives) · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

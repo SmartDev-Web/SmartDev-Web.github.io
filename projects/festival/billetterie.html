@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Billetterie — Echoes Festival 2027</title>
   <meta name="description" content="Achetez vos billets pour Echoes Festival 2027 : pass 3 jours, pass camping, VIP, billets à la journée et options parking ou navette.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +35,7 @@
   </header>
 
   <main id="main-content">
-    <section class="page-hero">
+    <section class="page-hero" data-sticker="Dès 59 €">
       <div class="blob-field" aria-hidden="true">
         <span class="blob is-yellow"></span>
         <span class="blob is-pink"></span>
@@ -55,7 +58,7 @@
             <p class="summary-empty" data-summary-empty>Aucun billet sélectionné. Utilisez les boutons + pour composer votre commande.</p>
             <form class="promo-form" novalidate data-promo-form>
               <label class="visually-hidden" for="promo-code">Code promo</label>
-              <input class="text-input" type="text" id="promo-code" name="promo" placeholder="Code promo" autocomplete="off" data-promo-input>
+              <input class="text-input" type="text" id="promo-code" name="promo" placeholder="Code promo" autocomplete="off" maxlength="20" data-promo-input>
               <button class="btn btn-outline btn-small" type="submit">Appliquer</button>
             </form>
             <p class="promo-message" aria-live="polite" data-promo-message></p>
@@ -73,17 +76,17 @@
             <p style="color:var(--color-text-muted);font-size:.92rem">Les billets seront envoyés à cette adresse. Total à régler : <strong data-checkout-total>0,00 €</strong></p>
             <div class="form-field">
               <label for="buyer-firstname">Prénom</label>
-              <input class="text-input" type="text" id="buyer-firstname" name="firstname" autocomplete="given-name" required data-validate="name">
+              <input class="text-input" type="text" id="buyer-firstname" name="firstname" autocomplete="given-name" maxlength="60" required data-validate="name">
               <span class="field-error" aria-live="polite"></span>
             </div>
             <div class="form-field">
               <label for="buyer-lastname">Nom</label>
-              <input class="text-input" type="text" id="buyer-lastname" name="lastname" autocomplete="family-name" required data-validate="name">
+              <input class="text-input" type="text" id="buyer-lastname" name="lastname" autocomplete="family-name" maxlength="60" required data-validate="name">
               <span class="field-error" aria-live="polite"></span>
             </div>
             <div class="form-field">
               <label for="buyer-email">E-mail</label>
-              <input class="text-input" type="email" id="buyer-email" name="email" autocomplete="email" placeholder="prenom@exemple.fr" required data-validate="email">
+              <input class="text-input" type="email" id="buyer-email" name="email" autocomplete="email" maxlength="120" placeholder="prenom@domaine.example" required data-validate="email">
               <span class="field-error" aria-live="polite"></span>
             </div>
             <div class="form-field">
@@ -118,7 +121,7 @@
           <p class="footer-tagline">Trois jours d'électro et d'indie au bord de l'eau, à 20 minutes de Lyon. 9, 10 et 11 juillet 2027 au Domaine des Grands Étangs, Miribel.</p>
         </div>
         <div>
-          <h4>Festival</h4>
+          <h2 class="footer-title">Festival</h2>
           <ul>
             <li><a href="lineup.html">Line-up</a></li>
             <li><a href="programme.html">Programme</a></li>
@@ -126,7 +129,7 @@
           </ul>
         </div>
         <div>
-          <h4>Venir</h4>
+          <h2 class="footer-title">Venir</h2>
           <ul>
             <li><a href="billetterie.html">Billetterie</a></li>
             <li><a href="infos.html#acces">Accès &amp; navettes</a></li>
@@ -134,16 +137,16 @@
           </ul>
         </div>
         <div>
-          <h4>Contact</h4>
+          <h2 class="footer-title">Contact</h2>
           <ul>
-            <li><a href="mailto:hello@echoes-festival.fr">hello@echoes-festival.fr</a></li>
-            <li>Association Échos du Rhône<br>4 rue Paul Bert, 69003 Lyon</li>
+            <li><a href="mailto:hello@echoes-festival.example">hello@echoes-festival.example</a></li>
+            <li>Association Échos du Rhône<br>12 traverse des Échos-Perdus, 69003 Lyon<br><a href="tel:+33465712727">04 65 71 27 27</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span data-current-year>2026</span> Echoes Festival — Projet de démonstration, événement fictif.</span>
-        <span>Licences d'entrepreneur de spectacles fictives.</span>
+        <span>Licences d'entrepreneur de spectacles n° 0-000000 (fictives) · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

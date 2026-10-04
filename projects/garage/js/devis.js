@@ -45,7 +45,7 @@ const QUOTE_SERVICE_DEFINITIONS = [
   { id: "controle", label: "Pré-contrôle technique", minimumPrice: 49, maximumPrice: 59, laborHours: 0.75, excludedVehicleTypes: [] }
 ];
 
-const estimatorState = { currentStep: 1, isTransitioning: false };
+const estimatorState = { currentStep: 1, isTransitioning: false, preselectedServiceId: null };
 
 const quoteFormElement = document.querySelector("[data-quote-form]");
 
@@ -103,6 +103,21 @@ function describeVehicle(quoteSelection) {
   return vehicleParts.length ? vehicleParts.join(" ") : "Non renseigné";
 }
 
+/* Returns the service identifier passed as ?service= when it matches a known service, otherwise null */
+function readPreselectedServiceId() {
+  const requestedServiceId = new URLSearchParams(window.location.search).get("service");
+  const matchingService = QUOTE_SERVICE_DEFINITIONS.find((serviceDefinition) => serviceDefinition.id === requestedServiceId);
+  return matchingService ? matchingService.id : null;
+}
+
+/* Announces the service carried over from the services page */
+function renderPreselectedServiceNotice() {
+  const preselectionElement = document.querySelector("[data-preselected-service]");
+  const preselectedService = QUOTE_SERVICE_DEFINITIONS.find((serviceDefinition) => serviceDefinition.id === estimatorState.preselectedServiceId);
+  preselectionElement.hidden = !preselectedService;
+  if (preselectedService) preselectionElement.textContent = `Prestation pré-sélectionnée : ${preselectedService.label}`;
+}
+
 /* Builds the vehicle type tiles */
 function renderVehicleOptions() {
   const vehicleOptionsElement = document.querySelector("[data-vehicle-options]");
@@ -140,6 +155,10 @@ function renderServiceOptions() {
   const serviceOptionsElement = document.querySelector("[data-service-options]");
   const quoteSelection = readQuoteSelection();
   const previouslyCheckedIds = quoteSelection.selectedServices.map((serviceDefinition) => serviceDefinition.id);
+  if (estimatorState.preselectedServiceId) {
+    previouslyCheckedIds.push(estimatorState.preselectedServiceId);
+    estimatorState.preselectedServiceId = null;
+  }
   const vehicleTypeId = quoteSelection.vehicleType ? quoteSelection.vehicleType.id : "";
   const vehicleFactor = quoteSelection.vehicleType ? quoteSelection.vehicleType.priceFactor : 1;
   serviceOptionsElement.querySelectorAll(".option-tile").forEach((existingTileElement) => existingTileElement.remove());
@@ -317,6 +336,8 @@ function goToStep(targetStep) {
 /* Clears every choice and returns to the first step */
 function restartEstimator() {
   quoteFormElement.reset();
+  estimatorState.preselectedServiceId = null;
+  renderPreselectedServiceNotice();
   renderModelOptions("");
   quoteFormElement.querySelectorAll(".has-error").forEach((invalidFieldElement) => invalidFieldElement.classList.remove("has-error"));
   quoteFormElement.querySelectorAll(".form-field__error").forEach((errorElement) => { errorElement.textContent = ""; });
@@ -325,6 +346,8 @@ function restartEstimator() {
 }
 
 function initializeQuoteEstimator() {
+  estimatorState.preselectedServiceId = readPreselectedServiceId();
+  renderPreselectedServiceNotice();
   renderVehicleOptions();
   renderBrandAndYearOptions();
   renderStepChrome();

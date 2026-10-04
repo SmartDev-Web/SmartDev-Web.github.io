@@ -93,7 +93,7 @@ function renderPlanningView() {
         <button class="planning-remove" type="button" data-toggle-favorite="${artistEntry.id}" aria-label="Retirer ${artistEntry.name} de mon planning">Retirer</button>
       </li>`;
     }).join("");
-    return `<div class="planning-day"><h3>${dayEntry.fullLabel}<small>${plannedSets.length} concert${plannedSets.length > 1 ? "s" : ""}</small></h3><ul class="planning-list">${itemsMarkup}</ul></div>`;
+    return `<div class="planning-day"><h2>${dayEntry.fullLabel}<small>${plannedSets.length} concert${plannedSets.length > 1 ? "s" : ""}</small></h2><ul class="planning-list">${itemsMarkup}</ul></div>`;
   }).join("");
   planningSummaryElement.textContent = `${planningArtistIds.length} concert${planningArtistIds.length > 1 ? "s" : ""} au programme` + (conflictCount ? ` · ${conflictCount} créneau(x) en conflit` : " · aucun chevauchement");
 }

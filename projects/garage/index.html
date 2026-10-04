@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Atelier Méca Rivière — Garage indépendant à Nantes</title>
   <meta name="description" content="Garage indépendant à Nantes : entretien toutes marques, freinage, distribution, diagnostic, climatisation. Devis en ligne immédiat et prise de rendez-vous.">
   <meta name="theme-color" content="#111418">
@@ -11,16 +14,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add("js");</script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
   <div class="top-bar">
     <div class="container top-bar__inner">
-      <span class="status-pill" data-opening-status style="background:transparent;border-color:rgba(20,23,27,0.35);padding:0 10px"><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Ven 8h – 18h30</span></span>
-      <span class="top-bar__secondary">14 quai de la Fosse, 44000 Nantes</span>
-      <a class="top-bar__phone" href="tel:+33240481926">02 40 48 19 26</a>
+      <span class="status-pill status-pill--bar" data-opening-status><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Sam · voir horaires</span></span>
+      <span class="top-bar__secondary">9 impasse des Bielles-Chantantes, 44000 Nantes</span>
+      <a class="top-bar__phone" href="tel:+33261914826">02 61 91 48 26</a>
     </div>
   </div>
   <header class="site-header">
@@ -44,9 +46,9 @@
   <main id="contenu">
     <section class="hero" aria-labelledby="titre-hero">
       <div class="hero__media">
-        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1600&q=80" alt="Mécanicien intervenant sur un véhicule dans l'atelier" fetchpriority="high">
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1600&q=80" alt="Mécanicien intervenant sur un véhicule dans l'atelier" width="1600" height="1067" fetchpriority="high">
       </div>
-      <div class="container">
+      <div class="container hero__layout">
         <div class="hero__content">
           <span class="eyebrow">Garage indépendant depuis 1998</span>
           <h1 class="hero__title" id="titre-hero">
@@ -67,6 +69,19 @@
             <span class="hero__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Véhicule de prêt gratuit</span>
           </div>
         </div>
+        <aside class="spec-sheet" aria-label="Fiche technique de l'atelier">
+          <p class="spec-sheet__header"><span>Fiche technique</span><span>MR-01</span></p>
+          <dl class="spec-sheet__list">
+            <div class="spec-sheet__row"><dt>Surface atelier</dt><dd>650 m²</dd></div>
+            <div class="spec-sheet__row"><dt>Ponts élévateurs</dt><dd>5</dd></div>
+            <div class="spec-sheet__row"><dt>Mécaniciens</dt><dd>6</dd></div>
+            <div class="spec-sheet__row"><dt>Habilitation VE</dt><dd>B2VL / BCL</dd></div>
+            <div class="spec-sheet__row"><dt>Climatisation</dt><dd>R134a · R1234yf</dd></div>
+            <div class="spec-sheet__row"><dt>Taux horaire</dt><dd>62 € TTC</dd></div>
+            <div class="spec-sheet__row"><dt>Garantie</dt><dd>24 mois / 40 000 km</dd></div>
+          </dl>
+          <p class="spec-sheet__footer">Contrôle en 40 points · compte rendu photo par SMS</p>
+        </aside>
       </div>
     </section>
 
@@ -74,43 +89,49 @@
       <div class="container">
         <div class="section-heading">
           <div class="reveal">
-            <span class="eyebrow">Nos prestations</span>
+            <span class="eyebrow"><span class="eyebrow__index" aria-hidden="true">01</span>Nos prestations</span>
             <h2 class="section-title" id="titre-services">Tout l'entretien,<br><em>sous un même toit</em></h2>
           </div>
           <p class="section-lead reveal">Un atelier de 650 m² équipé de 5 ponts élévateurs, d'une valise de diagnostic multimarque et d'une station de climatisation R1234yf.</p>
         </div>
         <div class="service-grid reveal">
           <a class="service-card" href="services.html#entretien">
+            <span class="service-card__ref" aria-hidden="true">Réf. MR-01 · 0,5 h</span>
             <span class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7c-3 4-6 7.4-6 11.3a6 6 0 0 0 12 0c0-3.9-3-7.3-6-11.3z"/></svg></span>
             <h3 class="service-card__title">Vidange &amp; révision</h3>
             <p class="service-card__text">Révision selon le carnet constructeur, huiles homologuées et remise à zéro de l'indicateur.</p>
             <span class="service-card__price">dès 89 € TTC</span>
           </a>
           <a class="service-card" href="services.html#freinage">
+            <span class="service-card__ref" aria-hidden="true">Réf. MR-02 · 1 h</span>
             <span class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
             <h3 class="service-card__title">Freinage</h3>
             <p class="service-card__text">Plaquettes, disques, liquide de frein et contrôle complet du circuit sur banc.</p>
-            <span class="service-card__price">dès 119 € TTC</span>
+            <span class="service-card__price">dès 109 € TTC</span>
           </a>
           <a class="service-card" href="services.html#distribution">
+            <span class="service-card__ref" aria-hidden="true">Réf. MR-03 · 4 h</span>
             <span class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><path d="M7 8h10M7 16h10"/></svg></span>
             <h3 class="service-card__title">Distribution</h3>
             <p class="service-card__text">Kit courroie ou chaîne, pompe à eau et galets, avec pièces de qualité équivalente à l'origine.</p>
             <span class="service-card__price">dès 449 € TTC</span>
           </a>
           <a class="service-card" href="services.html#diagnostic">
+            <span class="service-card__ref" aria-hidden="true">Réf. MR-04 · 1 h</span>
             <span class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M6 12l3-3 3 4 3-3 3 2M8 22h8"/></svg></span>
             <h3 class="service-card__title">Diagnostic électronique</h3>
             <p class="service-card__text">Lecture des codes défauts, voyants moteur, ABS, airbag et calculateurs toutes marques.</p>
             <span class="service-card__price">dès 59 € TTC</span>
           </a>
           <a class="service-card" href="services.html#climatisation">
+            <span class="service-card__ref" aria-hidden="true">Réf. MR-05 · 0,75 h</span>
             <span class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M4.9 4.9l14.2 14.2M2 12h20M4.9 19.1L19.1 4.9"/></svg></span>
             <h3 class="service-card__title">Climatisation</h3>
             <p class="service-card__text">Recharge, contrôle d'étanchéité, traitement antibactérien et remplacement du filtre habitacle.</p>
             <span class="service-card__price">dès 79 € TTC</span>
           </a>
           <a class="service-card" href="services.html#pneumatiques">
+            <span class="service-card__ref" aria-hidden="true">Réf. MR-06 · 0,25 h</span>
             <span class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
             <h3 class="service-card__title">Pneus &amp; géométrie</h3>
             <p class="service-card__text">Montage, équilibrage, parallélisme 3D et gardiennage de vos pneus hiver.</p>
@@ -123,11 +144,11 @@
     <section class="section" aria-labelledby="titre-pourquoi">
       <div class="container split">
         <div class="split__media reveal">
-          <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1000&q=80" alt="Mécanicien de l'atelier contrôlant un moteur" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1000&q=80" alt="Mécanicien de l'atelier contrôlant un moteur" width="1000" height="1200" loading="lazy">
           <div class="split__badge"><strong>28 ans</strong>d'expertise mécanique au cœur de Nantes.</div>
         </div>
         <div>
-          <span class="eyebrow reveal">Pourquoi nous choisir</span>
+          <span class="eyebrow reveal"><span class="eyebrow__index" aria-hidden="true">02</span>Pourquoi nous choisir</span>
           <h2 class="section-title reveal" id="titre-pourquoi">Un garage de quartier,<br><em>une rigueur de concession</em></h2>
           <p class="section-lead reveal">Nous traitons votre voiture comme la nôtre : on vous explique, on vous montre les pièces remplacées, et on ne touche à rien sans votre accord.</p>
           <ul class="check-list">
@@ -153,12 +174,12 @@
       <div class="container">
         <div class="section-heading">
           <div class="reveal">
-            <span class="eyebrow">Avis clients vérifiés</span>
+            <span class="eyebrow"><span class="eyebrow__index" aria-hidden="true">03</span>Avis clients vérifiés</span>
             <h2 class="section-title" id="titre-avis">Ils nous confient <em>leurs clés</em></h2>
           </div>
           <div class="rating-summary reveal">
             <span class="rating-summary__score">4,9</span>
-            <div><span class="stars" aria-label="4,9 étoiles sur 5">★★★★★</span><br><small>612 avis Google</small></div>
+            <div><span class="stars" aria-label="4,9 étoiles sur 5">★★★★★</span><br><small>612 avis vérifiés</small></div>
           </div>
         </div>
         <div class="review-track reveal" data-slider-track tabindex="0" aria-label="Avis clients, faites défiler horizontalement">
@@ -195,7 +216,7 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top:0" aria-labelledby="titre-cta">
+    <section class="section section--flush-top" aria-labelledby="titre-cta">
       <div class="container">
         <div class="cta-band reveal">
           <div>
@@ -204,7 +225,7 @@
           </div>
           <div class="cta-band__actions">
             <a class="button" href="devis.html">Lancer le devis</a>
-            <a class="button button--ghost" href="tel:+33240481926">02 40 48 19 26</a>
+            <a class="button button--ghost" href="tel:+33261914826">02 61 91 48 26</a>
           </div>
         </div>
       </div>
@@ -238,16 +259,16 @@
         <div>
           <h2 class="site-footer__title">Contact</h2>
           <ul class="site-footer__list">
-            <li>14 quai de la Fosse, 44000 Nantes</li>
-            <li><a href="tel:+33240481926">02 40 48 19 26</a></li>
-            <li><a href="mailto:atelier@meca-riviere.fr">atelier@meca-riviere.fr</a></li>
-            <li>Tram 1 · arrêt Gare Maritime</li>
+            <li>9 impasse des Bielles-Chantantes, 44000 Nantes</li>
+            <li><a href="tel:+33261914826">02 61 91 48 26</a></li>
+            <li><a href="mailto:atelier@meca-riviere.example">atelier@meca-riviere.example</a></li>
+            <li>Parking client gratuit (8 places)</li>
           </ul>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 412 587 963 00024</span>
-        <span>Mentions légales · Confidentialité · Conditions générales</span>
+        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 000 000 000 00000</span>
+        <span>Mentions légales · Confidentialité · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

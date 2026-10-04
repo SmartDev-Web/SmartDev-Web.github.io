@@ -63,8 +63,41 @@ function renderHeadliners() {
   }).join("");
 }
 
+/* Builds one day column of the printed-style line-up poster, headliners first. */
+function createPosterDayElement(dayEntry) {
+  const getPosterRank = (artistEntry) => (artistEntry.isHeadliner ? 1 : 0) + (artistEntry.isHeadliner && artistEntry.stage === "soleil" ? 1 : 0);
+  const dayArtists = festivalArtists.filter((artistEntry) => artistEntry.day === dayEntry.id).sort((firstArtist, secondArtist) => getPosterRank(secondArtist) - getPosterRank(firstArtist) || getMinutesFromTimetableStart(secondArtist.start) - getMinutesFromTimetableStart(firstArtist.start));
+  const dayColumnElement = document.createElement("div");
+  dayColumnElement.className = "poster-day";
+  const dayTitleElement = document.createElement("h3");
+  dayTitleElement.className = "poster-day-title";
+  dayTitleElement.textContent = dayEntry.fullLabel;
+  const artistListElement = document.createElement("ul");
+  artistListElement.className = "poster-artist-list";
+  dayArtists.forEach((artistEntry) => {
+    const artistItemElement = document.createElement("li");
+    const artistButtonElement = document.createElement("button");
+    artistButtonElement.type = "button";
+    artistButtonElement.className = artistEntry.isHeadliner ? "poster-artist is-headliner" : "poster-artist";
+    artistButtonElement.dataset.openArtist = artistEntry.id;
+    artistButtonElement.textContent = artistEntry.name;
+    artistItemElement.appendChild(artistButtonElement);
+    artistListElement.appendChild(artistItemElement);
+  });
+  dayColumnElement.append(dayTitleElement, artistListElement);
+  return dayColumnElement;
+}
+
+/* Renders the full line-up as a festival poster, one column per day. */
+function renderLineupPoster() {
+  const lineupPosterElement = document.querySelector("[data-lineup-poster]");
+  if (!lineupPosterElement) return;
+  lineupPosterElement.replaceChildren(...festivalDays.map(createPosterDayElement));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initializeCountdown();
   initializeMarquee();
   renderHeadliners();
+  renderLineupPoster();
 });

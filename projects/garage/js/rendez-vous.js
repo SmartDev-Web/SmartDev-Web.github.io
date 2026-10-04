@@ -12,6 +12,13 @@ const FRENCH_PLATE_PATTERN = /^(?!SS|WW)[A-HJ-NP-TV-Z]{2}-(?!000)\d{3}-(?!SS)[A-
 const FRENCH_MOBILE_PATTERN = /^(?:\+33\s?|0)[67](?:[\s.-]?\d{2}){4}$/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+/* Reasons offered by the appointment form, used to validate restored data */
+const APPOINTMENT_REASONS = ["Vidange & révision", "Freinage", "Distribution", "Diagnostic électronique", "Climatisation", "Pneus & géométrie", "Embrayage & boîte", "Pré-contrôle technique", "Autre / je ne sais pas"];
+const DATE_KEY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const SLOT_TIME_PATTERN = /^\d{2}:\d{2}$/;
+const APPOINTMENT_ID_PATTERN = /^rdv-\d{1,16}$/;
+const QUOTE_RANGE_PATTERN = /^[\d\s\u202f\u00a0]{1,9} – [\d\s\u202f\u00a0]{1,9} €$/;
+
 /* Public holidays (month-day for recurring dates, full ISO dates for movable ones) */
 const RECURRING_PUBLIC_HOLIDAYS = ["01-01", "05-01", "05-08", "07-14", "08-15", "11-01", "11-11", "12-25"];
 const MOVABLE_PUBLIC_HOLIDAYS = ["2026-04-06", "2026-05-14", "2026-05-25", "2027-03-29", "2027-05-06", "2027-05-17"];
@@ -35,10 +42,33 @@ const bookingState = {
   savedAppointments: loadSavedAppointments()
 };
 
+/* Keeps a stored appointment only when every field has the expected shape */
+function sanitizeStoredAppointment(storedAppointment) {
+  if (!storedAppointment || typeof storedAppointment !== "object") return null;
+  const { id, dateKey, slotTime, licensePlate, appointmentReason, customerName, loanVehicle, quoteRange } = storedAppointment;
+  const hasValidShape = typeof id === "string" && APPOINTMENT_ID_PATTERN.test(id)
+    && typeof dateKey === "string" && DATE_KEY_PATTERN.test(dateKey)
+    && typeof slotTime === "string" && SLOT_TIME_PATTERN.test(slotTime)
+    && typeof licensePlate === "string" && FRENCH_PLATE_PATTERN.test(licensePlate)
+    && APPOINTMENT_REASONS.includes(appointmentReason)
+    && typeof customerName === "string" && customerName.length <= 80;
+  if (!hasValidShape) return null;
+  return {
+    id,
+    dateKey,
+    slotTime,
+    licensePlate,
+    appointmentReason,
+    customerName,
+    loanVehicle: loanVehicle === true,
+    quoteRange: typeof quoteRange === "string" && QUOTE_RANGE_PATTERN.test(quoteRange) ? quoteRange : ""
+  };
+}
+
 function loadSavedAppointments() {
   try {
     const storedAppointments = JSON.parse(localStorage.getItem(APPOINTMENTS_STORAGE_KEY) || "[]");
-    return Array.isArray(storedAppointments) ? storedAppointments : [];
+    return Array.isArray(storedAppointments) ? storedAppointments.map(sanitizeStoredAppointment).filter(Boolean) : [];
   } catch (storageError) {
     return [];
   }
@@ -52,9 +82,16 @@ function persistSavedAppointments() {
   }
 }
 
+/* Restores the last online quote, discarding it when its shape is unexpected */
 function loadLastQuote() {
   try {
-    return JSON.parse(localStorage.getItem(LAST_QUOTE_STORAGE_KEY) || "null");
+    const storedQuote = JSON.parse(localStorage.getItem(LAST_QUOTE_STORAGE_KEY) || "null");
+    const hasValidShape = storedQuote && typeof storedQuote === "object"
+      && typeof storedQuote.vehicleDescription === "string" && storedQuote.vehicleDescription.length <= 160
+      && Array.isArray(storedQuote.serviceLabels) && storedQuote.serviceLabels.length <= 20 && storedQuote.serviceLabels.every((serviceLabel) => typeof serviceLabel === "string" && serviceLabel.length <= 80)
+      && Number.isFinite(storedQuote.totalMinimum) && Number.isFinite(storedQuote.totalMaximum)
+      && storedQuote.totalMinimum >= 0 && storedQuote.totalMaximum >= storedQuote.totalMinimum && storedQuote.totalMaximum < 100000;
+    return hasValidShape ? storedQuote : null;
   } catch (storageError) {
     return null;
   }
@@ -178,10 +215,10 @@ function renderAppointmentList() {
   }
   appointmentListElement.innerHTML = upcomingAppointments.map((savedAppointment) => `<li class="appointment-item">
     <div>
-      <span class="appointment-item__date">${formatLongDate(savedAppointment.dateKey)} · ${formatSlotTime(savedAppointment.slotTime)}</span>
-      <span class="appointment-item__meta"><span class="mini-plate">${savedAppointment.licensePlate}</span> · ${savedAppointment.appointmentReason}${savedAppointment.quoteRange ? ` · devis ${savedAppointment.quoteRange}` : ""}</span>
+      <span class="appointment-item__date">${escapeHtml(formatLongDate(savedAppointment.dateKey))} · ${escapeHtml(formatSlotTime(savedAppointment.slotTime))}</span>
+      <span class="appointment-item__meta"><span class="mini-plate">${escapeHtml(savedAppointment.licensePlate)}</span> · ${escapeHtml(savedAppointment.appointmentReason)}${savedAppointment.quoteRange ? ` · devis ${escapeHtml(savedAppointment.quoteRange)}` : ""}</span>
     </div>
-    <button class="button button--ghost button--small" type="button" data-cancel-appointment="${savedAppointment.id}">Annuler</button>
+    <button class="button button--ghost button--small" type="button" data-cancel-appointment="${escapeHtml(savedAppointment.id)}">Annuler</button>
   </li>`).join("");
 }
 
@@ -266,7 +303,7 @@ function initializeAppointmentForm() {
       slotTime: bookingState.selectedSlotTime,
       licensePlate: formFields.licensePlate.value,
       appointmentReason: formFields.appointmentReason.value,
-      customerName: formFields.customerName.value.trim(),
+      customerName: formFields.customerName.value.trim().slice(0, 80),
       loanVehicle: formFields.loanVehicle.checked,
       quoteRange: attachedQuoteRange
     };

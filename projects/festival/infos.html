@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Infos pratiques — Echoes Festival 2027</title>
   <meta name="description" content="Accès, navettes, camping, cashless, accessibilité et FAQ : toutes les infos pratiques pour profiter d'Echoes Festival 2027 à Miribel.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +35,7 @@
   </header>
 
   <main id="main-content">
-    <section class="page-hero">
+    <section class="page-hero" data-sticker="Miribel">
       <div class="blob-field" aria-hidden="true">
         <span class="blob is-coral"></span>
         <span class="blob is-violet"></span>
@@ -46,11 +49,12 @@
 
     <section class="section" style="padding-top:10px">
       <div class="container">
+        <h2 class="visually-hidden">L'essentiel avant de venir</h2>
         <div class="info-grid">
           <article class="info-card reveal">
             <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
             <h3>Horaires</h3>
-            <p>Vendredi : 16 h – 3 h. Samedi et dimanche : 15 h 30 – 3 h. Le Hangar ferme à 3 h, les autres scènes vers minuit et demi.</p>
+            <p>Vendredi : 16 h – 3 h. Samedi et dimanche : 15 h 30 – 3 h. Le Hangar ferme à 3 h, la Scène Soleil et la Clairière au plus tard à 1 h.</p>
           </article>
           <article class="info-card reveal">
             <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div>
@@ -87,7 +91,7 @@
           <div class="section-heading reveal" style="margin-bottom:28px">
             <span class="kicker">Accès</span>
             <h2>Venir au <span class="text-sunset">Domaine</span>.</h2>
-            <p>Domaine des Grands Étangs, chemin de la Baisse, 01700 Miribel. À 15 km au nord-est de Lyon.</p>
+            <p>Domaine des Grands Étangs, chemin des Lucioles-Vagabondes, 01700 Miribel. À 15 km au nord-est de Lyon.</p>
           </div>
           <div class="access-grid">
             <article class="access-card reveal">
@@ -109,7 +113,7 @@
           </div>
         </div>
         <figure class="map-card reveal" style="margin:0">
-          <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80" alt="Festivaliers profitant d'un concert en plein air au coucher du soleil" style="aspect-ratio:4/5;object-fit:cover;width:100%">
+          <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80" alt="Festivaliers profitant d'un concert en plein air au coucher du soleil" width="1200" height="1500" loading="lazy" style="aspect-ratio:4/5;object-fit:cover;width:100%">
         </figure>
       </div>
     </section>
@@ -133,7 +137,7 @@
           </div>
           <div class="faq-item" data-faq-item data-faq-category="billets">
             <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-2" data-faq-question>Les enfants peuvent-ils venir ?<span class="faq-icon" aria-hidden="true">+</span></button>
-            <div class="faq-answer" id="faq-2" data-faq-answer><div class="faq-answer-inner">L'entrée est gratuite pour les moins de 10 ans accompagnés d'un adulte. Les 10-15 ans paient un billet à tarif réduit (35 € la journée). Un casque anti-bruit est obligatoire pour les moins de 10 ans et prêté gratuitement.</div></div>
+            <div class="faq-answer" id="faq-2" data-faq-answer><div class="faq-answer-inner">L'entrée est gratuite pour les moins de 10 ans accompagnés d'un adulte. Les 10-15 ans bénéficient d'un billet journée à tarif réduit (35 €), disponible uniquement au guichet du festival sur présentation d'une pièce d'identité. Un casque anti-bruit est obligatoire pour les moins de 10 ans et prêté gratuitement.</div></div>
           </div>
           <div class="faq-item" data-faq-item data-faq-category="billets">
             <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-3" data-faq-question>Que se passe-t-il en cas d'annulation ?<span class="faq-icon" aria-hidden="true">+</span></button>
@@ -172,9 +176,9 @@
           </div>
           <span class="kicker">Une autre question ?</span>
           <h2>Écrivez-nous, on répond <span class="text-sunset">en 48 h</span>.</h2>
-          <p>L'équipe accueil est joignable à hello@echoes-festival.fr et au 04 72 00 27 27 du lundi au vendredi, de 10 h à 18 h.</p>
+          <p>L'équipe accueil est joignable à hello@echoes-festival.example et au 04 65 71 27 27 du lundi au vendredi, de 10 h à 18 h.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:hello@echoes-festival.fr">Contacter l'équipe</a>
+            <a class="btn btn-primary" href="mailto:hello@echoes-festival.example">Contacter l'équipe</a>
             <a class="btn btn-outline" href="billetterie.html">Billetterie</a>
           </div>
         </div>
@@ -193,7 +197,7 @@
           <p class="footer-tagline">Trois jours d'électro et d'indie au bord de l'eau, à 20 minutes de Lyon. 9, 10 et 11 juillet 2027 au Domaine des Grands Étangs, Miribel.</p>
         </div>
         <div>
-          <h4>Festival</h4>
+          <h2 class="footer-title">Festival</h2>
           <ul>
             <li><a href="lineup.html">Line-up</a></li>
             <li><a href="programme.html">Programme</a></li>
@@ -201,7 +205,7 @@
           </ul>
         </div>
         <div>
-          <h4>Venir</h4>
+          <h2 class="footer-title">Venir</h2>
           <ul>
             <li><a href="billetterie.html">Billetterie</a></li>
             <li><a href="infos.html#acces">Accès &amp; navettes</a></li>
@@ -209,16 +213,16 @@
           </ul>
         </div>
         <div>
-          <h4>Contact</h4>
+          <h2 class="footer-title">Contact</h2>
           <ul>
-            <li><a href="mailto:hello@echoes-festival.fr">hello@echoes-festival.fr</a></li>
-            <li>Association Échos du Rhône<br>4 rue Paul Bert, 69003 Lyon</li>
+            <li><a href="mailto:hello@echoes-festival.example">hello@echoes-festival.example</a></li>
+            <li>Association Échos du Rhône<br>12 traverse des Échos-Perdus, 69003 Lyon<br><a href="tel:+33465712727">04 65 71 27 27</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span data-current-year>2026</span> Echoes Festival — Projet de démonstration, événement fictif.</span>
-        <span>Licences d'entrepreneur de spectacles fictives.</span>
+        <span>Licences d'entrepreneur de spectacles n° 0-000000 (fictives) · <a href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a></span>
       </div>
     </div>
   </footer>

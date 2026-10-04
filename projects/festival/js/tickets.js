@@ -29,6 +29,7 @@ const ticketCatalog = [
     items: [
       { id: "option-parking", name: "Parking voiture 3 jours", description: "Une place par véhicule sur le parking P2, à 400 m de l'entrée.", price: 25, isTicket: false },
       { id: "option-navette-aeroport", name: "Navette aéroport Saint-Exupéry", description: "Aller-retour entre l'aéroport et le site, horaires calés sur les vols.", price: 24, isTicket: false },
+      { id: "option-tente", name: "Tente pré-montée 2 places", description: "Tente montée à votre arrivée dans l'espace « Camp Lumière », pour la durée du séjour.", price: 90, isTicket: false, requiredItemId: "pass-camping", requirementMessage: "Ajoutez d'abord un pass 3 jours + camping : une tente par pass camping." },
       { id: "option-kit", name: "Kit confort festivalier", description: "Poncho, bouchons d'oreilles, gourde Echoes et tote bag en coton bio.", price: 12, isTicket: false }
     ]
   }
@@ -41,6 +42,11 @@ const promoCodeCatalog = {
 
 const ticketState = { quantities: {}, promoCode: null, isCheckoutOpen: false };
 
+/* Returns true when a value is one of the promo codes defined in the catalog. */
+function isKnownPromoCode(promoCodeValue) {
+  return typeof promoCodeValue === "string" && Object.prototype.hasOwnProperty.call(promoCodeCatalog, promoCodeValue);
+}
+
 /* Formats an amount in euros with French conventions. */
 function formatEuroAmount(amountValue) {
   return amountValue.toLocaleString("fr-FR", { style: "currency", currency: "EUR" });
@@ -51,16 +57,37 @@ function getAllTicketItems() {
   return ticketCatalog.flatMap((ticketGroup) => ticketGroup.items);
 }
 
+/* Returns the highest quantity allowed for an item, given the items it depends on. */
+function getMaximumQuantityForItem(ticketItem) {
+  if (!ticketItem.requiredItemId) return MAXIMUM_QUANTITY_PER_ITEM;
+  return Math.min(ticketState.quantities[ticketItem.requiredItemId] || 0, MAXIMUM_QUANTITY_PER_ITEM);
+}
+
+/* Lowers dependent items to what their required items allow and returns the names of the adjusted items. */
+function enforceCartDependencies() {
+  const adjustedItemNames = [];
+  getAllTicketItems().forEach((ticketItem) => {
+    const currentQuantity = ticketState.quantities[ticketItem.id] || 0;
+    const allowedQuantity = getMaximumQuantityForItem(ticketItem);
+    if (currentQuantity <= allowedQuantity) return;
+    if (allowedQuantity > 0) ticketState.quantities[ticketItem.id] = allowedQuantity;
+    else delete ticketState.quantities[ticketItem.id];
+    adjustedItemNames.push(ticketItem.name);
+  });
+  return adjustedItemNames;
+}
+
 /* Reads the saved cart from localStorage. */
 function restoreCart() {
   try {
     const storedCart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "null");
-    if (!storedCart) return;
+    if (!storedCart || typeof storedCart !== "object" || !storedCart.quantities || typeof storedCart.quantities !== "object") return;
     getAllTicketItems().forEach((ticketItem) => {
-      const storedQuantity = parseInt((storedCart.quantities || {})[ticketItem.id], 10);
+      const storedQuantity = Object.prototype.hasOwnProperty.call(storedCart.quantities, ticketItem.id) ? parseInt(storedCart.quantities[ticketItem.id], 10) : 0;
       if (storedQuantity > 0) ticketState.quantities[ticketItem.id] = Math.min(storedQuantity, MAXIMUM_QUANTITY_PER_ITEM);
     });
-    if (promoCodeCatalog[storedCart.promoCode]) ticketState.promoCode = storedCart.promoCode;
+    if (isKnownPromoCode(storedCart.promoCode)) ticketState.promoCode = storedCart.promoCode;
+    if (enforceCartDependencies().length) persistCart();
   } catch (storageError) {
     console.warn("Cart could not be restored.", storageError);
   }
@@ -97,12 +124,13 @@ function renderTicketCatalog() {
           <div>
             <h3 class="ticket-name">${ticketItem.name}${ticketItem.tag ? `<span class="ticket-tag">${ticketItem.tag}</span>` : ""}</h3>
             <p class="ticket-description">${ticketItem.description}</p>
+            ${ticketItem.requiredItemId ? `<p class="ticket-requirement" id="requirement-${ticketItem.id}" data-ticket-requirement="${ticketItem.id}">${ticketItem.requirementMessage}</p>` : ""}
             <span class="ticket-price">${formatEuroAmount(ticketItem.price)}</span>
           </div>
           <div class="stepper" role="group" aria-label="Quantité pour ${ticketItem.name}">
             <button type="button" aria-label="Retirer un ${ticketItem.name}" data-quantity-step="-1" data-ticket-id="${ticketItem.id}">−</button>
             <output aria-live="polite" data-quantity-output="${ticketItem.id}">0</output>
-            <button type="button" aria-label="Ajouter un ${ticketItem.name}" data-quantity-step="1" data-ticket-id="${ticketItem.id}">+</button>
+            <button type="button" aria-label="Ajouter un ${ticketItem.name}" data-quantity-step="1" data-ticket-id="${ticketItem.id}"${ticketItem.requiredItemId ? ` aria-describedby="requirement-${ticketItem.id}"` : ""}>+</button>
           </div>
         </li>`).join("")}
     </ul>`).join("");
@@ -126,7 +154,10 @@ function renderCart() {
     quantityOutputElement.textContent = String(quantityValue);
     document.querySelector(`[data-ticket-item="${ticketItem.id}"]`).classList.toggle("is-selected", quantityValue > 0);
     document.querySelector(`[data-ticket-id="${ticketItem.id}"][data-quantity-step="-1"]`).disabled = quantityValue === 0;
-    document.querySelector(`[data-ticket-id="${ticketItem.id}"][data-quantity-step="1"]`).disabled = quantityValue >= MAXIMUM_QUANTITY_PER_ITEM;
+    const maximumQuantity = getMaximumQuantityForItem(ticketItem);
+    document.querySelector(`[data-ticket-id="${ticketItem.id}"][data-quantity-step="1"]`).disabled = quantityValue >= maximumQuantity;
+    const requirementElement = document.querySelector(`[data-ticket-requirement="${ticketItem.id}"]`);
+    if (requirementElement) requirementElement.classList.toggle("is-blocking", quantityValue >= maximumQuantity);
   });
   document.querySelector("[data-summary-lines]").innerHTML = cartTotals.cartLines.map((cartLine) => `<li><span>${cartLine.quantity} × ${cartLine.ticketItem.name}</span><span>${formatEuroAmount(cartLine.lineTotal)}</span></li>`).join("");
   document.querySelector("[data-summary-empty]").hidden = cartTotals.cartLines.length > 0;
@@ -154,10 +185,14 @@ function renderPromoMessage(cartTotals) {
 /* Changes the quantity of a ticket item by a step value. */
 function changeTicketQuantity(ticketId, stepValue) {
   const currentQuantity = ticketState.quantities[ticketId] || 0;
-  const nextQuantity = Math.min(Math.max(currentQuantity + stepValue, 0), MAXIMUM_QUANTITY_PER_ITEM);
+  const ticketItem = getAllTicketItems().find((catalogItem) => catalogItem.id === ticketId);
+  if (!ticketItem) return;
+  const nextQuantity = Math.min(Math.max(currentQuantity + stepValue, 0), getMaximumQuantityForItem(ticketItem));
   if (nextQuantity === currentQuantity) return;
   ticketState.quantities[ticketId] = nextQuantity;
   if (nextQuantity === 0) delete ticketState.quantities[ticketId];
+  const adjustedItemNames = enforceCartDependencies();
+  if (adjustedItemNames.length) showToastMessage(`${adjustedItemNames.join(", ")} : quantité ajustée au nombre de pass camping`);
   persistCart();
   renderCart();
   const quantityOutputElement = document.querySelector(`[data-quantity-output="${ticketId}"]`);
@@ -218,7 +253,7 @@ function bindTicketEvents() {
     const promoInputElement = document.querySelector("[data-promo-input]");
     const promoMessageElement = document.querySelector("[data-promo-message]");
     const enteredCode = promoInputElement.value.trim().toUpperCase();
-    if (!promoCodeCatalog[enteredCode]) {
+    if (!isKnownPromoCode(enteredCode)) {
       promoMessageElement.className = "promo-message is-error";
       promoMessageElement.textContent = enteredCode ? `Le code « ${enteredCode} » n'est pas valide.` : "Saisissez un code promo.";
       return;
@@ -241,6 +276,13 @@ function bindTicketEvents() {
   });
   checkoutFormElement.addEventListener("submit", (submitEvent) => {
     submitEvent.preventDefault();
+    if (enforceCartDependencies().length) {
+      persistCart();
+      renderCart();
+      showOrderPanel("cart");
+      showToastMessage("Votre commande a été ajustée : une tente pré-montée nécessite un pass camping.");
+      return;
+    }
     const validationResults = Array.from(checkoutFields).map(validateCheckoutField);
     if (validationResults.every(Boolean)) {
       completeOrder(checkoutFormElement);

@@ -4,7 +4,15 @@
    animated counters, accordions, opening status, toasts and form helpers
    ========================================================================== */
 
+document.documentElement.classList.add("js");
+
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* Escapes a value before it is interpolated into an HTML template */
+function escapeHtml(unsafeValue) {
+  const htmlEntityMap = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  return String(unsafeValue).replace(/[&<>"']/g, (matchedCharacter) => htmlEntityMap[matchedCharacter]);
+}
 
 /* Reveals the page once the DOM is ready and restores it after back/forward cache */
 function revealPageOnLoad() {
@@ -20,7 +28,8 @@ function initializePageTransitions() {
     const clickedLinkElement = clickEvent.target.closest("a[href]");
     if (!clickedLinkElement) return;
     const linkHref = clickedLinkElement.getAttribute("href");
-    const isInternalPageLink = linkHref.endsWith(".html") && !clickedLinkElement.target && !linkHref.startsWith("http");
+    const destinationUrl = new URL(linkHref, window.location.href);
+    const isInternalPageLink = destinationUrl.pathname.endsWith(".html") && !clickedLinkElement.target && !linkHref.startsWith("http") && destinationUrl.protocol === window.location.protocol;
     if (!isInternalPageLink || clickEvent.metaKey || clickEvent.ctrlKey || clickEvent.shiftKey || clickEvent.button !== 0) return;
     if (prefersReducedMotion) return;
     clickEvent.preventDefault();
