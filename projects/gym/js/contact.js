@@ -32,7 +32,7 @@ function getTrialFieldError(trialFormElement, fieldName) {
     case "emailAddress":
       return EMAIL_ADDRESS_PATTERN.test(trimmedValue(formFields.emailAddress.value)) ? "" : "Adresse e-mail invalide.";
     case "phoneNumber":
-      return FRENCH_PHONE_PATTERN.test(trimmedValue(formFields.phoneNumber.value)) ? "" : "Numéro français attendu, ex. 06 12 34 56 78.";
+      return FRENCH_PHONE_PATTERN.test(trimmedValue(formFields.phoneNumber.value)) ? "" : "Numéro français attendu, ex. 06 39 98 12 34.";
     case "trialDate": {
       const selectedDateValue = formFields.trialDate.value;
       if (!selectedDateValue) return "Choisissez une date.";

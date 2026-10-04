@@ -1,8 +1,11 @@
 /* ==========================================================================
    IronPulse — shared behaviour for every page
+   Loaded synchronously in the head so the .js class is set before first paint.
    Header state, mobile navigation, page transitions, scroll reveal,
    animated counters, split typography, toast messages and form helpers
    ========================================================================== */
+
+document.documentElement.classList.add("js");
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -120,21 +123,34 @@ function initializeAnimatedCounters() {
   counterElements.forEach((counterElement) => counterObserver.observe(counterElement));
 }
 
-/* Splits headline text into individually animated letters */
+/* Splits headline text into individually animated letters grouped by word */
 function initializeSplitTypography() {
   let globalLetterIndex = 0;
   document.querySelectorAll("[data-split-letters]").forEach((splitTextElement) => {
     const originalText = splitTextElement.textContent.trim();
     splitTextElement.setAttribute("aria-label", originalText);
     splitTextElement.textContent = "";
-    [...originalText].forEach((characterValue) => {
-      const letterElement = document.createElement("span");
-      letterElement.className = characterValue === " " ? "split-letter split-letter--space" : "split-letter";
-      letterElement.setAttribute("aria-hidden", "true");
-      letterElement.style.setProperty("--letter-index", globalLetterIndex);
-      letterElement.textContent = characterValue === " " ? " " : characterValue;
-      splitTextElement.appendChild(letterElement);
-      globalLetterIndex += 1;
+    originalText.split(" ").forEach((wordText, wordIndex) => {
+      if (wordIndex > 0) {
+        const spaceElement = document.createElement("span");
+        spaceElement.className = "split-letter split-letter--space";
+        spaceElement.setAttribute("aria-hidden", "true");
+        spaceElement.textContent = " ";
+        splitTextElement.appendChild(spaceElement);
+        globalLetterIndex += 1;
+      }
+      const wordElement = document.createElement("span");
+      wordElement.className = "split-word";
+      wordElement.setAttribute("aria-hidden", "true");
+      [...wordText].forEach((characterValue) => {
+        const letterElement = document.createElement("span");
+        letterElement.className = "split-letter";
+        letterElement.style.setProperty("--letter-index", globalLetterIndex);
+        letterElement.textContent = characterValue;
+        wordElement.appendChild(letterElement);
+        globalLetterIndex += 1;
+      });
+      splitTextElement.appendChild(wordElement);
     });
   });
 }
@@ -145,7 +161,8 @@ function initializeSliders() {
     const sliderTrackElement = sliderElement.querySelector("[data-slider-track]");
     const scrollSliderByDirection = (scrollDirection) => {
       const firstSlideElement = sliderTrackElement.firstElementChild;
-      const slideStepWidth = firstSlideElement ? firstSlideElement.getBoundingClientRect().width + 22 : 300;
+      const trackColumnGap = parseFloat(getComputedStyle(sliderTrackElement).columnGap) || 0;
+      const slideStepWidth = firstSlideElement ? firstSlideElement.getBoundingClientRect().width + trackColumnGap : 300;
       sliderTrackElement.scrollBy({ left: slideStepWidth * scrollDirection, behavior: prefersReducedMotion ? "auto" : "smooth" });
     };
     sliderElement.querySelector("[data-slider-previous]").addEventListener("click", () => scrollSliderByDirection(-1));

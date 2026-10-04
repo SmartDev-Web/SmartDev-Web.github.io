@@ -3,52 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Planning des cours — IronPulse Lille</title>
   <meta name="description" content="Consultez le planning hebdomadaire des cours collectifs IronPulse et réservez votre place en un clic : cross-training, HIIT, boxe, cycling, yoga.">
-  <meta name="theme-color" content="#0a0b0d">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d4ff2e'/%3E%3Cpath d='M4 16h4l4-9 5 18 4-9h7' fill='none' stroke='%230a0b0d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#d4ff2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23d4ff2e'/%3E%3Crect x='1.5' y='1.5' width='29' height='29' fill='none' stroke='%230b0b0b' stroke-width='3'/%3E%3Cpath d='M5 16h4l4-8 5 16 4-8h5' fill='none' stroke='%230b0b0b' stroke-width='3.2' stroke-linejoin='miter'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add("js");</script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js"></script>
   <script src="js/planning.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
   <header class="site-header">
-    <div class="container site-header__inner">
+    <div class="site-header__inner">
       <a class="brand" href="index.html" aria-label="IronPulse, retour à l'accueil">
-        <span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span>
-        <span>Iron<span class="brand__accent">Pulse</span></span>
+        <span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="miter" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span>
+        <span class="brand__name">Iron<span class="brand__accent">Pulse</span></span>
       </a>
       <button class="burger-button" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
         <span class="burger-button__line"></span><span class="burger-button__line"></span><span class="burger-button__line"></span>
       </button>
       <nav class="main-nav" id="navigation-principale" aria-label="Navigation principale">
         <ul class="main-nav__list">
-          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
-          <li><a class="main-nav__link" href="planning.html" aria-current="page">Planning</a></li>
-          <li><a class="main-nav__link" href="tarifs.html">Tarifs</a></li>
-          <li><a class="main-nav__link" href="coachs.html">Coachs</a></li>
-          <li><a class="main-nav__link" href="contact.html">Contact</a></li>
-          <li class="main-nav__cta"><a class="button button--small" href="contact.html">Essai gratuit</a></li>
+          <li><a class="main-nav__link" href="index.html"><span class="main-nav__number" aria-hidden="true">01</span>Accueil</a></li>
+          <li><a class="main-nav__link" href="planning.html" aria-current="page"><span class="main-nav__number" aria-hidden="true">02</span>Planning</a></li>
+          <li><a class="main-nav__link" href="tarifs.html"><span class="main-nav__number" aria-hidden="true">03</span>Tarifs</a></li>
+          <li><a class="main-nav__link" href="coachs.html"><span class="main-nav__number" aria-hidden="true">04</span>Coachs</a></li>
+          <li><a class="main-nav__link" href="contact.html"><span class="main-nav__number" aria-hidden="true">05</span>Contact</a></li>
+          <li class="main-nav__cta"><a class="main-nav__cta-link" href="contact.html">Essai gratuit</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main id="contenu">
-    <section class="page-hero" data-watermark="PLANNING">
-      <div class="container">
-        <span class="eyebrow">Cours collectifs</span>
-        <h1 class="page-hero__title">Planning <em>de la semaine</em></h1>
-        <p class="section-lead">Filtrez par discipline ou intensité, cliquez sur un cours pour voir les détails et réservez votre place. Les réservations ouvrent 7 jours à l'avance et se libèrent jusqu'à 2 heures avant le début.</p>
+    <section class="page-hero">
+      <div class="page-hero__grid">
+        <div class="page-hero__panel">
+          <span class="eyebrow">Cours collectifs</span>
+          <h1 class="page-hero__title">Planning <em>de la semaine</em></h1>
+          <p class="section-lead">Filtrez par discipline ou intensité, cliquez sur un cours pour voir les détails et réservez votre place. Les réservations ouvrent 7 jours à l'avance et se libèrent jusqu'à 2 heures avant le début.</p>
+        </div>
+        <div class="page-hero__aside" aria-hidden="true">
+          <span class="page-hero__index">02</span>
+          <span class="page-hero__label">Planning</span>
+        </div>
       </div>
     </section>
 
     <section class="section" aria-labelledby="titre-semaine">
       <div class="container">
+        <span class="eyebrow reveal">Réserver un cours</span>
         <div class="filter-bar reveal" role="group" aria-label="Filtres du planning">
           <div class="chip-group" data-type-filter-group>
             <button class="chip" type="button" data-type-filter="all" aria-pressed="true">Tous</button>
@@ -71,7 +80,7 @@
 
         <div class="planning-toolbar">
           <h2 class="planning-toolbar__week" id="titre-semaine" data-week-label>Semaine en cours</h2>
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div class="planning-toolbar__actions">
             <span class="results-count" data-visible-count aria-live="polite"></span>
             <button class="button button--small" type="button" data-open-bookings>
               Mes réservations <span class="booking-counter" data-booking-count>0</span>
@@ -82,12 +91,12 @@
         <div class="schedule-grid" data-schedule-grid></div>
 
         <div class="legend" aria-label="Légende des disciplines">
-          <span class="legend__item"><span class="legend__swatch" style="background:#d4ff2e"></span>Cross-training</span>
-          <span class="legend__item"><span class="legend__swatch" style="background:#ff3d3d"></span>HIIT</span>
-          <span class="legend__item"><span class="legend__swatch" style="background:#ffb02e"></span>Boxe</span>
-          <span class="legend__item"><span class="legend__swatch" style="background:#4fc3ff"></span>Cycling</span>
-          <span class="legend__item"><span class="legend__swatch" style="background:#b98cff"></span>Yoga</span>
-          <span class="legend__item"><span class="legend__swatch" style="background:#3ddc84"></span>Force</span>
+          <span class="legend__item"><span class="legend__swatch legend__swatch--cross"></span>Cross-training</span>
+          <span class="legend__item"><span class="legend__swatch legend__swatch--hiit"></span>HIIT</span>
+          <span class="legend__item"><span class="legend__swatch legend__swatch--boxe"></span>Boxe</span>
+          <span class="legend__item"><span class="legend__swatch legend__swatch--cycling"></span>Cycling</span>
+          <span class="legend__item"><span class="legend__swatch legend__swatch--yoga"></span>Yoga</span>
+          <span class="legend__item"><span class="legend__swatch legend__swatch--force"></span>Force</span>
         </div>
       </div>
     </section>
@@ -118,9 +127,9 @@
           <div><dt>Coach</dt><dd data-dialog-coach></dd></div>
           <div><dt>Salle</dt><dd data-dialog-room></dd></div>
         </dl>
-        <div style="display:flex;justify-content:space-between;font-weight:700"><span>Places disponibles</span><span data-dialog-spots></span></div>
+        <div class="dialog__spots-row"><span>Places disponibles</span><span data-dialog-spots></span></div>
         <div class="spots-progress" aria-hidden="true"><div class="spots-progress__fill" data-dialog-progress></div></div>
-        <button class="button" type="button" data-dialog-action style="width:100%">Réserver ma place</button>
+        <button class="button button--block" type="button" data-dialog-action>Réserver ma place</button>
       </div>
     </dialog>
 
@@ -139,12 +148,12 @@
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__grid">
-        <div>
-          <a class="brand" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span><span>Iron<span class="brand__accent">Pulse</span></span></a>
-          <p>Club de fitness premium au cœur de Lille. 1 800 m² d'équipements, 85 cours par semaine et des coachs diplômés d'État pour repousser vos limites.</p>
+        <div class="site-footer__intro">
+          <a class="brand brand--inverted" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="miter" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span><span class="brand__name">Iron<span class="brand__accent">Pulse</span></span></a>
+          <p>Club de fitness au cœur de Lille. 1 800 m² d'équipements, 31 cours collectifs par semaine et des coachs diplômés d'État pour repousser vos limites.</p>
         </div>
         <div>
-          <h2 class="site-footer__title">Le club</h2>
+          <h2 class="site-footer__title"><span aria-hidden="true">A.</span> Le club</h2>
           <ul class="site-footer__list">
             <li><a href="planning.html">Planning des cours</a></li>
             <li><a href="tarifs.html">Abonnements</a></li>
@@ -153,27 +162,28 @@
           </ul>
         </div>
         <div>
-          <h2 class="site-footer__title">Horaires</h2>
+          <h2 class="site-footer__title"><span aria-hidden="true">B.</span> Horaires</h2>
           <ul class="site-footer__list">
             <li>Lun – Ven : 6h00 – 23h00</li>
             <li>Samedi : 8h00 – 21h00</li>
             <li>Dimanche : 8h00 – 19h00</li>
-            <li>Accès 24h/24 avec Black Card</li>
+            <li>Accès 24h/24 avec la Black Card</li>
           </ul>
         </div>
         <div>
-          <h2 class="site-footer__title">Contact</h2>
+          <h2 class="site-footer__title"><span aria-hidden="true">C.</span> Contact</h2>
           <ul class="site-footer__list">
-            <li>48 rue Nationale, 59000 Lille</li>
-            <li><a href="tel:+33320574812">03 20 57 48 12</a></li>
-            <li><a href="mailto:bonjour@ironpulse-lille.fr">bonjour@ironpulse-lille.fr</a></li>
-            <li>Métro Rihour (ligne 1)</li>
+            <li>27 passage des Haltères-Chantantes, 59000 Lille</li>
+            <li><a href="tel:+33353014812">03 53 01 48 12</a></li>
+            <li><a href="mailto:bonjour@ironpulse-lille.example">bonjour@ironpulse-lille.example</a></li>
+            <li>Métro ligne 1 à 4 minutes à pied</li>
           </ul>
         </div>
       </div>
       <div class="site-footer__bottom">
         <span>© <span data-current-year>2026</span> IronPulse Lille. Tous droits réservés.</span>
         <span>Mentions légales · Politique de confidentialité · CGV</span>
+        <a class="site-footer__credit" href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a>
       </div>
     </div>
   </footer>

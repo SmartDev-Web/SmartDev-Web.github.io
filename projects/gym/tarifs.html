@@ -3,61 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
   <title>Tarifs et abonnements — IronPulse Lille</title>
   <meta name="description" content="Abonnements IronPulse Lille : Essentiel, Performance et Black Card, au mois ou à l'année. Calculez votre IMC et vos besoins caloriques.">
-  <meta name="theme-color" content="#0a0b0d">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d4ff2e'/%3E%3Cpath d='M4 16h4l4-9 5 18 4-9h7' fill='none' stroke='%230a0b0d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#d4ff2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23d4ff2e'/%3E%3Crect x='1.5' y='1.5' width='29' height='29' fill='none' stroke='%230b0b0b' stroke-width='3'/%3E%3Cpath d='M5 16h4l4-8 5 16 4-8h5' fill='none' stroke='%230b0b0b' stroke-width='3.2' stroke-linejoin='miter'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add("js");</script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js"></script>
   <script src="js/tarifs.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
   <header class="site-header">
-    <div class="container site-header__inner">
+    <div class="site-header__inner">
       <a class="brand" href="index.html" aria-label="IronPulse, retour à l'accueil">
-        <span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span>
-        <span>Iron<span class="brand__accent">Pulse</span></span>
+        <span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="miter" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span>
+        <span class="brand__name">Iron<span class="brand__accent">Pulse</span></span>
       </a>
       <button class="burger-button" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
         <span class="burger-button__line"></span><span class="burger-button__line"></span><span class="burger-button__line"></span>
       </button>
       <nav class="main-nav" id="navigation-principale" aria-label="Navigation principale">
         <ul class="main-nav__list">
-          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
-          <li><a class="main-nav__link" href="planning.html">Planning</a></li>
-          <li><a class="main-nav__link" href="tarifs.html" aria-current="page">Tarifs</a></li>
-          <li><a class="main-nav__link" href="coachs.html">Coachs</a></li>
-          <li><a class="main-nav__link" href="contact.html">Contact</a></li>
-          <li class="main-nav__cta"><a class="button button--small" href="contact.html">Essai gratuit</a></li>
+          <li><a class="main-nav__link" href="index.html"><span class="main-nav__number" aria-hidden="true">01</span>Accueil</a></li>
+          <li><a class="main-nav__link" href="planning.html"><span class="main-nav__number" aria-hidden="true">02</span>Planning</a></li>
+          <li><a class="main-nav__link" href="tarifs.html" aria-current="page"><span class="main-nav__number" aria-hidden="true">03</span>Tarifs</a></li>
+          <li><a class="main-nav__link" href="coachs.html"><span class="main-nav__number" aria-hidden="true">04</span>Coachs</a></li>
+          <li><a class="main-nav__link" href="contact.html"><span class="main-nav__number" aria-hidden="true">05</span>Contact</a></li>
+          <li class="main-nav__cta"><a class="main-nav__cta-link" href="contact.html">Essai gratuit</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main id="contenu">
-    <section class="page-hero" data-watermark="TARIFS">
-      <div class="container">
-        <span class="eyebrow">Abonnements</span>
-        <h1 class="page-hero__title">Investis <em>en toi</em></h1>
-        <p class="section-lead">Trois formules claires, sans frais cachés. Frais d'inscription offerts jusqu'au 31 octobre et résiliation possible à tout moment sur la formule mensuelle.</p>
+    <section class="page-hero">
+      <div class="page-hero__grid">
+        <div class="page-hero__panel">
+          <span class="eyebrow">Abonnements</span>
+          <h1 class="page-hero__title">Investis <em>en toi</em></h1>
+          <p class="section-lead">Trois formules claires, sans frais cachés. Frais d'inscription offerts jusqu'au 31 octobre 2026 et résiliation possible à tout moment sur la formule mensuelle.</p>
+        </div>
+        <div class="page-hero__aside" aria-hidden="true">
+          <span class="page-hero__index">03</span>
+          <span class="page-hero__label">Tarifs</span>
+        </div>
       </div>
     </section>
 
     <section class="section" aria-labelledby="titre-formules">
       <div class="container">
         <div class="section-heading">
-          <div>
-            <h2 class="section-title reveal" id="titre-formules">Choisis ta <em>formule</em></h2>
+          <div class="reveal">
+            <span class="eyebrow">Formules</span>
+            <h2 class="section-title" id="titre-formules">Choisis ta <em>formule</em></h2>
           </div>
           <div class="billing-toggle reveal">
             <span class="billing-toggle__label is-active" data-billing-label="monthly">Mensuel</span>
             <button class="switch" type="button" role="switch" aria-checked="false" aria-label="Facturation annuelle" data-billing-switch></button>
             <span class="billing-toggle__label" data-billing-label="annual">Annuel</span>
-            <span class="saving-pill">-17 %</span>
+            <span class="saving-pill">Jusqu'à -17 %</span>
           </div>
         </div>
         <div class="pricing-grid">
@@ -68,7 +77,7 @@
             <p class="plan-card__billing-note" data-plan-note>Sans engagement</p>
             <ul class="plan-card__features">
               <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Accès plateau musculation &amp; cardio</li>
-              <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Horaires 6h – 23h, 7j/7</li>
+              <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Accès 7j/7 aux horaires d'ouverture</li>
               <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Bilan forme InBody à l'inscription</li>
               <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Application de suivi IronPulse</li>
               <li class="plan-card__feature plan-card__feature--off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Cours collectifs illimités</li>
@@ -84,13 +93,13 @@
             <p class="plan-card__billing-note" data-plan-note>Sans engagement</p>
             <ul class="plan-card__features">
               <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Tout l'Essentiel</li>
-              <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>85 cours collectifs par semaine</li>
+              <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>31 cours collectifs par semaine</li>
               <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Espace récupération : sauna &amp; bain froid</li>
               <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>1 séance coaching individuel / trimestre</li>
               <li class="plan-card__feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Réservation des cours 7 jours à l'avance</li>
               <li class="plan-card__feature plan-card__feature--off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Accès 24h/24</li>
             </ul>
-            <a class="button" href="contact.html">Commencer maintenant</a>
+            <a class="button button--ink" href="contact.html">Commencer maintenant</a>
           </article>
           <article class="plan-card reveal" style="--reveal-delay:0.2s" data-plan data-monthly-price="69.90" data-annual-price="57.90">
             <h3 class="plan-card__name">Black Card</h3>
@@ -108,7 +117,7 @@
             <a class="button button--ghost" href="contact.html">Passer au niveau supérieur</a>
           </article>
         </div>
-        <p class="disclaimer" style="text-align:center;margin-top:28px">Tarif étudiant (-20 %) et tarif duo (-15 % par personne) sur présentation d'un justificatif. Prix TTC.</p>
+        <p class="disclaimer disclaimer--centered">Tarif étudiant (-20 %) et tarif duo (-15 % par personne) sur présentation d'un justificatif. Prix TTC.</p>
       </div>
     </section>
 
@@ -137,10 +146,10 @@
                 <span class="form-field__error"></span>
               </div>
             </div>
-            <button class="button" type="submit" style="margin-top:12px">Calculer mon IMC</button>
+            <button class="button calculator__submit" type="submit">Calculer mon IMC</button>
             <div class="calculator__result" data-bmi-result hidden aria-live="polite">
               <div class="result-figure"><span class="result-figure__value" data-bmi-value>0</span><span class="result-figure__label" data-bmi-category></span></div>
-              <div class="bmi-gauge" aria-hidden="true"><span class="bmi-gauge__marker" data-bmi-marker></span></div>
+              <div class="bmi-gauge" aria-hidden="true"><span class="bmi-gauge__zone bmi-gauge__zone--under"></span><span class="bmi-gauge__zone bmi-gauge__zone--normal"></span><span class="bmi-gauge__zone bmi-gauge__zone--over"></span><span class="bmi-gauge__zone bmi-gauge__zone--obese"></span><span class="bmi-gauge__marker" data-bmi-marker></span></div>
               <div class="bmi-gauge__scale" aria-hidden="true"><span style="left:0">15</span><span style="left:14%">18,5</span><span style="left:40%">25</span><span style="left:60%">30</span><span style="left:100%">40</span></div>
               <p class="disclaimer" data-bmi-advice></p>
             </div>
@@ -187,7 +196,7 @@
                 <label class="segmented__option"><input type="radio" name="fitnessGoal" value="gain"><span>Prise de muscle</span></label>
               </fieldset>
             </div>
-            <button class="button" type="submit" style="margin-top:12px">Calculer mes besoins</button>
+            <button class="button calculator__submit" type="submit">Calculer mes besoins</button>
             <div class="calculator__result" data-calorie-result hidden aria-live="polite">
               <div class="result-figure"><span class="result-figure__value" data-calorie-target>0</span><span class="result-figure__label">kcal / jour</span></div>
               <div class="calorie-breakdown">
@@ -219,12 +228,12 @@
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__grid">
-        <div>
-          <a class="brand" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span><span>Iron<span class="brand__accent">Pulse</span></span></a>
-          <p>Club de fitness premium au cœur de Lille. 1 800 m² d'équipements, 85 cours par semaine et des coachs diplômés d'État pour repousser vos limites.</p>
+        <div class="site-footer__intro">
+          <a class="brand brand--inverted" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="miter" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span><span class="brand__name">Iron<span class="brand__accent">Pulse</span></span></a>
+          <p>Club de fitness au cœur de Lille. 1 800 m² d'équipements, 31 cours collectifs par semaine et des coachs diplômés d'État pour repousser vos limites.</p>
         </div>
         <div>
-          <h2 class="site-footer__title">Le club</h2>
+          <h2 class="site-footer__title"><span aria-hidden="true">A.</span> Le club</h2>
           <ul class="site-footer__list">
             <li><a href="planning.html">Planning des cours</a></li>
             <li><a href="tarifs.html">Abonnements</a></li>
@@ -233,27 +242,28 @@
           </ul>
         </div>
         <div>
-          <h2 class="site-footer__title">Horaires</h2>
+          <h2 class="site-footer__title"><span aria-hidden="true">B.</span> Horaires</h2>
           <ul class="site-footer__list">
             <li>Lun – Ven : 6h00 – 23h00</li>
             <li>Samedi : 8h00 – 21h00</li>
             <li>Dimanche : 8h00 – 19h00</li>
-            <li>Accès 24h/24 avec Black Card</li>
+            <li>Accès 24h/24 avec la Black Card</li>
           </ul>
         </div>
         <div>
-          <h2 class="site-footer__title">Contact</h2>
+          <h2 class="site-footer__title"><span aria-hidden="true">C.</span> Contact</h2>
           <ul class="site-footer__list">
-            <li>48 rue Nationale, 59000 Lille</li>
-            <li><a href="tel:+33320574812">03 20 57 48 12</a></li>
-            <li><a href="mailto:bonjour@ironpulse-lille.fr">bonjour@ironpulse-lille.fr</a></li>
-            <li>Métro Rihour (ligne 1)</li>
+            <li>27 passage des Haltères-Chantantes, 59000 Lille</li>
+            <li><a href="tel:+33353014812">03 53 01 48 12</a></li>
+            <li><a href="mailto:bonjour@ironpulse-lille.example">bonjour@ironpulse-lille.example</a></li>
+            <li>Métro ligne 1 à 4 minutes à pied</li>
           </ul>
         </div>
       </div>
       <div class="site-footer__bottom">
         <span>© <span data-current-year>2026</span> IronPulse Lille. Tous droits réservés.</span>
         <span>Mentions légales · Politique de confidentialité · CGV</span>
+        <a class="site-footer__credit" href="../../index.html">Site fictif de démonstration réalisé par SmartDev</a>
       </div>
     </div>
   </footer>
