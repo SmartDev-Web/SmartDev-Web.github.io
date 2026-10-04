@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devis en ligne — Atelier Méca Rivière Nantes</title>
+  <meta name="description" content="Estimez gratuitement le coût de l'entretien ou de la réparation de votre voiture en 4 étapes : véhicule, modèle, prestations et fourchette de prix immédiate.">
+  <meta name="theme-color" content="#111418">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23ff6b1a'/%3E%3Cpath d='M19.6 8.4a1.3 1.3 0 0 0 0 1.9l2.1 2.1a1.3 1.3 0 0 0 1.9 0l4-4a8 8 0 0 1-10.6 10.6l-7.4 7.4a2.8 2.8 0 0 1-4-4l7.4-7.4A8 8 0 0 1 23.6 4.4z' fill='none' stroke='%2314171b' stroke-width='2.6' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="js/main.js" defer></script>
+  <script src="js/devis.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <span class="status-pill" data-opening-status style="background:transparent;border-color:rgba(20,23,27,0.35);padding:0 10px"><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Ven 8h – 18h30</span></span>
+      <span class="top-bar__secondary">14 quai de la Fosse, 44000 Nantes</span>
+      <a class="top-bar__phone" href="tel:+33240481926">02 40 48 19 26</a>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Atelier Méca Rivière, retour à l'accueil"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><span class="brand__name">Atelier Méca Rivière</span><span class="brand__tagline">Garage indépendant · Nantes</span></span></a>
+      <button class="burger-button" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
+        <span class="burger-button__line"></span><span class="burger-button__line"></span><span class="burger-button__line"></span>
+      </button>
+      <nav class="main-nav" id="navigation-principale" aria-label="Navigation principale">
+        <ul class="main-nav__list">
+          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+          <li><a class="main-nav__link" href="services.html">Services</a></li>
+          <li><a class="main-nav__link" href="devis.html" aria-current="page">Devis en ligne</a></li>
+          <li><a class="main-nav__link" href="rendez-vous.html">Rendez-vous</a></li>
+          <li><a class="main-nav__link" href="contact.html">Contact</a></li>
+          <li class="main-nav__cta"><a class="button button--small" href="rendez-vous.html">Prendre RDV</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="contenu">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> / Devis en ligne</nav>
+        <h1 class="page-hero__title">Estimez votre <em>devis</em></h1>
+        <p class="section-lead">Quatre étapes, deux minutes, aucune inscription. Vous obtenez une fourchette de prix TTC basée sur nos tarifs réels, confirmée ensuite par un devis ferme à l'atelier.</p>
+      </div>
+    </section>
+
+    <section class="section section--grid" aria-label="Estimateur de devis">
+      <div class="container estimator">
+        <div class="estimator__panel">
+          <div class="progress" aria-label="Progression du devis">
+            <ol class="progress__steps">
+              <li class="progress__step is-current" data-progress-step="1"><span>Véhicule</span></li>
+              <li class="progress__step" data-progress-step="2"><span>Modèle</span></li>
+              <li class="progress__step" data-progress-step="3"><span>Prestations</span></li>
+              <li class="progress__step" data-progress-step="4"><span>Estimation</span></li>
+            </ol>
+            <div class="progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-label="Étape 1 sur 4" data-progress-bar><div class="progress__fill" data-progress-fill></div></div>
+          </div>
+
+          <form data-quote-form novalidate>
+            <div class="estimator-step" data-step="1">
+              <h2 class="estimator-step__title">Quel type de véhicule ?</h2>
+              <p class="estimator-step__intro">Le gabarit influence le temps de main-d'œuvre et le prix des pièces.</p>
+              <fieldset class="vehicle-options" data-vehicle-options>
+                <legend class="visually-hidden">Type de véhicule</legend>
+              </fieldset>
+              <p class="form-field__error" data-step-error="1" role="alert"></p>
+            </div>
+
+            <div class="estimator-step" data-step="2" hidden>
+              <h2 class="estimator-step__title">Marque, modèle et année</h2>
+              <p class="estimator-step__intro">Ces informations nous permettent d'ajuster le prix des pièces et l'usure probable.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="devis-marque">Marque</label>
+                  <select id="devis-marque" name="vehicleBrand" data-brand-select>
+                    <option value="">Choisir une marque</option>
+                  </select>
+                  <span class="form-field__error"></span>
+                </div>
+                <div class="form-field">
+                  <label for="devis-modele">Modèle</label>
+                  <select id="devis-modele" name="vehicleModel" data-model-select disabled>
+                    <option value="">Choisir d'abord une marque</option>
+                  </select>
+                  <span class="form-field__error"></span>
+                </div>
+                <div class="form-field">
+                  <label for="devis-annee">Année de mise en circulation</label>
+                  <select id="devis-annee" name="vehicleYear" data-year-select>
+                    <option value="">Choisir une année</option>
+                  </select>
+                  <span class="form-field__error"></span>
+                </div>
+                <div class="form-field">
+                  <label for="devis-kilometrage">Kilométrage (facultatif)</label>
+                  <input id="devis-kilometrage" name="vehicleMileage" type="number" inputmode="numeric" min="0" max="500000" step="1000" placeholder="Ex. 85000">
+                  <span class="form-field__error"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="estimator-step" data-step="3" hidden>
+              <h2 class="estimator-step__title">Quelles prestations ?</h2>
+              <p class="estimator-step__intro">Cochez une ou plusieurs interventions. Les prestations non applicables à votre véhicule sont désactivées.</p>
+              <fieldset class="service-options" data-service-options>
+                <legend class="visually-hidden">Prestations souhaitées</legend>
+              </fieldset>
+              <p class="form-field__error" data-step-error="3" role="alert"></p>
+            </div>
+
+            <div class="estimator-step" data-step="4" hidden>
+              <h2 class="estimator-step__title">Votre estimation</h2>
+              <p class="estimator-step__intro" data-summary-vehicle></p>
+              <div class="estimate-figure" aria-live="polite">
+                <div class="estimate-figure__label">Fourchette estimée TTC</div>
+                <div class="estimate-figure__value"><span data-estimate-minimum>0</span> – <span data-estimate-maximum>0</span> €</div>
+                <div class="estimate-meter" aria-hidden="true"><div class="estimate-meter__range" data-estimate-range></div></div>
+                <div class="note" data-estimate-duration></div>
+              </div>
+              <ul class="summary-list" data-summary-list></ul>
+              <p class="note">Estimation non contractuelle, établie sur nos tarifs en vigueur. Un devis ferme vous est remis gratuitement à l'atelier avant toute intervention.</p>
+            </div>
+
+            <div class="estimator-actions">
+              <button class="button button--ghost" type="button" data-step-previous hidden>← Retour</button>
+              <button class="button" type="button" data-step-next style="margin-left:auto">Continuer →</button>
+              <a class="button" href="rendez-vous.html" data-book-with-quote hidden style="margin-left:auto">Prendre RDV avec ce devis</a>
+              <button class="button button--ghost" type="button" data-quote-restart hidden>Nouveau devis</button>
+            </div>
+          </form>
+        </div>
+
+        <aside class="estimator-aside" aria-label="Récapitulatif en cours">
+          <h2 class="estimator-aside__title">Votre sélection</h2>
+          <ul class="summary-list" data-live-summary></ul>
+          <div class="live-total"><span>Estimation</span><strong data-live-total>—</strong></div>
+          <p class="note">Main-d'œuvre : 62 € TTC / heure. Pièces de qualité d'origine garanties 2 ans.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><span class="brand__name">Atelier Méca Rivière</span><span class="brand__tagline">Garage indépendant · Nantes</span></span></a>
+          <p>Mécanique générale, entretien toutes marques et diagnostic électronique depuis 1998. Un garage indépendant, des tarifs transparents et des pièces de qualité d'origine.</p>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Atelier</h2>
+          <ul class="site-footer__list">
+            <li><a href="services.html">Nos services</a></li>
+            <li><a href="devis.html">Devis en ligne</a></li>
+            <li><a href="rendez-vous.html">Prendre rendez-vous</a></li>
+            <li><a href="contact.html">Nous trouver</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Horaires</h2>
+          <ul class="site-footer__list">
+            <li>Lun – Jeu : 8h – 12h / 13h30 – 18h30</li>
+            <li>Vendredi : 8h – 12h / 13h30 – 18h</li>
+            <li>Samedi : 8h30 – 12h30</li>
+            <li>Dimanche : fermé</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Contact</h2>
+          <ul class="site-footer__list">
+            <li>14 quai de la Fosse, 44000 Nantes</li>
+            <li><a href="tel:+33240481926">02 40 48 19 26</a></li>
+            <li><a href="mailto:atelier@meca-riviere.fr">atelier@meca-riviere.fr</a></li>
+            <li>Tram 1 · arrêt Gare Maritime</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 412 587 963 00024</span>
+        <span>Mentions légales · Confidentialité · Conditions générales</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+</body>
+</html>

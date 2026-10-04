@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nos coachs — IronPulse Lille</title>
+  <meta name="description" content="Rencontrez les coachs IronPulse : préparateurs physiques, coachs HIIT, cross-training, boxe, cycling et yoga, tous diplômés d'État.">
+  <meta name="theme-color" content="#0a0b0d">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d4ff2e'/%3E%3Cpath d='M4 16h4l4-9 5 18 4-9h7' fill='none' stroke='%230a0b0d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="js/main.js" defer></script>
+  <script src="js/coachs.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="IronPulse, retour à l'accueil">
+        <span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span>
+        <span>Iron<span class="brand__accent">Pulse</span></span>
+      </a>
+      <button class="burger-button" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
+        <span class="burger-button__line"></span><span class="burger-button__line"></span><span class="burger-button__line"></span>
+      </button>
+      <nav class="main-nav" id="navigation-principale" aria-label="Navigation principale">
+        <ul class="main-nav__list">
+          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+          <li><a class="main-nav__link" href="planning.html">Planning</a></li>
+          <li><a class="main-nav__link" href="tarifs.html">Tarifs</a></li>
+          <li><a class="main-nav__link" href="coachs.html" aria-current="page">Coachs</a></li>
+          <li><a class="main-nav__link" href="contact.html">Contact</a></li>
+          <li class="main-nav__cta"><a class="button button--small" href="contact.html">Essai gratuit</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="contenu">
+    <section class="page-hero" data-watermark="COACHS">
+      <div class="container">
+        <span class="eyebrow">L'équipe</span>
+        <h1 class="page-hero__title">Ceux qui <em>te poussent</em></h1>
+        <p class="section-lead">Quatorze coachs diplômés d'État, des parcours d'athlètes et une même obsession : votre progression. Filtrez par spécialité et retournez les cartes pour découvrir chaque profil.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="titre-equipe">
+      <div class="container">
+        <h2 class="visually-hidden" id="titre-equipe">Nos coachs</h2>
+        <div class="filter-bar reveal" role="group" aria-label="Filtrer par spécialité">
+          <div class="chip-group" data-specialty-filter-group>
+            <button class="chip" type="button" data-specialty-filter="all" aria-pressed="true">Toutes</button>
+            <button class="chip" type="button" data-specialty-filter="hiit" aria-pressed="false">HIIT</button>
+            <button class="chip" type="button" data-specialty-filter="cross" aria-pressed="false">Cross-training</button>
+            <button class="chip" type="button" data-specialty-filter="force" aria-pressed="false">Force</button>
+            <button class="chip" type="button" data-specialty-filter="boxe" aria-pressed="false">Boxe</button>
+            <button class="chip" type="button" data-specialty-filter="cycling" aria-pressed="false">Cycling</button>
+            <button class="chip" type="button" data-specialty-filter="yoga" aria-pressed="false">Yoga</button>
+            <button class="chip" type="button" data-specialty-filter="perte-de-poids" aria-pressed="false">Perte de poids</button>
+            <button class="chip" type="button" data-specialty-filter="reathletisation" aria-pressed="false">Réathlétisation</button>
+          </div>
+          <span class="results-count" data-coach-count aria-live="polite">8 coachs</span>
+        </div>
+        <div class="coach-grid" data-coach-grid>
+          <article class="coach-card reveal" style="--reveal-delay:0.00s" data-coach-specialties="hiit boxe perte-de-poids">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=700&q=80" alt="Portrait de Karim Benali, head coach hiit" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Head coach HIIT</span>
+                  <h3 class="coach-card__name">Karim Benali</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">HIIT</span><span class="tag">Perte de poids</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Karim</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Head coach HIIT</span>
+                <h3 class="coach-card__name">Karim Benali</h3>
+                <p class="coach-card__bio">Ancien sprinteur au niveau national, Karim transforme chaque séance en finale olympique. Spécialiste du conditionnement métabolique.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> BPJEPS AF, Certification Precision Nutrition</li>
+                  <li><strong>Expérience :</strong> 9 ans</li>
+                  <li><strong>Devise :</strong> « Le burpee est un état d'esprit. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="coach-card reveal" style="--reveal-delay:0.08s" data-coach-specialties="cycling hiit">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80" alt="Portrait de Léa Fontaine, coach cycling & cardio" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Coach cycling & cardio</span>
+                  <h3 class="coach-card__name">Léa Fontaine</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">Cycling</span><span class="tag">Cardio</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Léa</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Coach cycling & cardio</span>
+                <h3 class="coach-card__name">Léa Fontaine</h3>
+                <p class="coach-card__bio">Léa construit ses rides comme des concerts : montées en tempo, sprints sur le refrain et récupération active sur les ponts musicaux.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> BPJEPS AGFF, Instructrice Les Mills RPM</li>
+                  <li><strong>Expérience :</strong> 6 ans</li>
+                  <li><strong>Devise :</strong> « Suis le beat, il ne ment jamais. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="coach-card reveal" style="--reveal-delay:0.16s" data-coach-specialties="cross force">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=700&q=80" alt="Portrait de Hugo Marchand, responsable cross-training" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Responsable cross-training</span>
+                  <h3 class="coach-card__name">Hugo Marchand</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">Cross-training</span><span class="tag">Haltérophilie</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Hugo</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Responsable cross-training</span>
+                <h3 class="coach-card__name">Hugo Marchand</h3>
+                <p class="coach-card__bio">Compétiteur régional et programmateur de la Box, Hugo périodise chaque cycle de 8 semaines pour des progrès mesurables.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> CrossFit Level 2, DEJEPS Haltérophilie</li>
+                  <li><strong>Expérience :</strong> 8 ans</li>
+                  <li><strong>Devise :</strong> « La technique d'abord, la charge ensuite. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="coach-card reveal" style="--reveal-delay:0.24s" data-coach-specialties="boxe perte-de-poids">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=700&q=80" alt="Portrait de Mehdi Amrani, coach boxe & combat" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Coach boxe & combat</span>
+                  <h3 class="coach-card__name">Mehdi Amrani</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">Boxe anglaise</span><span class="tag">Kick-boxing</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Mehdi</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Coach boxe & combat</span>
+                <h3 class="coach-card__name">Mehdi Amrani</h3>
+                <p class="coach-card__bio">Double champion des Hauts-de-France amateur, Mehdi enseigne la boxe avec rigueur, pédagogie et beaucoup d'humour.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> BPJEPS Boxe, Brevet fédéral FFB</li>
+                  <li><strong>Expérience :</strong> 11 ans</li>
+                  <li><strong>Devise :</strong> « Les épaules relâchées, le regard devant. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="coach-card reveal" style="--reveal-delay:0.00s" data-coach-specialties="yoga reathletisation">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=700&q=80" alt="Portrait de Inès Lefebvre, professeure de yoga" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Professeure de yoga</span>
+                  <h3 class="coach-card__name">Inès Lefebvre</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">Vinyasa</span><span class="tag">Yin yoga</span><span class="tag">Mobilité</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Inès</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Professeure de yoga</span>
+                <h3 class="coach-card__name">Inès Lefebvre</h3>
+                <p class="coach-card__bio">Formée en Inde puis à Paris, Inès accompagne athlètes et débutants vers plus de mobilité, de souffle et de récupération.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> RYT 500 Yoga Alliance, DU Préparation physique</li>
+                  <li><strong>Expérience :</strong> 10 ans</li>
+                  <li><strong>Devise :</strong> « La souplesse est une force tranquille. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="coach-card reveal" style="--reveal-delay:0.08s" data-coach-specialties="force reathletisation">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=700&q=80" alt="Portrait de Antoine Roussel, préparateur physique" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Préparateur physique</span>
+                  <h3 class="coach-card__name">Antoine Roussel</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">Force</span><span class="tag">Réathlétisation</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Antoine</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Préparateur physique</span>
+                <h3 class="coach-card__name">Antoine Roussel</h3>
+                <p class="coach-card__bio">Kinésithérapeute de formation, Antoine prend en charge les retours de blessure et les objectifs de force pure.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> Master STAPS, Kinésithérapeute DE</li>
+                  <li><strong>Expérience :</strong> 12 ans</li>
+                  <li><strong>Devise :</strong> « On construit du solide, rep après rep. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="coach-card reveal" style="--reveal-delay:0.16s" data-coach-specialties="cross perte-de-poids">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=80" alt="Portrait de Chloé Petit, coach cross-training" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Coach cross-training</span>
+                  <h3 class="coach-card__name">Chloé Petit</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">Cross-training</span><span class="tag">Débutants</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Chloé</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Coach cross-training</span>
+                <h3 class="coach-card__name">Chloé Petit</h3>
+                <p class="coach-card__bio">Chloé est la référence des débutants : elle adapte chaque mouvement pour que tout le monde termine le WOD avec le sourire.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> CrossFit Level 1, BPJEPS AF</li>
+                  <li><strong>Expérience :</strong> 5 ans</li>
+                  <li><strong>Devise :</strong> « Personne ne finit dernier ici. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="coach-card reveal" style="--reveal-delay:0.24s" data-coach-specialties="hiit perte-de-poids">
+            <div class="coach-card__inner">
+              <div class="coach-card__face coach-card__face--front">
+                <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=700&q=80" alt="Portrait de Sarah Kaci, coach hiit & nutrition" loading="lazy">
+                <div class="coach-card__front-body">
+                  <span class="coach-card__role">Coach HIIT & nutrition</span>
+                  <h3 class="coach-card__name">Sarah Kaci</h3>
+                  <div class="coach-card__tags" style="margin-top:10px"><span class="tag">HIIT</span><span class="tag">Nutrition</span></div>
+                  <button class="button button--small coach-card__flip-button" type="button" data-flip-coach aria-expanded="false">Découvrir Sarah</button>
+                </div>
+              </div>
+              <div class="coach-card__face coach-card__face--back" aria-hidden="true">
+                <span class="coach-card__role">Coach HIIT & nutrition</span>
+                <h3 class="coach-card__name">Sarah Kaci</h3>
+                <p class="coach-card__bio">Diététicienne et coach, Sarah relie l'assiette et l'entraînement pour des résultats qui durent bien après l'été.</p>
+                <ul class="coach-card__facts">
+                  <li><strong>Diplômes :</strong> BTS Diététique, BPJEPS AGFF</li>
+                  <li><strong>Expérience :</strong> 7 ans</li>
+                  <li><strong>Devise :</strong> « Les abdos se construisent aussi en cuisine. »</li>
+                </ul>
+                <div class="coach-card__back-actions">
+                  <a class="button button--small" href="planning.html" tabindex="-1">Ses cours</a>
+                  <button class="button button--ghost button--small" type="button" data-flip-coach tabindex="-1">Retour</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface" aria-labelledby="titre-coaching">
+      <div class="container split">
+        <div class="split__media reveal">
+          <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1000&q=80" alt="Séance de coaching individuel au club" loading="lazy">
+          <div class="split__floating-card"><strong>55 €</strong>la séance individuelle, 450 € le pack de 10.</div>
+        </div>
+        <div>
+          <span class="eyebrow reveal">Coaching individuel</span>
+          <h2 class="section-title reveal" id="titre-coaching">Un coach,<br><em>un objectif</em></h2>
+          <p class="section-lead reveal">Préparation d'un marathon, première traction, retour de blessure ou mariage dans trois mois : nos coachs construisent un plan sur mesure et vous suivent séance après séance.</p>
+          <ul class="feature-list">
+            <li class="feature-list__item reveal"><span class="feature-list__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><div><h3 class="feature-list__title">Objectifs mesurables</h3><p class="feature-list__text">Bilan InBody, tests de force et de cardio toutes les 6 semaines.</p></div></li>
+            <li class="feature-list__item reveal"><span class="feature-list__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span><div><h3 class="feature-list__title">Suivi dans l'application</h3><p class="feature-list__text">Programme, charges et messages avec votre coach au même endroit.</p></div></li>
+          </ul>
+          <a class="button reveal" href="contact.html" style="margin-top:28px">Demander un coach</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span><span>Iron<span class="brand__accent">Pulse</span></span></a>
+          <p>Club de fitness premium au cœur de Lille. 1 800 m² d'équipements, 85 cours par semaine et des coachs diplômés d'État pour repousser vos limites.</p>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Le club</h2>
+          <ul class="site-footer__list">
+            <li><a href="planning.html">Planning des cours</a></li>
+            <li><a href="tarifs.html">Abonnements</a></li>
+            <li><a href="coachs.html">Nos coachs</a></li>
+            <li><a href="contact.html">Séance d'essai</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Horaires</h2>
+          <ul class="site-footer__list">
+            <li>Lun – Ven : 6h00 – 23h00</li>
+            <li>Samedi : 8h00 – 21h00</li>
+            <li>Dimanche : 8h00 – 19h00</li>
+            <li>Accès 24h/24 avec Black Card</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Contact</h2>
+          <ul class="site-footer__list">
+            <li>48 rue Nationale, 59000 Lille</li>
+            <li><a href="tel:+33320574812">03 20 57 48 12</a></li>
+            <li><a href="mailto:bonjour@ironpulse-lille.fr">bonjour@ironpulse-lille.fr</a></li>
+            <li>Métro Rihour (ligne 1)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> IronPulse Lille. Tous droits réservés.</span>
+        <span>Mentions légales · Politique de confidentialité · CGV</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+</body>
+</html>

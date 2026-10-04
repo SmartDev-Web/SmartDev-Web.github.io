@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Services et tarifs — Atelier Méca Rivière Nantes</title>
+  <meta name="description" content="Tous nos services mécaniques et tarifs TTC : révision, freinage, distribution, diagnostic, climatisation, pneus, embrayage et pré-contrôle technique à Nantes.">
+  <meta name="theme-color" content="#111418">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23ff6b1a'/%3E%3Cpath d='M19.6 8.4a1.3 1.3 0 0 0 0 1.9l2.1 2.1a1.3 1.3 0 0 0 1.9 0l4-4a8 8 0 0 1-10.6 10.6l-7.4 7.4a2.8 2.8 0 0 1-4-4l7.4-7.4A8 8 0 0 1 23.6 4.4z' fill='none' stroke='%2314171b' stroke-width='2.6' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="js/main.js" defer></script>
+  <script src="js/services.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <span class="status-pill" data-opening-status style="background:transparent;border-color:rgba(20,23,27,0.35);padding:0 10px"><span class="status-pill__dot" aria-hidden="true"></span><span data-opening-label>Lun – Ven 8h – 18h30</span></span>
+      <span class="top-bar__secondary">14 quai de la Fosse, 44000 Nantes</span>
+      <a class="top-bar__phone" href="tel:+33240481926">02 40 48 19 26</a>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Atelier Méca Rivière, retour à l'accueil"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><span class="brand__name">Atelier Méca Rivière</span><span class="brand__tagline">Garage indépendant · Nantes</span></span></a>
+      <button class="burger-button" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
+        <span class="burger-button__line"></span><span class="burger-button__line"></span><span class="burger-button__line"></span>
+      </button>
+      <nav class="main-nav" id="navigation-principale" aria-label="Navigation principale">
+        <ul class="main-nav__list">
+          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+          <li><a class="main-nav__link" href="services.html" aria-current="page">Services</a></li>
+          <li><a class="main-nav__link" href="devis.html">Devis en ligne</a></li>
+          <li><a class="main-nav__link" href="rendez-vous.html">Rendez-vous</a></li>
+          <li><a class="main-nav__link" href="contact.html">Contact</a></li>
+          <li class="main-nav__cta"><a class="button button--small" href="rendez-vous.html">Prendre RDV</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="contenu">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> / Services</nav>
+        <h1 class="page-hero__title">Services &amp; <em>tarifs</em></h1>
+        <p class="section-lead">Des prix affichés, pièces et main-d'œuvre comprises. Taux horaire atelier : 62 € TTC, soit environ 35 % de moins qu'en concession nantaise.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Détail des prestations">
+      <div class="container services-layout">
+        <aside class="services-index reveal" aria-label="Sommaire des services">
+          <p class="services-index__title">Sommaire</p>
+          <ol data-services-index>
+            <li><a href="#entretien">Vidange & révision</a></li>
+            <li><a href="#freinage">Freinage</a></li>
+            <li><a href="#distribution">Distribution</a></li>
+            <li><a href="#diagnostic">Diagnostic électronique</a></li>
+            <li><a href="#climatisation">Climatisation</a></li>
+            <li><a href="#pneumatiques">Pneus & géométrie</a></li>
+            <li><a href="#embrayage">Embrayage & boîte</a></li>
+            <li><a href="#controle">Pré-contrôle technique</a></li>
+          </ol>
+        </aside>
+        <div class="accordion" data-accordion>
+          <article class="accordion__item reveal is-open" id="entretien">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="true" aria-controls="panneau-entretien" id="bouton-entretien">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7c-3 4-6 7.4-6 11.3a6 6 0 0 0 12 0c0-3.9-3-7.3-6-11.3z"/></svg></span>
+                <span><span class="accordion__title">Vidange &amp; révision</span><span class="accordion__subtitle">Entretien périodique selon préconisations constructeur</span></span>
+                <span class="accordion__from">dès 89 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-entretien" role="region" aria-labelledby="bouton-entretien">
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>Nous respectons scrupuleusement le carnet d'entretien de votre véhicule : votre garantie constructeur est intégralement préservée. Chaque révision comprend un contrôle en 40 points avec compte rendu photo envoyé par SMS.</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Vidange + filtre à huile</th><td>89 €</td><td>109 €</td><td>129 €</td></tr>
+                        <tr><th scope="row">Révision constructeur complète</th><td>169 €</td><td>209 €</td><td>259 €</td></tr>
+                        <tr><th scope="row">Remplacement filtre à air</th><td>35 €</td><td>42 €</td><td>49 €</td></tr>
+                        <tr><th scope="row">Remplacement filtre à gasoil</th><td>59 €</td><td>69 €</td><td>79 €</td></tr>
+                        <tr><th scope="row">Bougies d'allumage (x4)</th><td>79 €</td><td>95 €</td><td>119 €</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="accordion__item reveal" id="freinage">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-freinage" id="bouton-freinage">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
+                <span><span class="accordion__title">Freinage</span><span class="accordion__subtitle">Plaquettes, disques, étriers et liquide de frein</span></span>
+                <span class="accordion__from">dès 119 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-freinage" role="region" aria-labelledby="bouton-freinage" inert>
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>Votre sécurité n'attend pas. Nous contrôlons gratuitement l'usure de vos freins sur banc et ne remplaçons que ce qui est nécessaire, avec des pièces de première monte (Bosch, Brembo, TRW).</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Plaquettes avant</th><td>119 €</td><td>139 €</td><td>169 €</td></tr>
+                        <tr><th scope="row">Disques + plaquettes avant</th><td>249 €</td><td>289 €</td><td>349 €</td></tr>
+                        <tr><th scope="row">Plaquettes arrière</th><td>109 €</td><td>129 €</td><td>159 €</td></tr>
+                        <tr><th scope="row">Purge liquide de frein</th><td>59 €</td><td>69 €</td><td>69 €</td></tr>
+                        <tr><th scope="row">Contrôle freinage sur banc</th><td>Offert</td><td>Offert</td><td>Offert</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="accordion__item reveal" id="distribution">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-distribution" id="bouton-distribution">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><path d="M7 8h10M7 16h10"/></svg></span>
+                <span><span class="accordion__title">Distribution</span><span class="accordion__subtitle">Kit courroie ou chaîne, pompe à eau, galets</span></span>
+                <span class="accordion__from">dès 449 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-distribution" role="region" aria-labelledby="bouton-distribution" inert>
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>La rupture de courroie de distribution peut détruire un moteur. Nous remplaçons systématiquement le kit complet avec la pompe à eau, et vérifions l'échéance exacte selon votre motorisation.</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Kit distribution + pompe à eau (essence)</th><td>449 €</td><td>589 €</td><td>729 €</td></tr>
+                        <tr><th scope="row">Kit distribution + pompe à eau (diesel)</th><td>519 €</td><td>659 €</td><td>799 €</td></tr>
+                        <tr><th scope="row">Courroie d'accessoires + galet</th><td>149 €</td><td>179 €</td><td>219 €</td></tr>
+                        <tr><th scope="row">Diagnostic chaîne de distribution</th><td>49 €</td><td>49 €</td><td>69 €</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="accordion__item reveal" id="diagnostic">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-diagnostic" id="bouton-diagnostic">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M6 12l3-3 3 4 3-3 3 2M8 22h8"/></svg></span>
+                <span><span class="accordion__title">Diagnostic électronique</span><span class="accordion__subtitle">Voyants, calculateurs et pannes intermittentes</span></span>
+                <span class="accordion__from">dès 59 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-diagnostic" role="region" aria-labelledby="bouton-diagnostic" inert>
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>Notre valise multimarque (Autel MaxiSys Ultra) lit et efface les codes défauts de tous les calculateurs. Le diagnostic est déduit de la facture si vous faites réaliser la réparation chez nous.</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Lecture codes défauts + rapport</th><td>59 €</td><td>59 €</td><td>69 €</td></tr>
+                        <tr><th scope="row">Diagnostic approfondi (1 h)</th><td>89 €</td><td>89 €</td><td>99 €</td></tr>
+                        <tr><th scope="row">Réinitialisation entretien / TPMS</th><td>25 €</td><td>25 €</td><td>35 €</td></tr>
+                        <tr><th scope="row">Codage injecteurs</th><td>79 €</td><td>89 €</td><td>99 €</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="accordion__item reveal" id="climatisation">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-climatisation" id="bouton-climatisation">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M4.9 4.9l14.2 14.2M2 12h20M4.9 19.1L19.1 4.9"/></svg></span>
+                <span><span class="accordion__title">Climatisation</span><span class="accordion__subtitle">Recharge, étanchéité et traitement antibactérien</span></span>
+                <span class="accordion__from">dès 79 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-climatisation" role="region" aria-labelledby="bouton-climatisation" inert>
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>Une climatisation perd naturellement 10 % de son gaz chaque année. Nous intervenons sur les gaz R134a et R1234yf avec une station homologuée et un contrôle d'étanchéité par traceur UV.</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Recharge climatisation R134a</th><td>79 €</td><td>89 €</td><td>99 €</td></tr>
+                        <tr><th scope="row">Recharge climatisation R1234yf</th><td>129 €</td><td>149 €</td><td>169 €</td></tr>
+                        <tr><th scope="row">Traitement antibactérien</th><td>39 €</td><td>39 €</td><td>45 €</td></tr>
+                        <tr><th scope="row">Filtre habitacle à charbon actif</th><td>35 €</td><td>42 €</td><td>49 €</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="accordion__item reveal" id="pneumatiques">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-pneumatiques" id="bouton-pneumatiques">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+                <span><span class="accordion__title">Pneus &amp; géométrie</span><span class="accordion__subtitle">Montage, équilibrage, parallélisme, gardiennage</span></span>
+                <span class="accordion__from">dès 25 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-pneumatiques" role="region" aria-labelledby="bouton-pneumatiques" inert>
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>Nous proposons les grandes marques (Michelin, Continental, Bridgestone) et des alternatives premium à prix serré. Le parallélisme 3D est recommandé à chaque changement de train de pneus.</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Montage + équilibrage (par pneu)</th><td>25 €</td><td>29 €</td><td>35 €</td></tr>
+                        <tr><th scope="row">Géométrie / parallélisme 3D</th><td>69 €</td><td>79 €</td><td>89 €</td></tr>
+                        <tr><th scope="row">Réparation crevaison</th><td>29 €</td><td>29 €</td><td>35 €</td></tr>
+                        <tr><th scope="row">Gardiennage pneus (saison)</th><td>49 €</td><td>49 €</td><td>59 €</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="accordion__item reveal" id="embrayage">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-embrayage" id="bouton-embrayage">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg></span>
+                <span><span class="accordion__title">Embrayage &amp; boîte</span><span class="accordion__subtitle">Kit embrayage, volant moteur, vidange de boîte</span></span>
+                <span class="accordion__from">dès 590 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-embrayage" role="region" aria-labelledby="bouton-embrayage" inert>
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>Pédale dure, patinage ou bruit au débrayage ? Nous diagnostiquons l'origine exacte avant de proposer un kit embrayage complet, avec ou sans volant moteur bimasse.</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Kit embrayage complet</th><td>590 €</td><td>790 €</td><td>990 €</td></tr>
+                        <tr><th scope="row">Kit embrayage + volant bimasse</th><td>1 190 €</td><td>1 490 €</td><td>1 790 €</td></tr>
+                        <tr><th scope="row">Vidange boîte automatique</th><td>189 €</td><td>229 €</td><td>269 €</td></tr>
+                        <tr><th scope="row">Vidange boîte manuelle</th><td>79 €</td><td>89 €</td><td>99 €</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="accordion__item reveal" id="controle">
+            <h2 class="accordion__heading">
+              <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="panneau-controle" id="bouton-controle">
+                <span class="accordion__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+                <span><span class="accordion__title">Pré-contrôle technique</span><span class="accordion__subtitle">Préparation et contre-visite sans stress</span></span>
+                <span class="accordion__from">dès 49 €</span>
+                <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </h2>
+            <div class="accordion__panel" id="panneau-controle" role="region" aria-labelledby="bouton-controle" inert>
+              <div class="accordion__panel-inner">
+                <div class="accordion__content">
+                  <p>Nous vérifions les 133 points du contrôle technique et corrigeons les défaillances avant le passage. En partenariat avec un centre agréé voisin, nous pouvons aussi y conduire votre véhicule.</p>
+                  <div class="price-table-wrapper">
+                    <table class="price-table">
+                      <caption>Tarifs TTC, pièces et main-d'œuvre incluses</caption>
+                      <thead><tr><th scope="col">Prestation</th><th scope="col">Citadine</th><th scope="col">Berline / SUV</th><th scope="col">Utilitaire</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">Pré-contrôle technique</th><td>49 €</td><td>49 €</td><td>59 €</td></tr>
+                        <tr><th scope="row">Convoyage aller-retour au centre</th><td>29 €</td><td>29 €</td><td>29 €</td></tr>
+                        <tr><th scope="row">Remplacement ampoule (unité)</th><td>12 €</td><td>15 €</td><td>19 €</td></tr>
+                        <tr><th scope="row">Balais d'essuie-glace (paire)</th><td>29 €</td><td>35 €</td><td>39 €</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <a class="button button--small" href="devis.html" style="margin-top:18px">Estimer avec ce service</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <p class="note">Tarifs indicatifs pour un véhicule de moins de 15 ans. Les prix exacts dépendent de la motorisation et sont confirmés par un devis gratuit avant toute intervention.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface" aria-labelledby="titre-marques">
+      <div class="container" style="text-align:center">
+        <span class="eyebrow reveal">Toutes marques</span>
+        <h2 class="section-title reveal" id="titre-marques">Nous entretenons <em>votre voiture</em></h2>
+        <div class="brand-strip reveal">
+          <span>Renault</span><span>Peugeot</span><span>Citroën</span><span>Dacia</span><span>Volkswagen</span><span>Toyota</span><span>Ford</span><span>Audi</span><span>BMW</span><span>Mercedes</span><span>Tesla</span><span>Kia</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="titre-cta">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2 class="cta-band__title" id="titre-cta">Besoin d'un prix précis ?</h2>
+            <p>Combinez plusieurs prestations dans notre estimateur en ligne et obtenez une fourchette adaptée à votre véhicule.</p>
+          </div>
+          <div class="cta-band__actions"><a class="button" href="devis.html">Faire mon devis</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><span class="brand__name">Atelier Méca Rivière</span><span class="brand__tagline">Garage indépendant · Nantes</span></span></a>
+          <p>Mécanique générale, entretien toutes marques et diagnostic électronique depuis 1998. Un garage indépendant, des tarifs transparents et des pièces de qualité d'origine.</p>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Atelier</h2>
+          <ul class="site-footer__list">
+            <li><a href="services.html">Nos services</a></li>
+            <li><a href="devis.html">Devis en ligne</a></li>
+            <li><a href="rendez-vous.html">Prendre rendez-vous</a></li>
+            <li><a href="contact.html">Nous trouver</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Horaires</h2>
+          <ul class="site-footer__list">
+            <li>Lun – Jeu : 8h – 12h / 13h30 – 18h30</li>
+            <li>Vendredi : 8h – 12h / 13h30 – 18h</li>
+            <li>Samedi : 8h30 – 12h30</li>
+            <li>Dimanche : fermé</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Contact</h2>
+          <ul class="site-footer__list">
+            <li>14 quai de la Fosse, 44000 Nantes</li>
+            <li><a href="tel:+33240481926">02 40 48 19 26</a></li>
+            <li><a href="mailto:atelier@meca-riviere.fr">atelier@meca-riviere.fr</a></li>
+            <li>Tram 1 · arrêt Gare Maritime</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> Atelier Méca Rivière · SIRET 412 587 963 00024</span>
+        <span>Mentions légales · Confidentialité · Conditions générales</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+</body>
+</html>

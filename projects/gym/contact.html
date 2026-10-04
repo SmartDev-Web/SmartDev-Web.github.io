@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Séance d'essai gratuite et contact — IronPulse Lille</title>
+  <meta name="description" content="Réservez votre séance d'essai gratuite chez IronPulse Lille : visite, bilan InBody et accès aux cours. Adresse, horaires et contact du club.">
+  <meta name="theme-color" content="#0a0b0d">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d4ff2e'/%3E%3Cpath d='M4 16h4l4-9 5 18 4-9h7' fill='none' stroke='%230a0b0d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="js/main.js" defer></script>
+  <script src="js/contact.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="IronPulse, retour à l'accueil">
+        <span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span>
+        <span>Iron<span class="brand__accent">Pulse</span></span>
+      </a>
+      <button class="burger-button" type="button" aria-expanded="false" aria-controls="navigation-principale" aria-label="Ouvrir le menu">
+        <span class="burger-button__line"></span><span class="burger-button__line"></span><span class="burger-button__line"></span>
+      </button>
+      <nav class="main-nav" id="navigation-principale" aria-label="Navigation principale">
+        <ul class="main-nav__list">
+          <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+          <li><a class="main-nav__link" href="planning.html">Planning</a></li>
+          <li><a class="main-nav__link" href="tarifs.html">Tarifs</a></li>
+          <li><a class="main-nav__link" href="coachs.html">Coachs</a></li>
+          <li><a class="main-nav__link" href="contact.html" aria-current="page">Contact</a></li>
+          <li class="main-nav__cta"><a class="button button--small" href="contact.html">Essai gratuit</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="contenu">
+    <section class="page-hero" data-watermark="ESSAI">
+      <div class="container">
+        <span class="eyebrow">Séance d'essai offerte</span>
+        <h1 class="page-hero__title">Viens <em>tester</em></h1>
+        <p class="section-lead">Une journée complète pour découvrir le club, rencontrer un coach et participer aux cours. Remplissez le formulaire, nous vous confirmons le créneau par SMS sous 24 heures.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="titre-formulaire">
+      <div class="container contact-layout">
+        <div class="form-card reveal">
+          <form data-trial-form novalidate>
+            <h2 class="form-card__title" id="titre-formulaire">Réserver mon essai</h2>
+            <p class="calculator__intro">Les champs marqués d'un astérisque sont obligatoires.</p>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="essai-prenom">Prénom *</label>
+                <input id="essai-prenom" name="firstName" type="text" autocomplete="given-name" required>
+                <span class="form-field__error"></span>
+              </div>
+              <div class="form-field">
+                <label for="essai-nom">Nom *</label>
+                <input id="essai-nom" name="lastName" type="text" autocomplete="family-name" required>
+                <span class="form-field__error"></span>
+              </div>
+              <div class="form-field">
+                <label for="essai-email">E-mail *</label>
+                <input id="essai-email" name="emailAddress" type="email" autocomplete="email" placeholder="prenom@exemple.fr" required>
+                <span class="form-field__error"></span>
+              </div>
+              <div class="form-field">
+                <label for="essai-telephone">Téléphone *</label>
+                <input id="essai-telephone" name="phoneNumber" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" required>
+                <span class="form-field__error"></span>
+              </div>
+              <div class="form-field">
+                <label for="essai-date">Date souhaitée *</label>
+                <input id="essai-date" name="trialDate" type="date" required>
+                <span class="form-field__error"></span>
+              </div>
+              <div class="form-field">
+                <label for="essai-creneau">Créneau *</label>
+                <select id="essai-creneau" name="trialSlot" required>
+                  <option value="">Choisir un créneau</option>
+                  <option value="Matin (7h – 12h)">Matin (7h – 12h)</option>
+                  <option value="Midi (12h – 14h)">Midi (12h – 14h)</option>
+                  <option value="Après-midi (14h – 18h)">Après-midi (14h – 18h)</option>
+                  <option value="Soirée (18h – 21h)">Soirée (18h – 21h)</option>
+                </select>
+                <span class="form-field__error"></span>
+              </div>
+              <fieldset class="form-field form-field--full segmented">
+                <legend>Votre objectif principal *</legend>
+                <label class="segmented__option"><input type="radio" name="mainGoal" value="Perte de poids"><span>Perte de poids</span></label>
+                <label class="segmented__option"><input type="radio" name="mainGoal" value="Prise de muscle"><span>Prise de muscle</span></label>
+                <label class="segmented__option"><input type="radio" name="mainGoal" value="Cardio & endurance"><span>Cardio &amp; endurance</span></label>
+                <label class="segmented__option"><input type="radio" name="mainGoal" value="Bien-être"><span>Bien-être</span></label>
+                <span class="form-field__error" data-goal-error></span>
+              </fieldset>
+              <div class="form-field form-field--full">
+                <label for="essai-message">Antécédents, blessures ou questions</label>
+                <textarea id="essai-message" name="additionalMessage" maxlength="600" placeholder="Ex. : reprise après une entorse du genou, envie de tester la boxe…"></textarea>
+                <span class="form-field__error"></span>
+              </div>
+              <div class="checkbox-field form-field--full">
+                <input id="essai-consentement" name="privacyConsent" type="checkbox" required>
+                <label for="essai-consentement">J'accepte qu'IronPulse utilise ces informations pour organiser ma séance d'essai. Aucune donnée n'est transmise à des tiers. *</label>
+                <span class="form-field__error" style="grid-column:2"></span>
+              </div>
+            </div>
+            <button class="button" type="submit" style="margin-top:20px;width:100%">Valider ma séance d'essai</button>
+          </form>
+          <div class="form-success" data-trial-success hidden tabindex="-1">
+            <div class="form-success__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></div>
+            <h2 class="form-card__title">C'est noté !</h2>
+            <p data-trial-summary></p>
+            <button class="button button--ghost" type="button" data-trial-reset style="margin-top:18px">Nouvelle demande</button>
+          </div>
+        </div>
+
+        <aside class="info-stack" aria-label="Informations pratiques">
+          <div class="info-card reveal">
+            <h2 class="info-card__title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Adresse</h2>
+            <p>48 rue Nationale<br>59000 Lille<br>Métro Rihour (ligne 1) · V'Lille station Nationale<br>Parking Grand Place à 300 m (-50 % membres)</p>
+          </div>
+          <div class="info-card reveal">
+            <h2 class="info-card__title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Horaires</h2>
+            <table class="hours-table">
+              <tr><td>Lundi – Vendredi</td><td>6h00 – 23h00</td></tr>
+              <tr><td>Samedi</td><td>8h00 – 21h00</td></tr>
+              <tr><td>Dimanche &amp; jours fériés</td><td>8h00 – 19h00</td></tr>
+              <tr><td>Accueil</td><td>9h00 – 21h00</td></tr>
+            </table>
+          </div>
+          <div class="info-card reveal">
+            <h2 class="info-card__title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Nous joindre</h2>
+            <p><a href="tel:+33320574812">03 20 57 48 12</a><br><a href="mailto:bonjour@ironpulse-lille.fr">bonjour@ironpulse-lille.fr</a><br>Réponse sous 24 h ouvrées</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--surface" aria-labelledby="titre-deroulement">
+      <div class="container">
+        <span class="eyebrow reveal">Comment ça se passe</span>
+        <h2 class="section-title reveal" id="titre-deroulement">Ta journée <em>d'essai</em></h2>
+        <div class="trial-steps">
+          <article class="trial-step reveal"><h3>Accueil &amp; visite</h3><p>Un coach vous fait visiter les 1 800 m² et vous présente les espaces et le fonctionnement du club.</p></article>
+          <article class="trial-step reveal" style="--reveal-delay:0.1s"><h3>Bilan InBody</h3><p>Composition corporelle, questionnaire santé et échange sur vos objectifs pendant 20 minutes.</p></article>
+          <article class="trial-step reveal" style="--reveal-delay:0.2s"><h3>Entraînement libre</h3><p>Accès à tous les cours de la journée, au plateau et à l'espace récupération. Pensez à votre serviette !</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span><span>Iron<span class="brand__accent">Pulse</span></span></a>
+          <p>Club de fitness premium au cœur de Lille. 1 800 m² d'équipements, 85 cours par semaine et des coachs diplômés d'État pour repousser vos limites.</p>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Le club</h2>
+          <ul class="site-footer__list">
+            <li><a href="planning.html">Planning des cours</a></li>
+            <li><a href="tarifs.html">Abonnements</a></li>
+            <li><a href="coachs.html">Nos coachs</a></li>
+            <li><a href="contact.html">Séance d'essai</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Horaires</h2>
+          <ul class="site-footer__list">
+            <li>Lun – Ven : 6h00 – 23h00</li>
+            <li>Samedi : 8h00 – 21h00</li>
+            <li>Dimanche : 8h00 – 19h00</li>
+            <li>Accès 24h/24 avec Black Card</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__title">Contact</h2>
+          <ul class="site-footer__list">
+            <li>48 rue Nationale, 59000 Lille</li>
+            <li><a href="tel:+33320574812">03 20 57 48 12</a></li>
+            <li><a href="mailto:bonjour@ironpulse-lille.fr">bonjour@ironpulse-lille.fr</a></li>
+            <li>Métro Rihour (ligne 1)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> IronPulse Lille. Tous droits réservés.</span>
+        <span>Mentions légales · Politique de confidentialité · CGV</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+</body>
+</html>

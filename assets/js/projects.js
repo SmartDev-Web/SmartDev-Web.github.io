@@ -30,7 +30,7 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Salle de sport",
     description: "Club de fitness lillois : planning des cours réservable, calculateurs IMC et calories, coachs et abonnements.",
     tags: ["Planning", "Calculateurs", "Réservations"],
-    accentColor: "#c6ff00",
+    accentColor: "#d4ff2e",
     imageUrl: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=75"
   },
   {
@@ -40,8 +40,8 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Mécanique auto",
     description: "Garage indépendant nantais : devis en ligne multi-étapes, prise de rendez-vous sur calendrier et grille tarifaire.",
     tags: ["Devis multi-étapes", "Calendrier", "Validation"],
-    accentColor: "#ff7a1a",
-    imageUrl: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=900&q=75"
+    accentColor: "#ff6b1a",
+    imageUrl: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=900&q=75"
   },
   {
     slug: "forum",
