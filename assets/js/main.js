@@ -39,7 +39,7 @@
       overlayElement.removeEventListener("transitionend", handleOverlayCovered);
       window.location.href = destinationHref;
     };
-    if (prefersReducedMotion || !overlayElement) {
+    if (prefersReducedMotion || !overlayElement || !document.body.classList.contains("is-loaded")) {
       window.location.href = destinationHref;
       return;
     }

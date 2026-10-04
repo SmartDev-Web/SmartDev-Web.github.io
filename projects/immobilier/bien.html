@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fiche du bien — Horizon Immobilier</title>
+  <meta name="description" content="Découvrez ce bien en détail : photos, caractéristiques, diagnostic énergétique et demande de visite.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Horizon Immobilier, accueil">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="#b8964e" stroke-width="1.5"/><path d="M8 25l8-10 5 6 3-3 8 7" fill="none" stroke="#b8964e" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 29h20M13 32.5h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="brand__name">Horizon<small>Immobilier · Annecy</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="main-nav__list" id="main-navigation">
+        <li><a class="main-nav__link" href="index.html">Accueil</a></li>
+        <li><a class="main-nav__link" href="annonces.html" aria-current="page">Annonces</a></li>
+        <li><a class="main-nav__link" href="simulateur.html">Simulateur</a></li>
+        <li><a class="main-nav__link" href="agence.html">L'agence</a></li>
+        </ul>
+        <a class="header-favorites" href="annonces.html?favoris=1" aria-label="Voir mes favoris">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.4 7.6 3.6 4 7.2 4c2 0 3.6 1.1 4.8 2.8C13.2 5.1 14.8 4 16.8 4c3.6 0 5.8 3.6 4.5 7.1-1.8 4.8-9.3 9.4-9.3 9.4z"/></svg>
+          <span class="header-favorites__count" data-favorites-count data-count="0">0</span>
+        </a>
+        <a class="button button--gold" href="agence.html#estimation">Estimer mon bien</a>
+        <button class="burger-button" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenu">
+    <section class="page-banner">
+      <img class="page-banner__image" id="property-banner-image" src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80" alt="">
+      <div class="container" style="padding-bottom:40px">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span aria-hidden="true">/</span><a href="annonces.html">Annonces</a><span aria-hidden="true">/</span><span id="property-breadcrumb">Bien</span></nav>
+        <div class="property-header">
+          <div>
+            <p class="eyebrow" id="property-eyebrow">Référence</p>
+            <h1 id="property-title">Chargement du bien…</h1>
+            <p id="property-location"></p>
+          </div>
+          <div class="property-header__price" id="property-price"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="gallery" id="property-gallery" aria-label="Photos du bien"></div>
+    </div>
+
+    <section class="section" id="property-content">
+      <div class="container property-layout">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px">
+            <h2 style="margin:0">Le bien en détail</h2>
+            <button class="button button--outline" type="button" id="property-favorite-button" data-favorite-id="" aria-pressed="false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.4 7.6 3.6 4 7.2 4c2 0 3.6 1.1 4.8 2.8C13.2 5.1 14.8 4 16.8 4c3.6 0 5.8 3.6 4.5 7.1-1.8 4.8-9.3 9.4-9.3 9.4z"/></svg>
+              <span>Favori</span>
+            </button>
+          </div>
+          <p id="property-description" style="font-size:1.05rem"></p>
+          <dl class="spec-grid" id="property-specs"></dl>
+          <h3>Prestations</h3>
+          <ul class="feature-chips" id="property-features"></ul>
+          <h3>Performance énergétique</h3>
+          <div class="energy-panels">
+            <div class="energy-scale">
+              <h4>DPE — Consommation</h4>
+              <p>kWh/m².an d'énergie primaire</p>
+              <ol class="energy-scale__bars" id="energy-scale" aria-label="Classe énergie"></ol>
+            </div>
+            <div class="energy-scale">
+              <h4>GES — Émissions</h4>
+              <p>kg CO₂/m².an</p>
+              <ol class="energy-scale__bars" id="climate-scale" aria-label="Classe climat"></ol>
+            </div>
+          </div>
+          <p class="simulator-note">Diagnostics réalisés selon la méthode 3CL-DPE 2021. Montant estimé des dépenses annuelles d'énergie pour un usage standard communiqué sur demande.</p>
+        </div>
+
+        <aside class="sidebar-card" aria-labelledby="visit-form-title">
+          <div class="agent-line">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Portrait de Claire Vauthier" loading="lazy">
+            <div><strong>Claire Vauthier</strong><span>Conseillère · 04 50 51 23 47</span></div>
+          </div>
+          <a class="monthly-hint" id="monthly-hint" href="simulateur.html">Simuler le financement de ce bien</a>
+          <h2 id="visit-form-title" style="font-size:1.6rem">Demander une visite</h2>
+          <form id="visit-request-form" data-validate data-success-target="visit-success">
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="visit-firstname">Prénom</label>
+                <input id="visit-firstname" name="prenom" type="text" autocomplete="given-name" required minlength="2">
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <div class="form-field">
+                <label for="visit-lastname">Nom</label>
+                <input id="visit-lastname" name="nom" type="text" autocomplete="family-name" required minlength="2">
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <div class="form-field form-field--full">
+                <label for="visit-email">E-mail</label>
+                <input id="visit-email" name="email" type="email" autocomplete="email" required>
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <div class="form-field form-field--full">
+                <label for="visit-phone">Téléphone</label>
+                <input id="visit-phone" name="telephone" type="tel" autocomplete="tel" required pattern="^(?:\+33\s?|0)[1-9](?:[\s.\-]?\d{2}){4}$" data-pattern-message="Numéro français attendu (ex. : 06 12 34 56 78).">
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <div class="form-field">
+                <label for="visit-date">Date souhaitée</label>
+                <input id="visit-date" name="date" type="date" required data-min-tomorrow data-range-message="Choisissez une date à partir de demain.">
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <div class="form-field">
+                <label for="visit-slot">Créneau</label>
+                <select id="visit-slot" name="creneau" required>
+                  <option value="">Choisir…</option>
+                  <option>Matin (9h – 12h)</option>
+                  <option>Midi (12h – 14h)</option>
+                  <option>Après-midi (14h – 18h)</option>
+                  <option>Fin de journée (18h – 19h30)</option>
+                </select>
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <div class="form-field form-field--full">
+                <label for="visit-message">Message (facultatif)</label>
+                <textarea id="visit-message" name="message" placeholder="Votre projet, votre financement, vos questions…"></textarea>
+              </div>
+              <div class="form-consent form-field--full">
+                <input id="visit-consent" name="consentement" type="checkbox" required>
+                <label for="visit-consent">J'accepte d'être recontacté par Horizon Immobilier au sujet de ce bien.</label>
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <button class="button button--gold button--block form-field--full" type="submit">Envoyer ma demande</button>
+            </div>
+          </form>
+          <div class="form-success" id="visit-success" tabindex="-1" hidden>
+            <div class="form-success__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></div>
+            <h3>Merci <span data-success-name></span> !</h3>
+            <p>Votre demande de visite est bien enregistrée. Claire vous rappelle sous 24 heures ouvrées pour confirmer le rendez-vous.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--white">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">À découvrir aussi</p>
+          <h2>Biens similaires</h2>
+        </div>
+        <div class="listing-grid" id="similar-listings"></div>
+      </div>
+    </section>
+    <div class="lightbox" id="property-lightbox" role="dialog" aria-modal="true" aria-label="Galerie photos" aria-hidden="true">
+      <button class="lightbox__button lightbox__button--close" type="button" data-lightbox-close aria-label="Fermer la galerie"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <button class="lightbox__button lightbox__button--previous" type="button" data-lightbox-step="-1" aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <figure class="lightbox__figure">
+        <img class="lightbox__image" id="lightbox-image" src="" alt="">
+        <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+      </figure>
+      <button class="lightbox__button lightbox__button--next" type="button" data-lightbox-step="1" aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html"><svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="#b8964e" stroke-width="1.5"/><path d="M8 25l8-10 5 6 3-3 8 7" fill="none" stroke="#b8964e" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 29h20M13 32.5h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span class="brand__name">Horizon<small>Immobilier · Annecy</small></span></a>
+          <p>Agence indépendante fondée en 1998, Horizon Immobilier accompagne vente, achat et location de biens d'exception autour du lac d'Annecy.</p>
+          <p>Carte professionnelle CPI 7401 2018 000 041 527 délivrée par la CCI Haute-Savoie.</p>
+        </div>
+        <div>
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="annonces.html?transaction=vente">Acheter</a></li>
+            <li><a href="annonces.html?transaction=location">Louer</a></li>
+            <li><a href="simulateur.html">Simulateur de prêt</a></li>
+            <li><a href="agence.html#estimation">Estimation gratuite</a></li>
+            <li><a href="agence.html">Notre équipe</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li>12 rue Royale<br>74000 Annecy</li>
+            <li><a href="tel:+33450512345">04 50 51 23 45</a></li>
+            <li><a href="mailto:contact@horizon-immobilier.fr">contact@horizon-immobilier.fr</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Horaires</h3>
+          <ul>
+            <li>Lun – Ven : 9h – 19h</li>
+            <li>Samedi : 9h30 – 17h</li>
+            <li>Dimanche : sur rendez-vous</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year>2026</span> Horizon Immobilier — Site de démonstration</span>
+        <span>Mentions légales · Barème des honoraires · Politique de confidentialité</span>
+      </div>
+    </div>
+  </footer>
+  <a class="portfolio-back" href="../../index.html">← Portfolio SmartDev</a>
+
+  <script src="js/listings.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/bien.js"></script>
+</body>
+</html>

@@ -70,8 +70,8 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Agence immobilière",
     description: "Agence annécienne : recherche d'annonces filtrable, favoris, fiches détaillées et simulateur de prêt avec graphique.",
     tags: ["Recherche", "Simulateur", "Favoris"],
-    accentColor: "#c9a54c",
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=75"
+    accentColor: "#b8964e",
+    imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=75"
   },
   {
     slug: "photographe",
@@ -80,8 +80,8 @@ const PORTFOLIO_PROJECTS = [
     categoryLabel: "Photographe",
     description: "Photographe de mariage marseillais : galerie animée, lightbox, configurateur de prestation et demande de réservation.",
     tags: ["Galerie FLIP", "Configurateur", "Lightbox"],
-    accentColor: "#e8d5b5",
-    imageUrl: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=900&q=75"
+    accentColor: "#b5653e",
+    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=75"
   },
   {
     slug: "hotel",
