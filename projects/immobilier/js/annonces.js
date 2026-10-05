@@ -168,7 +168,6 @@ function initializeListingsPage() {
   renderRangeOutputs(normalizedFilterState);
   renderListingResults(normalizedFilterState);
   listingFiltersFormElement.addEventListener("input", handleFilterChange);
-  listingFiltersFormElement.addEventListener("change", handleFilterChange);
   sortSelectElement.addEventListener("change", handleFilterChange);
   listingFiltersFormElement.addEventListener("submit", function (submitEvent) { submitEvent.preventDefault(); });
   document.getElementById("reset-filters-button").addEventListener("click", function () {

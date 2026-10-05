@@ -74,8 +74,12 @@ function initializeGalleryFilters() {
       history.replaceState(null, "", filterButtonElement.dataset.filter === "tout" ? window.location.pathname : "#" + filterButtonElement.dataset.filter);
     });
   });
-  const hashCategory = window.location.hash.slice(1);
-  selectFilter(filterButtonElements.some(function (filterButtonElement) { return filterButtonElement.dataset.filter === hashCategory; }) ? hashCategory : "tout");
+  const selectFilterFromHash = function () {
+    const hashCategory = window.location.hash.slice(1);
+    selectFilter(filterButtonElements.some(function (filterButtonElement) { return filterButtonElement.dataset.filter === hashCategory; }) ? hashCategory : "tout");
+  };
+  window.addEventListener("hashchange", selectFilterFromHash);
+  selectFilterFromHash();
 }
 
 /* Shows the current lightbox photo */

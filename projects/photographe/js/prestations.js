@@ -4,6 +4,7 @@ const CONFIGURATOR_STORAGE_KEY = "lumen-studio-configuration";
 
 const configuratorFormElement = document.getElementById("price-configurator");
 let displayedTotalAmount = 0;
+let totalAnimationFrameId = 0;
 
 /* Reads the configurator form into a validated configuration object */
 function readConfiguration() {
@@ -22,16 +23,17 @@ function animateTotalAmount(targetAmount) {
   const startingAmount = displayedTotalAmount;
   const animationDuration = prefersReducedMotion ? 0 : 500;
   let animationStartTime = null;
-  displayedTotalAmount = targetAmount;
+  cancelAnimationFrame(totalAnimationFrameId);
   const renderFrame = function (frameTimestamp) {
     animationStartTime = animationStartTime === null ? frameTimestamp : animationStartTime;
     const progressRatio = animationDuration ? Math.min((frameTimestamp - animationStartTime) / animationDuration, 1) : 1;
-    totalElement.textContent = formatEuros(Math.round(startingAmount + (targetAmount - startingAmount) * (1 - Math.pow(1 - progressRatio, 3))));
+    displayedTotalAmount = Math.round(startingAmount + (targetAmount - startingAmount) * (1 - Math.pow(1 - progressRatio, 3)));
+    totalElement.textContent = formatEuros(displayedTotalAmount);
     if (progressRatio < 1) {
-      requestAnimationFrame(renderFrame);
+      totalAnimationFrameId = requestAnimationFrame(renderFrame);
     }
   };
-  requestAnimationFrame(renderFrame);
+  totalAnimationFrameId = requestAnimationFrame(renderFrame);
 }
 
 /* Persists the configuration so it survives a reload */
@@ -122,7 +124,6 @@ function initializePackageHighlight() {
 document.addEventListener("DOMContentLoaded", function () {
   restoreConfiguration();
   configuratorFormElement.addEventListener("input", updateConfigurator);
-  configuratorFormElement.addEventListener("change", updateConfigurator);
   configuratorFormElement.addEventListener("submit", function (submitEvent) { submitEvent.preventDefault(); });
   document.getElementById("reset-configurator").addEventListener("click", function () {
     configuratorFormElement.reset();

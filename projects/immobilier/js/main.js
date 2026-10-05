@@ -121,7 +121,7 @@ function createListingCardMarkup(propertyListing) {
   const safeEnergyClass = escapeHtml(propertyListing.energyClass);
   return '<article class="listing-card">' +
     '<div class="listing-card__media">' +
-    '<img src="' + escapeHtml(buildPropertyImageUrl(propertyListing.images[0], 800)) + '" alt="' + safeTitle + " à " + safeCity + '" loading="lazy" width="800" height="600">' +
+    '<img decoding="async" src="' + escapeHtml(buildPropertyImageUrl(propertyListing.images[0], 800)) + '" alt="' + safeTitle + " à " + safeCity + '" loading="lazy" width="800" height="600">' +
     '<div class="listing-card__badges"><span class="badge">' + transactionLabel + "</span>" + freshBadge + "</div>" +
     '<span class="energy-chip" data-energy="' + safeEnergyClass + '"><b>' + safeEnergyClass + "</b>DPE</span>" +
     '<button class="favorite-button" type="button" data-favorite-id="' + safeIdentifier + '" aria-pressed="false" aria-label="Ajouter aux favoris">' + SVG_ICONS.heart + "</button>" +
@@ -148,6 +148,13 @@ function initializeFavoriteButtons() {
     }
     clickEvent.preventDefault();
     toggleFavoriteListing(favoriteButtonElement.dataset.favoriteId);
+  });
+  window.addEventListener("storage", function (storageEvent) {
+    if (storageEvent.key !== FAVORITES_STORAGE_KEY) {
+      return;
+    }
+    refreshFavoriteIndicators();
+    document.dispatchEvent(new CustomEvent("favorites:change", { detail: { favoriteListingIds: readFavoriteListingIds() } }));
   });
   refreshFavoriteIndicators();
 }
@@ -366,7 +373,7 @@ function initializeValidatedForms() {
 function initializeDateInputs() {
   const tomorrowDate = new Date();
   tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-  const isoTomorrow = tomorrowDate.toISOString().slice(0, 10);
+  const isoTomorrow = tomorrowDate.getFullYear() + "-" + String(tomorrowDate.getMonth() + 1).padStart(2, "0") + "-" + String(tomorrowDate.getDate()).padStart(2, "0");
   document.querySelectorAll("input[type='date'][data-min-tomorrow]").forEach(function (dateInputElement) {
     dateInputElement.min = isoTomorrow;
   });

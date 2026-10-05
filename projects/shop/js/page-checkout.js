@@ -262,6 +262,7 @@ function initCheckoutForms() {
     NordikCart.clearCart();
     renderOrderSummary(orderedLines, orderTotals);
     checkoutElements.paymentForm.reset();
+    updateCardPreview();
     showCheckoutStep("confirmation");
   });
 }

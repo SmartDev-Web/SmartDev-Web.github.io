@@ -42,6 +42,5 @@ function updateIndicativeEstimate() {
 document.addEventListener("DOMContentLoaded", function () {
   const estimationFormElement = document.getElementById("estimation-form");
   estimationFormElement.addEventListener("input", updateIndicativeEstimate);
-  estimationFormElement.addEventListener("change", updateIndicativeEstimate);
   updateIndicativeEstimate();
 });

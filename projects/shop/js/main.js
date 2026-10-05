@@ -27,7 +27,7 @@ function getQueryParameter(parameterName) {
 /* Shared product markup. */
 function renderRatingStars(ratingValue) {
   const roundedRating = Math.round(ratingValue);
-  return `<span class="rating" aria-label="Note de ${String(ratingValue).replace(".", ",")} sur 5">${"★".repeat(roundedRating)}<span class="rating__off">${"★".repeat(5 - roundedRating)}</span></span>`;
+  return `<span class="rating" role="img" aria-label="Note de ${String(ratingValue).replace(".", ",")} sur 5">${"★".repeat(roundedRating)}<span class="rating__off">${"★".repeat(5 - roundedRating)}</span></span>`;
 }
 
 function renderPriceMarkup(product, unitPrice = product.price) {
@@ -58,8 +58,8 @@ function renderProductCard(product, cardOptions = {}) {
     <article class="product-card reveal">
       <div class="product-card__media">
         <a href="produit.html?id=${encodeURIComponent(product.id)}" tabindex="-1" aria-hidden="true">
-          <img class="product-card__image" src="${escapeHtml(product.thumbnail)}" alt="" loading="lazy" width="480" height="600">
-          <img class="product-card__image product-card__image--hover" src="${escapeHtml(product.hoverImage)}" alt="" loading="lazy" width="480" height="600">
+          <img decoding="async" class="product-card__image" src="${escapeHtml(product.thumbnail)}" alt="" loading="lazy" width="480" height="600">
+          <img decoding="async" class="product-card__image product-card__image--hover" src="${escapeHtml(product.hoverImage)}" alt="" loading="lazy" width="480" height="600">
         </a>
         ${renderProductBadges(product)}
         <div class="product-card__actions">
@@ -98,7 +98,7 @@ function renderCartLine(line, lineVariant) {
   const isEditable = lineVariant !== "summary";
   return `
     <li class="cart-line cart-line--${lineVariant}">
-      <a class="cart-line__media" href="${productUrl}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(line.product.thumbnail)}" alt="" width="96" height="120" loading="lazy">${lineVariant === "summary" ? `<span class="cart-line__count">${line.quantity}</span>` : ""}</a>
+      <a class="cart-line__media" href="${productUrl}" tabindex="-1" aria-hidden="true"><img decoding="async" src="${escapeHtml(line.product.thumbnail)}" alt="" width="96" height="120" loading="lazy">${lineVariant === "summary" ? `<span class="cart-line__count">${line.quantity}</span>` : ""}</a>
       <div class="cart-line__info">
         <a class="cart-line__name" href="${productUrl}">${escapeHtml(line.product.name)}</a>
         <p class="cart-line__options">${renderCartLineOptions(line)}</p>
@@ -182,13 +182,30 @@ function closeCartDrawer() {
   if (elementFocusedBeforeDrawer) elementFocusedBeforeDrawer.focus();
 }
 
-function updateCartBadges() {
+/* Cycles keyboard focus inside the open drawer, as expected from a modal dialog. */
+function keepFocusInsideDrawer(keyboardEvent) {
+  if (!cartDrawerElement || !cartDrawerElement.classList.contains("is-open")) return;
+  const focusableElements = Array.from(cartDrawerElement.querySelectorAll("a[href], button:not([disabled]), input:not([disabled])")).filter((focusableElement) => focusableElement.offsetParent !== null);
+  if (!focusableElements.length) return;
+  const firstFocusable = focusableElements[0];
+  const lastFocusable = focusableElements[focusableElements.length - 1];
+  const focusIsOutside = !cartDrawerElement.contains(document.activeElement);
+  if (keyboardEvent.shiftKey && (document.activeElement === firstFocusable || focusIsOutside)) {
+    keyboardEvent.preventDefault();
+    lastFocusable.focus();
+  } else if (!keyboardEvent.shiftKey && (document.activeElement === lastFocusable || focusIsOutside)) {
+    keyboardEvent.preventDefault();
+    firstFocusable.focus();
+  }
+}
+
+function updateCartBadges(shouldAnimateIncrease = true) {
   const itemCount = NordikCart.getItemCount();
   document.querySelectorAll("[data-cart-count]").forEach((badgeElement) => {
     const previousCount = Number(badgeElement.textContent) || 0;
     badgeElement.textContent = String(itemCount);
     badgeElement.hidden = itemCount === 0;
-    if (itemCount > previousCount) {
+    if (shouldAnimateIncrease && itemCount > previousCount) {
       badgeElement.classList.remove("is-bumping");
       requestAnimationFrame(() => badgeElement.classList.add("is-bumping"));
     }
@@ -199,8 +216,9 @@ function updateCartBadges() {
 function addProductToCart(cartItemInput, shouldOpenDrawer = true) {
   const product = NordikCatalog.getProductById(cartItemInput.productId);
   if (!product) return;
+  const quantityBeforeAdding = NordikCart.getItemCount();
   NordikCart.addItem(cartItemInput);
-  showToast(`${product.name} a été ajouté au panier.`);
+  showToast(NordikCart.getItemCount() > quantityBeforeAdding ? `${product.name} a été ajouté au panier.` : `Quantité maximale atteinte pour ${product.name}.`);
   if (shouldOpenDrawer) openCartDrawer();
 }
 
@@ -210,6 +228,7 @@ function initCartInteractions() {
   if (cartDrawerOverlay) cartDrawerOverlay.addEventListener("click", closeCartDrawer);
   document.addEventListener("keydown", (keyboardEvent) => {
     if (keyboardEvent.key === "Escape") closeCartDrawer();
+    if (keyboardEvent.key === "Tab") keepFocusInsideDrawer(keyboardEvent);
   });
   document.addEventListener("click", (clickEvent) => {
     const quickAddButton = clickEvent.target.closest("[data-quick-add]");
@@ -224,11 +243,18 @@ function initCartInteractions() {
     if (cartActionButton.dataset.cartAction === "remove") {
       NordikCart.removeItem(lineKey);
       showToast(`${targetLine.product.name} a été retiré du panier.`);
+      if (cartDrawerElement && cartDrawerElement.contains(cartActionButton)) cartDrawerElement.querySelector("[data-close-cart]").focus();
     }
   });
   document.addEventListener("change", (changeEvent) => {
     const quantityInput = changeEvent.target.closest("[data-cart-quantity-input]");
-    if (quantityInput) NordikCart.setQuantity(quantityInput.dataset.lineKey, quantityInput.value);
+    if (!quantityInput) return;
+    const targetLine = NordikCart.getDetailedLines().find((line) => line.key === quantityInput.dataset.lineKey);
+    if (quantityInput.value.trim() === "" || !Number.isFinite(Number(quantityInput.value))) {
+      if (targetLine) quantityInput.value = String(targetLine.quantity);
+      return;
+    }
+    NordikCart.setQuantity(quantityInput.dataset.lineKey, quantityInput.value);
   });
   document.addEventListener("animationend", (animationEvent) => {
     if (animationEvent.animationName === "badge-bump") animationEvent.target.classList.remove("is-bumping");
@@ -238,7 +264,7 @@ function initCartInteractions() {
     updateCartBadges();
   });
   renderMiniCart();
-  updateCartBadges();
+  updateCartBadges(false);
 }
 
 /* Toast notifications removed once their exit animation ends. */
@@ -290,12 +316,20 @@ function initHeader() {
   const headerElement = document.querySelector(".site-header");
   const scrollSentinelElement = document.querySelector(".scroll-sentinel");
   if (navigationToggleButton && siteNavigationElement) {
-    navigationToggleButton.addEventListener("click", () => {
-      const isOpen = navigationToggleButton.getAttribute("aria-expanded") === "true";
-      navigationToggleButton.setAttribute("aria-expanded", String(!isOpen));
-      siteNavigationElement.classList.toggle("is-open", !isOpen);
-      document.body.classList.toggle("has-open-menu", !isOpen);
+    const setMenuState = (shouldOpen) => {
+      navigationToggleButton.setAttribute("aria-expanded", String(shouldOpen));
+      navigationToggleButton.setAttribute("aria-label", shouldOpen ? "Fermer le menu" : "Ouvrir le menu");
+      siteNavigationElement.classList.toggle("is-open", shouldOpen);
+      document.body.classList.toggle("has-open-menu", shouldOpen);
+    };
+    navigationToggleButton.addEventListener("click", () => setMenuState(navigationToggleButton.getAttribute("aria-expanded") !== "true"));
+    document.addEventListener("keydown", (keyboardEvent) => {
+      if (keyboardEvent.key !== "Escape" || !siteNavigationElement.classList.contains("is-open")) return;
+      setMenuState(false);
+      navigationToggleButton.focus();
     });
+    window.matchMedia("(min-width: 961px)").addEventListener("change", () => setMenuState(false));
+    window.addEventListener("pageshow", () => setMenuState(false));
   }
   if (headerElement && scrollSentinelElement) {
     const headerObserver = new IntersectionObserver(([sentinelEntry]) => headerElement.classList.toggle("is-scrolled", !sentinelEntry.isIntersecting));
@@ -366,6 +400,7 @@ function navigateWithTransition(destinationHref) {
     window.location.href = destinationHref;
     return;
   }
+  bodyElement.getAnimations().forEach((runningAnimation) => runningAnimation.finish());
   bodyElement.addEventListener("transitionend", function handleLeaveTransition(transitionEvent) {
     if (transitionEvent.target !== bodyElement || transitionEvent.propertyName !== "opacity") return;
     bodyElement.removeEventListener("transitionend", handleLeaveTransition);

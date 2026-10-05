@@ -40,7 +40,7 @@ function renderPropertyGallery(propertyListing) {
     const moreOverlay = imageIndex === visibleImages.length - 1 && hiddenImageCount > 0 ? '<span class="gallery__more">+ ' + hiddenImageCount + " photos</span>" : "";
     const imageWidth = imageIndex === 0 ? 1400 : 800;
     return '<button class="gallery__item" type="button" data-gallery-index="' + imageIndex + '" aria-label="Agrandir la photo ' + (imageIndex + 1) + " sur " + propertyListing.images.length + '">' +
-      '<img src="' + escapeHtml(buildPropertyImageUrl(photoIdentifier, imageWidth)) + '" alt="' + escapeHtml(propertyListing.title) + ", photo " + (imageIndex + 1) + '" width="' + imageWidth + '" height="' + Math.round(imageWidth * 0.75) + '">' + moreOverlay + "</button>";
+      '<img decoding="async" src="' + escapeHtml(buildPropertyImageUrl(photoIdentifier, imageWidth)) + '" alt="' + escapeHtml(propertyListing.title) + ", photo " + (imageIndex + 1) + '" width="' + imageWidth + '" height="' + Math.round(imageWidth * 0.75) + '">' + moreOverlay + "</button>";
   }).join("");
   galleryElement.addEventListener("click", function (clickEvent) {
     const galleryItemElement = clickEvent.target.closest("[data-gallery-index]");
@@ -183,6 +183,9 @@ function renderSimilarListings(propertyListing) {
 
 /* Displays a not-found message when the identifier is unknown */
 function renderMissingProperty() {
+  document.title = "Annonce introuvable | Horizon Immobilier";
+  document.getElementById("property-breadcrumb").textContent = "Annonce introuvable";
+  document.getElementById("property-eyebrow").textContent = "Annonce retirée";
   document.getElementById("property-title").textContent = "Ce bien n'est plus disponible";
   document.getElementById("property-location").textContent = "Il a peut-être déjà trouvé preneur. Découvrez nos autres annonces.";
   document.getElementById("property-content").innerHTML = '<div class="container"><div class="empty-state"><h2>Annonce introuvable</h2><p>La référence demandée n\'existe pas ou a été retirée.</p><a class="button button--primary" href="annonces.html">Voir toutes les annonces</a></div></div>';

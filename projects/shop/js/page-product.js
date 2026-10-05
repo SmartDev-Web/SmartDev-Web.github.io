@@ -26,7 +26,7 @@ function renderProductDetail(product) {
   productPageElements.pageRoot.innerHTML = `
     <section class="product-gallery" aria-label="Galerie photos">
       <figure class="gallery-main" data-gallery-main>
-        <img src="${escapeHtml(product.gallery[0].src)}" alt="${escapeHtml(product.gallery[0].alt)}" width="1200" height="1400" data-gallery-image>
+        <img decoding="async" src="${escapeHtml(product.gallery[0].src)}" alt="${escapeHtml(product.gallery[0].alt)}" width="1200" height="1400" data-gallery-image>
         ${renderProductBadges(product)}
         <button type="button" class="gallery-main__expand" data-open-lightbox aria-label="Agrandir la photo">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -34,7 +34,7 @@ function renderProductDetail(product) {
         <figcaption class="gallery-main__hint">Survolez pour zoomer</figcaption>
       </figure>
       <div class="gallery-thumbs" role="group" aria-label="Choisir une photo">
-        ${product.gallery.map((galleryImage, imageIndex) => `<button type="button" class="gallery-thumb" data-gallery-index="${imageIndex}" aria-pressed="${imageIndex === 0}" aria-label="Photo ${imageIndex + 1} : ${escapeHtml(galleryImage.alt)}"><img src="${escapeHtml(galleryImage.src.replace("w=1200&h=1400", "w=240&h=280"))}" alt="" width="240" height="280" loading="lazy"></button>`).join("")}
+        ${product.gallery.map((galleryImage, imageIndex) => `<button type="button" class="gallery-thumb" data-gallery-index="${imageIndex}" aria-pressed="${imageIndex === 0}" aria-label="Photo ${imageIndex + 1} : ${escapeHtml(galleryImage.alt)}"><img decoding="async" src="${escapeHtml(galleryImage.src.replace("w=1200&h=1400", "w=240&h=280"))}" alt="" width="240" height="280" loading="lazy"></button>`).join("")}
       </div>
     </section>
     <section class="product-info" aria-labelledby="product-title">
@@ -130,26 +130,43 @@ function initGalleryInteractions(product) {
     productPageElements.pageRoot.querySelector(`[data-gallery-index="${productSelection.imageIndex}"]`).focus();
   });
   if (supportsHoverZoom && !prefersReducedMotion) {
+    let galleryBounds = null;
+    galleryMainElement.addEventListener("pointerenter", () => {
+      galleryBounds = galleryMainElement.getBoundingClientRect();
+    });
+    window.addEventListener("scroll", () => {
+      galleryBounds = null;
+    }, { passive: true });
     galleryMainElement.addEventListener("pointermove", (pointerEvent) => {
-      const galleryBounds = galleryMainElement.getBoundingClientRect();
+      if (!galleryBounds) galleryBounds = galleryMainElement.getBoundingClientRect();
       const horizontalPercent = ((pointerEvent.clientX - galleryBounds.left) / galleryBounds.width) * 100;
       const verticalPercent = ((pointerEvent.clientY - galleryBounds.top) / galleryBounds.height) * 100;
       galleryImageElement.style.transformOrigin = `${horizontalPercent}% ${verticalPercent}%`;
       galleryMainElement.classList.add("is-zoomed");
     });
-    galleryMainElement.addEventListener("pointerleave", () => galleryMainElement.classList.remove("is-zoomed"));
+    galleryMainElement.addEventListener("pointerleave", () => {
+      galleryBounds = null;
+      galleryMainElement.classList.remove("is-zoomed");
+    });
   }
-  galleryMainElement.addEventListener("click", () => {
+  const showLightboxImage = (imageIndex) => {
+    showGalleryImage(product, imageIndex);
     productPageElements.lightboxImage.src = product.gallery[productSelection.imageIndex].src.replace("w=1200&h=1400", "w=1600&h=1870");
     productPageElements.lightboxImage.alt = product.gallery[productSelection.imageIndex].alt;
+  };
+  galleryMainElement.addEventListener("click", () => {
+    showLightboxImage(productSelection.imageIndex);
     productPageElements.lightboxDialog.showModal();
+  });
+  productPageElements.lightboxDialog.addEventListener("keydown", (keyboardEvent) => {
+    if (keyboardEvent.key !== "ArrowRight" && keyboardEvent.key !== "ArrowLeft") return;
+    keyboardEvent.preventDefault();
+    showLightboxImage(productSelection.imageIndex + (keyboardEvent.key === "ArrowRight" ? 1 : -1));
   });
   productPageElements.lightboxDialog.addEventListener("click", (clickEvent) => {
     const navigationButton = clickEvent.target.closest("[data-lightbox-step]");
     if (navigationButton) {
-      showGalleryImage(product, productSelection.imageIndex + Number(navigationButton.dataset.lightboxStep));
-      productPageElements.lightboxImage.src = product.gallery[productSelection.imageIndex].src.replace("w=1200&h=1400", "w=1600&h=1870");
-      productPageElements.lightboxImage.alt = product.gallery[productSelection.imageIndex].alt;
+      showLightboxImage(productSelection.imageIndex + Number(navigationButton.dataset.lightboxStep));
       return;
     }
     if (clickEvent.target === productPageElements.lightboxDialog || clickEvent.target.closest("[data-close-lightbox]")) productPageElements.lightboxDialog.close();

@@ -143,7 +143,7 @@ function openQuickView(productId) {
     <label class="field-label" for="quick-view-size">Taille</label>
     <select id="quick-view-size" class="select-input" data-quick-view-size>${product.sizes.map((size) => `<option value="${escapeHtml(size.label)}">${escapeHtml(size.label)}${size.priceDelta ? ` (+${formatPrice(size.priceDelta)})` : ""}</option>`).join("")}</select>` : "";
   catalogueElements.quickViewContent.innerHTML = `
-    <div class="quick-view__media"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" width="900" height="1100"></div>
+    <div class="quick-view__media"><img decoding="async" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" width="900" height="1100"></div>
     <div class="quick-view__info">
       <p class="eyebrow">${escapeHtml(category.name)}</p>
       <h2 id="quick-view-title">${escapeHtml(product.name)}</h2>
