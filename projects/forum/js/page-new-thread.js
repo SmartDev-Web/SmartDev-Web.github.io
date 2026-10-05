@@ -21,7 +21,7 @@ const newThreadElements = {
 const newThreadState = { tags: [] };
 
 function normalizeTagName(rawTagName) {
-  return normalizeSearchText(rawTagName).trim().replace(/^#/, "").replace(/[^a-z0-9.+-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, MAXIMUM_TAG_LENGTH);
+  return normalizeSearchText(rawTagName).trim().replace(/^#/, "").replace(/[^a-z0-9.+-]+/g, "-").slice(0, MAXIMUM_TAG_LENGTH).replace(/^-+|-+$/g, "");
 }
 
 function setFieldError(fieldName, errorMessage) {
@@ -35,7 +35,7 @@ function renderTagChipList() {
   newThreadElements.tagChipList.innerHTML = newThreadState.tags.map((tagName) => `<li class="tag-chip tag-chip--removable">#${escapeHtml(tagName)}<button type="button" data-remove-tag="${escapeHtml(tagName)}" aria-label="Retirer le tag ${escapeHtml(tagName)}">×</button></li>`).join("");
   newThreadElements.tagInput.placeholder = newThreadState.tags.length >= MAXIMUM_TAG_COUNT ? "Maximum atteint" : "Ajouter un tag puis Entrée";
   newThreadElements.tagInput.disabled = newThreadState.tags.length >= MAXIMUM_TAG_COUNT;
-  const suggestedTags = DevAgoraStore.getPopularTags(20).map(({ tagName }) => tagName).filter((tagName) => !newThreadState.tags.includes(tagName)).slice(0, 8);
+  const suggestedTags = DevAgoraStore.getPopularTags(20).map(({ tagName }) => tagName).filter((tagName) => !newThreadState.tags.includes(normalizeTagName(tagName))).slice(0, 8);
   newThreadElements.tagSuggestionList.innerHTML = suggestedTags.map((tagName) => `<li><button type="button" class="tag-button" data-suggest-tag="${escapeHtml(tagName)}">+ ${escapeHtml(tagName)}</button></li>`).join("");
   renderCardPreview();
 }

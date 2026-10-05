@@ -2,6 +2,8 @@
    HighlightForge — monthly / yearly billing switch with animated prices
    ========================================================================== */
 
+const priceAnimationCancellers = new WeakMap();
+
 /* Applies a billing period to every plan card and animates the price change. */
 function applyBillingPeriod(billingPeriod) {
   document.querySelectorAll("[data-plan]").forEach((planElement) => {
@@ -9,9 +11,10 @@ function applyBillingPeriod(billingPeriod) {
     const noteElement = planElement.querySelector("[data-plan-note]");
     const currentAmount = parseFloat(amountElement.textContent) || 0;
     const targetAmount = parseFloat(planElement.dataset[billingPeriod + "Price"]);
-    animateNumericValue(currentAmount, targetAmount, 600, (animatedAmount) => {
+    if (priceAnimationCancellers.has(amountElement)) priceAnimationCancellers.get(amountElement)();
+    priceAnimationCancellers.set(amountElement, animateNumericValue(currentAmount, targetAmount, 600, (animatedAmount) => {
       amountElement.textContent = String(Math.round(animatedAmount));
-    });
+    }));
     noteElement.textContent = noteElement.dataset[billingPeriod + "Note"];
   });
   document.querySelectorAll("[data-billing-label]").forEach((labelElement) => {

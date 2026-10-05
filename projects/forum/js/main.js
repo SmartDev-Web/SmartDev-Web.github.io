@@ -489,12 +489,17 @@ function initMarkdownEditor(editorRootElement, onContentChange) {
 }
 
 /* Theme toggle persisted in localStorage. */
+function getThemeToggleLabel(activeTheme) {
+  return activeTheme === "dark" ? "Activer le thème clair" : "Activer le thème sombre";
+}
+
 function initThemeToggle() {
   document.querySelectorAll("[data-theme-toggle]").forEach((toggleButton) => {
+    toggleButton.setAttribute("aria-label", getThemeToggleLabel(document.documentElement.dataset.theme));
     toggleButton.addEventListener("click", () => {
       const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
       document.documentElement.dataset.theme = nextTheme;
-      toggleButton.setAttribute("aria-label", nextTheme === "dark" ? "Activer le thème clair" : "Activer le thème sombre");
+      toggleButton.setAttribute("aria-label", getThemeToggleLabel(nextTheme));
       try {
         localStorage.setItem("devagora-theme", nextTheme);
       } catch (storageError) {
@@ -509,20 +514,18 @@ function initBurgerMenu() {
   const navigationToggleButton = document.querySelector(".nav-toggle");
   const siteNavigationElement = document.querySelector(".site-nav");
   if (!navigationToggleButton || !siteNavigationElement) return;
-  navigationToggleButton.addEventListener("click", () => {
-    const isOpen = navigationToggleButton.getAttribute("aria-expanded") === "true";
-    navigationToggleButton.setAttribute("aria-expanded", String(!isOpen));
-    siteNavigationElement.classList.toggle("is-open", !isOpen);
-  });
+  function setNavigationOpenState(shouldOpen) {
+    navigationToggleButton.setAttribute("aria-expanded", String(shouldOpen));
+    navigationToggleButton.setAttribute("aria-label", shouldOpen ? "Fermer le menu" : "Ouvrir le menu");
+    siteNavigationElement.classList.toggle("is-open", shouldOpen);
+  }
+  navigationToggleButton.addEventListener("click", () => setNavigationOpenState(navigationToggleButton.getAttribute("aria-expanded") !== "true"));
   siteNavigationElement.addEventListener("click", (clickEvent) => {
-    if (!clickEvent.target.closest("a")) return;
-    navigationToggleButton.setAttribute("aria-expanded", "false");
-    siteNavigationElement.classList.remove("is-open");
+    if (clickEvent.target.closest("a")) setNavigationOpenState(false);
   });
   document.addEventListener("keydown", (keyboardEvent) => {
     if (keyboardEvent.key !== "Escape" || !siteNavigationElement.classList.contains("is-open")) return;
-    navigationToggleButton.setAttribute("aria-expanded", "false");
-    siteNavigationElement.classList.remove("is-open");
+    setNavigationOpenState(false);
     navigationToggleButton.focus();
   });
 }

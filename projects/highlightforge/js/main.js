@@ -96,20 +96,22 @@ function formatFrenchNumber(numericValue, decimalCount = 0) {
   return numericValue.toLocaleString("fr-FR", { minimumFractionDigits: decimalCount, maximumFractionDigits: decimalCount });
 }
 
-/* Animates a numeric value between two numbers using requestAnimationFrame. */
+/* Animates a numeric value between two numbers using requestAnimationFrame and returns a function that cancels it. */
 function animateNumericValue(startValue, endValue, durationInMilliseconds, onFrame) {
   if (isReducedMotionPreferred() || durationInMilliseconds <= 0) {
     onFrame(endValue);
-    return;
+    return () => {};
   }
   const animationStartTime = performance.now();
+  let frameRequestId = 0;
   const renderFrame = (currentTime) => {
-    const progressRatio = Math.min((currentTime - animationStartTime) / durationInMilliseconds, 1);
+    const progressRatio = Math.min(Math.max((currentTime - animationStartTime) / durationInMilliseconds, 0), 1);
     const easedRatio = 1 - Math.pow(1 - progressRatio, 3);
     onFrame(startValue + (endValue - startValue) * easedRatio);
-    if (progressRatio < 1) requestAnimationFrame(renderFrame);
+    if (progressRatio < 1) frameRequestId = requestAnimationFrame(renderFrame);
   };
-  requestAnimationFrame(renderFrame);
+  frameRequestId = requestAnimationFrame(renderFrame);
+  return () => cancelAnimationFrame(frameRequestId);
 }
 
 /* Counts up every [data-counter] element once it becomes visible. */
@@ -172,7 +174,14 @@ function initializeAccordion() {
       const isOpening = !faqItemElement.classList.contains("is-open");
       faqItemElement.classList.toggle("is-open", isOpening);
       questionButtonElement.setAttribute("aria-expanded", String(isOpening));
+      if (!isOpening) {
+        answerElement.style.height = answerElement.scrollHeight + "px";
+        void answerElement.offsetHeight;
+      }
       answerElement.style.height = isOpening ? answerElement.scrollHeight + "px" : "0px";
+    });
+    answerElement.addEventListener("transitionend", (transitionEvent) => {
+      if (transitionEvent.target === answerElement && transitionEvent.propertyName === "height" && faqItemElement.classList.contains("is-open")) answerElement.style.height = "auto";
     });
   });
 }

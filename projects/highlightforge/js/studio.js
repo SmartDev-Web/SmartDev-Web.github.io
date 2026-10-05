@@ -87,6 +87,7 @@ const studioState = {
   exportQueue: [],
   isPreviewPlaying: false,
   previewPositionSeconds: 0,
+  previewFrameRequestId: 0,
   isRendering: false
 };
 
@@ -201,7 +202,7 @@ function sanitizeStoredExportQueue(storedExportQueue) {
     if (!storedItem || typeof storedItem !== "object") return sanitizedQueue;
     const catalogMatch = findCatalogHighlight(storedItem.vodId, storedItem.highlightId);
     const hasValidId = typeof storedItem.queueId === "string" && /^clip-[a-z0-9]{1,16}$/.test(storedItem.queueId) && !usedQueueIds.has(storedItem.queueId);
-    if (!catalogMatch || !hasValidId || !exportFormatCatalog[storedItem.format]) return sanitizedQueue;
+    if (!catalogMatch || !hasValidId || !isKnownExportFormat(storedItem.format)) return sanitizedQueue;
     if (!isValidTrimForHighlight(catalogMatch.vodEntry, catalogMatch.highlightEntry, storedItem.start, storedItem.end)) return sanitizedQueue;
     usedQueueIds.add(storedItem.queueId);
     sanitizedQueue.push(createQueueItem(catalogMatch.vodEntry, catalogMatch.highlightEntry, { start: storedItem.start, end: storedItem.end }, storedItem.format, storedItem.queueId, storedItem.status === "ready" ? "ready" : "queued"));
@@ -225,6 +226,11 @@ function createQueueItem(vodEntry, highlightEntry, clipTrim, exportFormat, queue
   };
 }
 
+/* Returns true when a value is one of the export format keys. */
+function isKnownExportFormat(candidateFormat) {
+  return typeof candidateFormat === "string" && Object.prototype.hasOwnProperty.call(exportFormatCatalog, candidateFormat);
+}
+
 /* Returns true when a value is an allowed position of the sensitivity slider. */
 function isValidMinimumScore(candidateScore) {
   return Number.isInteger(candidateScore) && candidateScore >= MINIMUM_SENSITIVITY_SCORE && candidateScore <= MAXIMUM_SENSITIVITY_SCORE && candidateScore % 5 === 0;
@@ -237,7 +243,7 @@ function restoreStudioState() {
     if (!storedState || typeof storedState !== "object") return;
     if (vodCatalog.some((vodEntry) => vodEntry.id === storedState.selectedVodId)) studioState.selectedVodId = storedState.selectedVodId;
     if (isValidMinimumScore(storedState.minimumScore)) studioState.minimumScore = storedState.minimumScore;
-    if (Object.prototype.hasOwnProperty.call(exportFormatCatalog, storedState.exportFormat)) studioState.exportFormat = storedState.exportFormat;
+    if (isKnownExportFormat(storedState.exportFormat)) studioState.exportFormat = storedState.exportFormat;
     studioState.trimOverrides = sanitizeStoredTrimOverrides(storedState.trimOverrides);
     studioState.exportQueue = sanitizeStoredExportQueue(storedState.exportQueue);
   } catch (storageError) {
@@ -346,7 +352,9 @@ function applyHighlightFilters() {
   selectedVod.highlights.forEach((highlightEntry) => {
     const isVisible = isHighlightVisible(highlightEntry);
     if (isVisible) visibleHighlightCount += 1;
-    studioElements.markerLayer.querySelector(`[data-highlight-id="${highlightEntry.id}"]`).classList.toggle("is-hidden", !isVisible);
+    const markerElement = studioElements.markerLayer.querySelector(`[data-highlight-id="${highlightEntry.id}"]`);
+    markerElement.classList.toggle("is-hidden", !isVisible);
+    markerElement.disabled = !isVisible;
     studioElements.highlightList.querySelector(`[data-list-item="${highlightEntry.id}"]`).hidden = !isVisible;
   });
   studioElements.visibleCount.textContent = `${visibleHighlightCount} / ${selectedVod.highlights.length} affichés`;
@@ -516,34 +524,38 @@ function renderPlayButton() {
     : '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>';
 }
 
-/* Stops the simulated preview playback. */
+/* Stops the simulated preview playback and invalidates its pending animation frame. */
 function stopPreviewPlayback() {
   studioState.isPreviewPlaying = false;
+  cancelAnimationFrame(studioState.previewFrameRequestId);
   renderPlayButton();
 }
 
 /* Starts the simulated preview playback driven by requestAnimationFrame. */
 function startPreviewPlayback() {
-  const selectedHighlight = getSelectedHighlight();
-  if (!selectedHighlight) return;
-  const clipTrim = getHighlightTrim(selectedHighlight);
-  const clipLength = clipTrim.end - clipTrim.start;
-  if (studioState.previewPositionSeconds >= clipLength) studioState.previewPositionSeconds = 0;
+  if (!getSelectedHighlight()) return;
+  const getSelectedClipLength = () => {
+    const clipTrim = getHighlightTrim(getSelectedHighlight());
+    return clipTrim.end - clipTrim.start;
+  };
+  if (studioState.previewPositionSeconds >= getSelectedClipLength()) studioState.previewPositionSeconds = 0;
+  stopPreviewPlayback();
   studioState.isPreviewPlaying = true;
   renderPlayButton();
   let previousFrameTime = performance.now();
   const advancePlayback = (frameTime) => {
-    if (!studioState.isPreviewPlaying) return;
-    studioState.previewPositionSeconds += (frameTime - previousFrameTime) / 1000;
+    if (!studioState.isPreviewPlaying || !getSelectedHighlight()) return;
+    const clipLength = getSelectedClipLength();
+    studioState.previewPositionSeconds += Math.max(frameTime - previousFrameTime, 0) / 1000;
     previousFrameTime = frameTime;
     if (studioState.previewPositionSeconds >= clipLength) {
       studioState.previewPositionSeconds = clipLength;
       stopPreviewPlayback();
     }
     renderPreviewProgress();
-    if (studioState.isPreviewPlaying) requestAnimationFrame(advancePlayback);
+    if (studioState.isPreviewPlaying) studioState.previewFrameRequestId = requestAnimationFrame(advancePlayback);
   };
-  requestAnimationFrame(advancePlayback);
+  studioState.previewFrameRequestId = requestAnimationFrame(advancePlayback);
 }
 
 /* Adds the selected highlight with its current trim and format to the queue. */
@@ -679,7 +691,7 @@ function bindStudioEvents() {
   });
   studioElements.formatInputs.forEach((formatInputElement) => {
     formatInputElement.addEventListener("change", () => {
-      if (!Object.prototype.hasOwnProperty.call(exportFormatCatalog, formatInputElement.value)) return;
+      if (!isKnownExportFormat(formatInputElement.value)) return;
       studioState.exportFormat = formatInputElement.value;
       studioElements.previewScreen.dataset.format = studioState.exportFormat;
       persistStudioState();

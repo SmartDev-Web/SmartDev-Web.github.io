@@ -19,7 +19,7 @@ const categoryPageElements = {
 const requestedCategoryId = getQueryParameter("id");
 const currentCategory = DevAgoraStore.getCategoryById(requestedCategoryId);
 const categoryViewState = {
-  sortMode: sortModeDefinitions[getQueryParameter("tri")] ? getQueryParameter("tri") : "recent",
+  sortMode: Object.prototype.hasOwnProperty.call(sortModeDefinitions, getQueryParameter("tri")) ? getQueryParameter("tri") : "recent",
   currentPage: Math.max(1, parseInt(getQueryParameter("page"), 10) || 1)
 };
 
