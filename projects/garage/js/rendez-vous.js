@@ -19,9 +19,9 @@ const SLOT_TIME_PATTERN = /^\d{2}:\d{2}$/;
 const APPOINTMENT_ID_PATTERN = /^rdv-\d{1,16}$/;
 const QUOTE_RANGE_PATTERN = /^[\d\s\u202f\u00a0]{1,9} – [\d\s\u202f\u00a0]{1,9} €$/;
 
-/* Public holidays (month-day for recurring dates, full ISO dates for movable ones) */
+/* Fixed public holidays as month-day; Easter-based ones are computed per year */
 const RECURRING_PUBLIC_HOLIDAYS = ["01-01", "05-01", "05-08", "07-14", "08-15", "11-01", "11-11", "12-25"];
-const MOVABLE_PUBLIC_HOLIDAYS = ["2026-04-06", "2026-05-14", "2026-05-25", "2027-03-29", "2027-05-06", "2027-05-17"];
+const EASTER_HOLIDAY_OFFSETS_IN_DAYS = [1, 39, 50];
 
 /* Drop-off slots by weekday (0 = Sunday) */
 const DROP_OFF_SLOTS_BY_WEEKDAY = {
@@ -45,13 +45,12 @@ const bookingState = {
 /* Keeps a stored appointment only when every field has the expected shape */
 function sanitizeStoredAppointment(storedAppointment) {
   if (!storedAppointment || typeof storedAppointment !== "object") return null;
-  const { id, dateKey, slotTime, licensePlate, appointmentReason, customerName, loanVehicle, quoteRange } = storedAppointment;
+  const { id, dateKey, slotTime, licensePlate, appointmentReason, loanVehicle, quoteRange } = storedAppointment;
   const hasValidShape = typeof id === "string" && APPOINTMENT_ID_PATTERN.test(id)
     && typeof dateKey === "string" && DATE_KEY_PATTERN.test(dateKey)
     && typeof slotTime === "string" && SLOT_TIME_PATTERN.test(slotTime)
     && typeof licensePlate === "string" && FRENCH_PLATE_PATTERN.test(licensePlate)
-    && APPOINTMENT_REASONS.includes(appointmentReason)
-    && typeof customerName === "string" && customerName.length <= 80;
+    && APPOINTMENT_REASONS.includes(appointmentReason);
   if (!hasValidShape) return null;
   return {
     id,
@@ -59,7 +58,6 @@ function sanitizeStoredAppointment(storedAppointment) {
     slotTime,
     licensePlate,
     appointmentReason,
-    customerName,
     loanVehicle: loanVehicle === true,
     quoteRange: typeof quoteRange === "string" && QUOTE_RANGE_PATTERN.test(quoteRange) ? quoteRange : ""
   };
@@ -114,9 +112,28 @@ function formatSlotTime(slotTime) {
   return slotTime.replace(":", "h");
 }
 
+/* Returns Easter Sunday of a year (anonymous Gregorian algorithm) */
+function computeEasterSunday(yearValue) {
+  const goldenNumber = yearValue % 19;
+  const centuryValue = Math.floor(yearValue / 100);
+  const yearOfCentury = yearValue % 100;
+  const epactValue = (19 * goldenNumber + centuryValue - Math.floor(centuryValue / 4) - Math.floor((centuryValue - Math.floor((centuryValue + 8) / 25) + 1) / 3) + 15) % 30;
+  const weekdayCorrection = (32 + 2 * (centuryValue % 4) + 2 * Math.floor(yearOfCentury / 4) - epactValue - (yearOfCentury % 4)) % 7;
+  const monthCorrection = Math.floor((goldenNumber + 11 * epactValue + 22 * weekdayCorrection) / 451);
+  const monthValue = Math.floor((epactValue + weekdayCorrection - 7 * monthCorrection + 114) / 31);
+  const dayValue = ((epactValue + weekdayCorrection - 7 * monthCorrection + 114) % 31) + 1;
+  return new Date(yearValue, monthValue - 1, dayValue);
+}
+
+/* Easter Monday, Ascension Thursday and Whit Monday of a year as date keys */
+function getMovablePublicHolidays(yearValue) {
+  const easterSunday = computeEasterSunday(yearValue);
+  return EASTER_HOLIDAY_OFFSETS_IN_DAYS.map((dayOffset) => toDateKey(new Date(easterSunday.getFullYear(), easterSunday.getMonth(), easterSunday.getDate() + dayOffset)));
+}
+
 function isPublicHoliday(dateValue) {
   const dateKey = toDateKey(dateValue);
-  return RECURRING_PUBLIC_HOLIDAYS.includes(dateKey.slice(5)) || MOVABLE_PUBLIC_HOLIDAYS.includes(dateKey);
+  return RECURRING_PUBLIC_HOLIDAYS.includes(dateKey.slice(5)) || getMovablePublicHolidays(dateValue.getFullYear()).includes(dateKey);
 }
 
 /* Deterministic pseudo-random occupancy so the planning looks realistic and stable */
@@ -303,13 +320,12 @@ function initializeAppointmentForm() {
       slotTime: bookingState.selectedSlotTime,
       licensePlate: formFields.licensePlate.value,
       appointmentReason: formFields.appointmentReason.value,
-      customerName: formFields.customerName.value.trim().slice(0, 80),
       loanVehicle: formFields.loanVehicle.checked,
       quoteRange: attachedQuoteRange
     };
     bookingState.savedAppointments = [...bookingState.savedAppointments, newAppointment];
     persistSavedAppointments();
-    document.querySelector("[data-appointment-summary]").textContent = `Merci ${newAppointment.customerName}. Nous vous attendons le ${formatLongDate(newAppointment.dateKey)} à ${formatSlotTime(newAppointment.slotTime)} pour votre véhicule ${newAppointment.licensePlate} (${newAppointment.appointmentReason.toLowerCase()}).${newAppointment.loanVehicle ? " Un véhicule de prêt vous sera réservé si disponible." : ""} Un SMS de rappel vous sera envoyé la veille.`;
+    document.querySelector("[data-appointment-summary]").textContent = `Merci ${formFields.customerName.value.trim()}. Nous vous attendons le ${formatLongDate(newAppointment.dateKey)} à ${formatSlotTime(newAppointment.slotTime)} pour votre véhicule ${newAppointment.licensePlate} (${newAppointment.appointmentReason.toLowerCase()}).${newAppointment.loanVehicle ? " Un véhicule de prêt vous sera réservé si disponible." : ""} Un SMS de rappel vous sera envoyé la veille.`;
     bookingState.selectedSlotTime = null;
     renderBookingViews();
     appointmentFormElement.hidden = true;

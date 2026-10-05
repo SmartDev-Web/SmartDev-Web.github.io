@@ -40,6 +40,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -211,6 +215,7 @@ main,
 .btn-primary {
   background: var(--gradient-sunset);
   background-size: 160% 100%;
+  background-origin: border-box;
   color: var(--color-ink);
   box-shadow: 0 10px 30px rgba(255, 61, 139, 0.35);
 }
@@ -1146,9 +1151,10 @@ main,
   position: relative;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.15rem;
+  font-size: clamp(0.95rem, 4.6vw, 1.15rem);
   line-height: 1.1;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
   margin-bottom: 6px;
 }
 
@@ -1223,12 +1229,13 @@ main,
   padding: 16px;
   visibility: hidden;
   opacity: 0;
-  transition: opacity var(--transition-medium), visibility var(--transition-medium);
+  transition: opacity var(--transition-medium), visibility 0s linear 0.45s;
 }
 
 .modal.is-open {
   visibility: visible;
   opacity: 1;
+  transition: opacity var(--transition-medium), visibility 0s;
 }
 
 .modal-backdrop {
@@ -1852,9 +1859,6 @@ main,
 
 .checkbox-field input { accent-color: var(--color-pink); width: 17px; height: 17px; margin-top: 3px; }
 
-.checkout-panel[hidden],
-.checkout-success[hidden] { display: none; }
-
 .checkout-panel { animation: card-pop 0.4s ease both; }
 
 .checkout-success {
@@ -1954,14 +1958,26 @@ main,
 .faq-item.is-open .faq-icon { transform: rotate(135deg); }
 
 .faq-answer {
-  height: 0;
-  overflow: hidden;
-  transition: height var(--transition-medium);
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-medium);
 }
 
+.faq-item.is-open .faq-answer { grid-template-rows: 1fr; }
+
 .faq-answer-inner {
-  padding: 0 22px 22px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 22px;
   color: var(--color-text-muted);
+  visibility: hidden;
+  transition: padding-bottom var(--transition-medium), visibility 0s linear 0.45s;
+}
+
+.faq-item.is-open .faq-answer-inner {
+  padding-bottom: 22px;
+  visibility: visible;
+  transition: padding-bottom var(--transition-medium), visibility 0s;
 }
 
 .faq-categories {
@@ -2165,9 +2181,12 @@ main,
     grid-template-columns: 1fr;
   }
   .poster-sticker {
-    top: 18px;
-    right: 18px;
-    font-size: 0.5rem;
+    top: -44px;
+    right: 2px;
+    width: 94px;
+    padding: 8px;
+    font-size: 0.4rem;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -2184,4 +2203,10 @@ main,
   }
   .reveal { opacity: 1; transform: none; }
   .marquee-track { animation: none !important; }
+  .toast.is-visible { animation: toast-hold 3s step-end both !important; }
+}
+
+@keyframes toast-hold {
+  from { transform: none; }
+  to { transform: translateY(160%); }
 }

@@ -29,7 +29,8 @@ function initializePageTransitions() {
     if (!clickedLinkElement) return;
     const linkHref = clickedLinkElement.getAttribute("href");
     const destinationUrl = new URL(linkHref, window.location.href);
-    const isInternalPageLink = destinationUrl.pathname.endsWith(".html") && !clickedLinkElement.target && !linkHref.startsWith("http") && destinationUrl.protocol === window.location.protocol;
+    const isSameDocumentAnchor = destinationUrl.pathname === window.location.pathname && destinationUrl.search === window.location.search && destinationUrl.hash !== "";
+    const isInternalPageLink = destinationUrl.pathname.endsWith(".html") && !isSameDocumentAnchor && !clickedLinkElement.target && !linkHref.startsWith("http") && destinationUrl.protocol === window.location.protocol;
     if (!isInternalPageLink || clickEvent.metaKey || clickEvent.ctrlKey || clickEvent.shiftKey || clickEvent.button !== 0) return;
     if (prefersReducedMotion) return;
     clickEvent.preventDefault();
@@ -75,6 +76,9 @@ function initializeMobileNavigation() {
       burgerButtonElement.focus();
     }
   });
+  window.matchMedia("(min-width: 981px)").addEventListener("change", (mediaQueryEvent) => {
+    if (mediaQueryEvent.matches) setNavigationOpenState(false);
+  });
 }
 
 /* Reveals elements with the .reveal class when they enter the viewport */
@@ -99,7 +103,7 @@ function animateCounterElement(counterElement) {
   const counterTargetValue = Number(counterElement.dataset.countTarget);
   const counterSuffix = counterElement.dataset.countSuffix || "";
   const counterDurationMilliseconds = 1800;
-  const formatCounterValue = (numericValue) => Math.round(numericValue).toLocaleString("fr-FR") + counterSuffix;
+  const formatCounterValue = (numericValue) => Math.round(numericValue).toLocaleString("fr-FR").replace(/\u202f/g, "\u00a0") + counterSuffix;
   if (prefersReducedMotion) {
     counterElement.textContent = formatCounterValue(counterTargetValue);
     return;

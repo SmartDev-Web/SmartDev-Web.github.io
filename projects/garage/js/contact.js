@@ -41,7 +41,7 @@ function initializeContactForm() {
       return;
     }
     const formFields = contactFormElement.elements;
-    contactSuccessElement.querySelector("[data-contact-summary]").textContent = `Merci ${formFields.contactName.value.trim()}, votre message « ${formFields.contactSubject.value} » a bien été transmis à l'atelier. Nous vous répondons à ${formFields.contactEmail.value.trim()} sous 4 heures ouvrées.`;
+    contactSuccessElement.querySelector("[data-contact-summary]").textContent = `Merci ${formFields.contactName.value.trim()}, votre message «\u00a0${formFields.contactSubject.value}\u00a0» a bien été transmis à l'atelier. Nous vous répondons à ${formFields.contactEmail.value.trim()} sous 4 heures ouvrées.`;
     contactFormElement.hidden = true;
     contactSuccessElement.hidden = false;
     contactSuccessElement.focus();

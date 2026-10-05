@@ -96,6 +96,22 @@ function renderTreatmentList() {
     </li>`).join('');
 }
 
+/* Converts a hh:mm label into minutes after midnight */
+function convertTimeLabelToMinutes(timeLabel) {
+  const [hourPart, minutePart] = timeLabel.split(':').map(Number);
+  return hourPart * 60 + minutePart;
+}
+
+/* True when a time range overlaps one of the visitor's saved appointments on that date */
+function overlapsSavedSpaBooking(dateString, startMinutes, durationMinutes) {
+  return loadSpaBookings().some((spaBooking) => {
+    if (spaBooking.date !== dateString) return false;
+    const bookedStartMinutes = convertTimeLabelToMinutes(spaBooking.time);
+    const bookedEndMinutes = bookedStartMinutes + findSpaTreatmentById(spaBooking.treatmentId).duration;
+    return startMinutes < bookedEndMinutes && bookedStartMinutes < startMinutes + durationMinutes;
+  });
+}
+
 /* Generates bookable start times for a date, given the treatment duration */
 function getSpaSlotsForDate(dateString, durationMinutes) {
   const firstStartMinutes = 9 * 60 + 30;
@@ -104,7 +120,7 @@ function getSpaSlotsForDate(dateString, durationMinutes) {
   for (let startMinutes = firstStartMinutes; startMinutes + durationMinutes <= lastEndMinutes; startMinutes += 30) {
     const timeLabel = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
     const seedValue = Array.from(`${dateString}${timeLabel}${spaState.selectedTreatment.id}`).reduce((accumulatedHash, character) => (accumulatedHash * 33 + character.charCodeAt(0)) % 7919, 11);
-    generatedSlots.push({ timeLabel, isTaken: seedValue % 100 < 30 });
+    generatedSlots.push({ timeLabel, isTaken: seedValue % 100 < 30 || overlapsSavedSpaBooking(dateString, startMinutes, durationMinutes) });
   }
   return generatedSlots;
 }
@@ -244,7 +260,7 @@ spaBookingFormElement.addEventListener('submit', (submitEvent) => {
   };
   const visitorFirstName = String(spaBookingFormData.get('name')).trim().split(/\s+/)[0];
   persistSpaBookings([...loadSpaBookings(), spaBooking]);
-  document.querySelector('[data-spa-success-text]').textContent = `${visitorFirstName}, nous vous attendons le ${formatSpaAppointment(spaBooking.date, spaBooking.time)} pour votre soin « ${spaState.selectedTreatment.name} ». Pensez à arriver 20 minutes en avance.`;
+  document.querySelector('[data-spa-success-text]').textContent = `${visitorFirstName}, nous vous attendons le ${formatSpaAppointment(spaBooking.date, spaBooking.time)} pour votre soin «\u00a0${spaState.selectedTreatment.name}\u00a0». Pensez à arriver 20 minutes en avance.`;
   spaBookingFormElement.hidden = true;
   spaSuccessElement.hidden = false;
   spaSuccessElement.focus();

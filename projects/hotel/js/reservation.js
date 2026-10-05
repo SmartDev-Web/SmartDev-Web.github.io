@@ -133,9 +133,9 @@ function renderRoomOptions() {
     return `<label class="room-option">
       <input type="radio" name="room" value="${escapeHtml(hotelRoom.id)}"${hotelRoom.id === stayState.roomId ? ' checked' : ''}${isTooSmall ? ' disabled' : ''}>
       <span class="room-option__card">
-        <img src="${escapeHtml(buildRoomImageUrl(hotelRoom.imageId, 240))}" alt="" width="240" height="180" loading="lazy">
+        <img src="${escapeHtml(buildRoomImageUrl(hotelRoom.imageId, 240))}" alt="" width="240" height="180" loading="lazy" decoding="async">
         <span><span class="room-option__name">${escapeHtml(hotelRoom.name)}</span><span class="room-option__info">${hotelRoom.surface} m² · ${escapeHtml(isTooSmall ? `max. ${hotelRoom.capacity} personnes` : hotelRoom.view)}</span></span>
-        <span class="room-option__price">dès<strong>${formatEuroAmount(hotelRoom.nightlyRate)}</strong>/ nuit</span>
+        <span class="room-option__price">dès <strong>${formatEuroAmount(hotelRoom.nightlyRate)}</strong> / nuit</span>
       </span>
     </label>`;
   }).join('');

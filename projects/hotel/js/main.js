@@ -87,20 +87,25 @@ function initializeScrollReveal() {
   registerRevealElements(document.querySelectorAll('[data-reveal]'));
 }
 
+/* Formats a counter value with a regular no-break space as thousands separator, which every web font provides */
+function formatCounterNumber(numericValue) {
+  return Math.round(numericValue).toLocaleString('fr-FR').replace(/\u202f/g, '\u00a0');
+}
+
 /* Animates numeric counters from zero to their target value when visible */
 function animateCounterElement(counterElement) {
   const counterTargetValue = Number(counterElement.dataset.counterTarget);
   const counterSuffix = counterElement.dataset.counterSuffix || '';
   const animationDurationMs = 1800;
   if (prefersReducedMotionQuery.matches) {
-    counterElement.textContent = counterTargetValue.toLocaleString('fr-FR') + counterSuffix;
+    counterElement.textContent = formatCounterNumber(counterTargetValue) + counterSuffix;
     return;
   }
   const animationStartTime = performance.now();
   const renderCounterFrame = (currentTime) => {
     const progressRatio = Math.min((currentTime - animationStartTime) / animationDurationMs, 1);
     const easedProgress = 1 - Math.pow(1 - progressRatio, 3);
-    counterElement.textContent = Math.round(counterTargetValue * easedProgress).toLocaleString('fr-FR') + counterSuffix;
+    counterElement.textContent = formatCounterNumber(counterTargetValue * easedProgress) + counterSuffix;
     if (progressRatio < 1) requestAnimationFrame(renderCounterFrame);
   };
   requestAnimationFrame(renderCounterFrame);

@@ -130,6 +130,20 @@ function renderProgramme() {
   renderPlanningView();
 }
 
+/* Moves the selection between the tabs of a tablist with the arrow, Home and End keys. */
+function handleTablistKeyboardNavigation(keyboardEvent) {
+  const currentTabElement = keyboardEvent.target.closest ? keyboardEvent.target.closest('[role="tab"]') : null;
+  if (!currentTabElement) return;
+  const tablistElement = currentTabElement.closest('[role="tablist"]');
+  const tabElements = Array.from(tablistElement.querySelectorAll('[role="tab"]'));
+  const currentTabIndex = tabElements.indexOf(currentTabElement);
+  const targetIndexByKey = { ArrowRight: currentTabIndex + 1, ArrowLeft: currentTabIndex - 1, Home: 0, End: tabElements.length - 1 };
+  if (!Object.prototype.hasOwnProperty.call(targetIndexByKey, keyboardEvent.key)) return;
+  keyboardEvent.preventDefault();
+  tabElements[(targetIndexByKey[keyboardEvent.key] + tabElements.length) % tabElements.length].click();
+  tablistElement.querySelector('[role="tab"][aria-selected="true"]').focus();
+}
+
 /* Registers click and keyboard interactions of the programme page. */
 function bindProgrammeEvents() {
   document.addEventListener("click", (clickEvent) => {
@@ -157,9 +171,13 @@ function bindProgrammeEvents() {
     navigator.clipboard.writeText(getPlanningAsText()).then(() => showToastMessage("Planning copié, prêt à partager !"), () => showToastMessage("Impossible de copier le planning"));
   });
   document.addEventListener("planning:change", () => {
+    const focusedFavoriteId = document.activeElement ? document.activeElement.dataset.toggleFavorite : undefined;
     renderTimetable();
     renderPlanningView();
+    const replacementToggleElement = focusedFavoriteId ? document.querySelector(`[data-timetable] [data-toggle-favorite="${focusedFavoriteId}"]`) : null;
+    if (replacementToggleElement) replacementToggleElement.focus();
   });
+  document.addEventListener("keydown", handleTablistKeyboardNavigation);
   window.addEventListener("hashchange", () => setProgrammeView(window.location.hash === "#mon-planning" ? "planning" : "grid"));
 }
 

@@ -110,12 +110,14 @@ function readPreselectedServiceId() {
   return matchingService ? matchingService.id : null;
 }
 
-/* Announces the service carried over from the services page */
-function renderPreselectedServiceNotice() {
+/* Announces the service carried over from the services page, warning when the chosen vehicle type excludes it */
+function renderPreselectedServiceNotice(vehicleTypeDefinition = null) {
   const preselectionElement = document.querySelector("[data-preselected-service]");
   const preselectedService = QUOTE_SERVICE_DEFINITIONS.find((serviceDefinition) => serviceDefinition.id === estimatorState.preselectedServiceId);
   preselectionElement.hidden = !preselectedService;
-  if (preselectedService) preselectionElement.textContent = `Prestation pré-sélectionnée : ${preselectedService.label}`;
+  if (!preselectedService) return;
+  const isExcludedForVehicle = Boolean(vehicleTypeDefinition) && preselectedService.excludedVehicleTypes.includes(vehicleTypeDefinition.id);
+  preselectionElement.textContent = isExcludedForVehicle ? `Prestation pré-sélectionnée : ${preselectedService.label} (non applicable au type «\u00a0${vehicleTypeDefinition.label}\u00a0»)` : `Prestation pré-sélectionnée : ${preselectedService.label}`;
 }
 
 /* Builds the vehicle type tiles */
@@ -157,6 +159,7 @@ function renderServiceOptions() {
   const previouslyCheckedIds = quoteSelection.selectedServices.map((serviceDefinition) => serviceDefinition.id);
   if (estimatorState.preselectedServiceId) {
     previouslyCheckedIds.push(estimatorState.preselectedServiceId);
+    renderPreselectedServiceNotice(quoteSelection.vehicleType);
     estimatorState.preselectedServiceId = null;
   }
   const vehicleTypeId = quoteSelection.vehicleType ? quoteSelection.vehicleType.id : "";

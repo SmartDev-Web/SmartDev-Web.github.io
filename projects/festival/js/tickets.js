@@ -29,7 +29,7 @@ const ticketCatalog = [
     items: [
       { id: "option-parking", name: "Parking voiture 3 jours", description: "Une place par véhicule sur le parking P2, à 400 m de l'entrée.", price: 25, isTicket: false },
       { id: "option-navette-aeroport", name: "Navette aéroport Saint-Exupéry", description: "Aller-retour entre l'aéroport et le site, horaires calés sur les vols.", price: 24, isTicket: false },
-      { id: "option-tente", name: "Tente pré-montée 2 places", description: "Tente montée à votre arrivée dans l'espace « Camp Lumière », pour la durée du séjour.", price: 90, isTicket: false, requiredItemId: "pass-camping", requirementMessage: "Ajoutez d'abord un pass 3 jours + camping : une tente par pass camping." },
+      { id: "option-tente", name: "Tente pré-montée 2 places", description: "Tente montée à votre arrivée dans l'espace «\u00a0Camp Lumière\u00a0», pour la durée du séjour.", price: 90, isTicket: false, requiredItemId: "pass-camping", requirementMessage: "Ajoutez d'abord un pass 3 jours + camping : une tente par pass camping." },
       { id: "option-kit", name: "Kit confort festivalier", description: "Poncho, bouchons d'oreilles, gourde Echoes et tote bag en coton bio.", price: 12, isTicket: false }
     ]
   }
@@ -167,7 +167,8 @@ function renderCart() {
   document.querySelector("[data-total-discount]").textContent = "−" + formatEuroAmount(cartTotals.discountAmount);
   if (cartTotals.isPromoApplicable) document.querySelector("[data-discount-label]").textContent = promoCodeCatalog[ticketState.promoCode].label;
   animateAmountElement(document.querySelector("[data-total-amount]"), cartTotals.totalAmount);
-  document.querySelector("[data-open-checkout]").disabled = cartTotals.cartLines.length === 0 || !cartTotals.cartLines.some((cartLine) => cartLine.ticketItem.isTicket);
+  document.querySelector("[data-open-checkout]").disabled = !isCartCheckoutReady(cartTotals);
+  if (!isCartCheckoutReady(cartTotals) && !document.querySelector("[data-checkout-form]").hidden) showOrderPanel("cart");
   document.querySelector("[data-checkout-total]").textContent = formatEuroAmount(cartTotals.totalAmount);
   document.querySelector("[data-pay-button]").textContent = "Payer " + formatEuroAmount(cartTotals.totalAmount);
   renderPromoMessage(cartTotals);
@@ -178,8 +179,9 @@ function renderPromoMessage(cartTotals) {
   const promoMessageElement = document.querySelector("[data-promo-message]");
   if (!ticketState.promoCode) return;
   const activePromo = promoCodeCatalog[ticketState.promoCode];
+  const pendingPromoMessage = cartTotals.subtotalAmount > 0 ? `Le code ${ticketState.promoCode} s'applique dès ${formatEuroAmount(activePromo.minimumSubtotal)} d'achat.` : `Le code ${ticketState.promoCode} sera appliqué dès que votre panier contiendra un article.`;
   promoMessageElement.className = "promo-message " + (cartTotals.isPromoApplicable ? "is-success" : "is-error");
-  promoMessageElement.textContent = cartTotals.isPromoApplicable ? `✔ ${activePromo.label} appliqué` : `Le code ${ticketState.promoCode} s'applique dès ${formatEuroAmount(activePromo.minimumSubtotal)} d'achat.`;
+  promoMessageElement.textContent = cartTotals.isPromoApplicable ? `✔ ${activePromo.label} appliqué` : pendingPromoMessage;
 }
 
 /* Changes the quantity of a ticket item by a step value. */
@@ -193,6 +195,7 @@ function changeTicketQuantity(ticketId, stepValue) {
   if (nextQuantity === 0) delete ticketState.quantities[ticketId];
   const adjustedItemNames = enforceCartDependencies();
   if (adjustedItemNames.length) showToastMessage(`${adjustedItemNames.join(", ")} : quantité ajustée au nombre de pass camping`);
+  if (!document.querySelector("[data-checkout-success]").hidden) showOrderPanel("cart");
   persistCart();
   renderCart();
   const quantityOutputElement = document.querySelector(`[data-quantity-output="${ticketId}"]`);
@@ -222,6 +225,11 @@ function showOrderPanel(panelName) {
   document.querySelector("[data-cart-panel]").hidden = panelName !== "cart";
   document.querySelector("[data-checkout-form]").hidden = panelName !== "checkout";
   document.querySelector("[data-checkout-success]").hidden = panelName !== "success";
+}
+
+/* Returns true when the cart holds at least one ticket, the condition to open or submit the checkout. */
+function isCartCheckoutReady(cartTotals) {
+  return cartTotals.cartLines.some((cartLine) => cartLine.ticketItem.isTicket);
 }
 
 /* Completes the fake order, clears the cart and shows the confirmation. */
@@ -255,7 +263,7 @@ function bindTicketEvents() {
     const enteredCode = promoInputElement.value.trim().toUpperCase();
     if (!isKnownPromoCode(enteredCode)) {
       promoMessageElement.className = "promo-message is-error";
-      promoMessageElement.textContent = enteredCode ? `Le code « ${enteredCode} » n'est pas valide.` : "Saisissez un code promo.";
+      promoMessageElement.textContent = enteredCode ? `Le code «\u00a0${enteredCode}\u00a0» n'est pas valide.` : "Saisissez un code promo.";
       return;
     }
     ticketState.promoCode = enteredCode;
@@ -281,6 +289,11 @@ function bindTicketEvents() {
       renderCart();
       showOrderPanel("cart");
       showToastMessage("Votre commande a été ajustée : une tente pré-montée nécessite un pass camping.");
+      return;
+    }
+    if (!isCartCheckoutReady(computeCartTotals())) {
+      showOrderPanel("cart");
+      showToastMessage("Ajoutez au moins un billet avant de payer.");
       return;
     }
     const validationResults = Array.from(checkoutFields).map(validateCheckoutField);

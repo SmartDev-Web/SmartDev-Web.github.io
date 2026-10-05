@@ -948,6 +948,12 @@ p {
   line-height: 1.1;
 }
 
+@media (max-width: 1250px) {
+  .split__badge {
+    left: -12px;
+  }
+}
+
 @media (max-width: 860px) {
   .split {
     grid-template-columns: 1fr;

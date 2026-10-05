@@ -34,8 +34,13 @@ function initializeBurgerMenu() {
   burgerButtonElement.addEventListener("click", () => {
     setMenuOpenState(burgerButtonElement.getAttribute("aria-expanded") !== "true");
   });
+  mainNavigationElement.addEventListener("click", (clickEvent) => {
+    if (clickEvent.target.closest("a")) setMenuOpenState(false);
+  });
   document.addEventListener("keydown", (keyboardEvent) => {
-    if (keyboardEvent.key === "Escape") setMenuOpenState(false);
+    if (keyboardEvent.key !== "Escape" || !mainNavigationElement.classList.contains("is-open")) return;
+    setMenuOpenState(false);
+    burgerButtonElement.focus();
   });
   window.matchMedia("(min-width: 961px)").addEventListener("change", (mediaEvent) => {
     if (mediaEvent.matches) setMenuOpenState(false);
@@ -154,16 +159,14 @@ function showToastMessage(messageText) {
   toastElement.classList.add("is-visible");
 }
 
-/* Wires the expandable FAQ accordion with animated height. */
+/* Wires the expandable FAQ accordion; the CSS grid rows animate the height. */
 function initializeAccordion() {
   document.querySelectorAll("[data-faq-item]").forEach((faqItemElement) => {
     const questionButtonElement = faqItemElement.querySelector("[data-faq-question]");
-    const answerElement = faqItemElement.querySelector("[data-faq-answer]");
     questionButtonElement.addEventListener("click", () => {
       const isOpening = !faqItemElement.classList.contains("is-open");
       faqItemElement.classList.toggle("is-open", isOpening);
       questionButtonElement.setAttribute("aria-expanded", String(isOpening));
-      answerElement.style.height = isOpening ? answerElement.scrollHeight + "px" : "0px";
     });
   });
 }
@@ -179,12 +182,22 @@ function openModal(modalElement) {
   modalElement.querySelector("button[data-modal-close]").focus();
 }
 
+/* Returns the trigger to focus after closing a modal, or its re-rendered equivalent when it was replaced meanwhile. */
+function getModalReturnFocusElement() {
+  const lastFocusedElement = modalState.lastFocusedElement;
+  if (!lastFocusedElement || lastFocusedElement.isConnected) return lastFocusedElement;
+  const openedArtistId = lastFocusedElement.dataset ? lastFocusedElement.dataset.openArtist : undefined;
+  return openedArtistId ? document.querySelector(`[data-open-artist="${openedArtistId}"]`) : null;
+}
+
 /* Closes a modal dialog and restores focus to its trigger. */
 function closeModal(modalElement) {
+  if (!modalElement.classList.contains("is-open")) return;
   modalElement.classList.remove("is-open");
   modalElement.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
-  if (modalState.lastFocusedElement) modalState.lastFocusedElement.focus();
+  const returnFocusElement = getModalReturnFocusElement();
+  if (returnFocusElement) returnFocusElement.focus();
 }
 
 /* Wires closing behaviours (button, backdrop, Escape, focus trap) for every modal. */

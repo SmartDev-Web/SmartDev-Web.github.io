@@ -2396,8 +2396,8 @@ textarea {
 
 .calendar__grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(3px, 1.2vw, 6px);
 }
 
 .calendar__weekday {
@@ -2413,7 +2413,7 @@ textarea {
 .calendar__day {
   position: relative;
   aspect-ratio: 1;
-  min-height: 40px;
+  min-height: 36px;
   display: grid;
   place-items: center;
   border-radius: var(--radius-medium);
@@ -2865,7 +2865,11 @@ textarea {
     transform: none;
   }
   .toast.is-visible {
-    animation: none;
-    transform: translate(-50%, 0);
+    animation: toast-hold 3.6s step-end forwards !important;
   }
+}
+
+@keyframes toast-hold {
+  from { transform: translate(-50%, 0); }
+  to { transform: translate(-50%, 180%); }
 }
