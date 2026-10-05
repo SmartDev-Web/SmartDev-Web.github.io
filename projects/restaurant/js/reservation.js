@@ -126,9 +126,10 @@ function renderTimeSlots() {
     slotGridElement.setAttribute('role', 'radiogroup');
     slotGridElement.setAttribute('aria-label', `Créneaux du ${dayService.label.toLowerCase()}`);
     dayService.times.forEach((timeLabel) => {
-      const isUnavailable = isTimeSlotFullyBooked(reservationState.selectedDate, timeLabel) || isTimeSlotInPast(reservationState.selectedDate, timeLabel);
+      const isPastSlot = isTimeSlotInPast(reservationState.selectedDate, timeLabel);
+      const isUnavailable = isPastSlot || isTimeSlotFullyBooked(reservationState.selectedDate, timeLabel);
       const slotLabelElement = createTimeSlotElement(dayService.label, timeLabel, isUnavailable, slotRenderIndex);
-      if (isUnavailable) slotLabelElement.title = 'Complet';
+      if (isUnavailable) slotLabelElement.title = isPastSlot ? 'Créneau trop proche ou passé' : 'Complet';
       else availableSlotCount += 1;
       slotRenderIndex += 1;
       slotGridElement.appendChild(slotLabelElement);

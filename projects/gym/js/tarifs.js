@@ -13,8 +13,11 @@ function formatEuroAmount(numericAmount) {
   return numericAmount.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-/* Tweens a numeric text value between two amounts using requestAnimationFrame */
+const runningTweenFrameIds = new WeakMap();
+
+/* Tweens a numeric text value between two amounts using requestAnimationFrame, replacing any tween running on the same element */
 function animateNumericText(targetElement, startValue, endValue, formatValue) {
+  cancelAnimationFrame(runningTweenFrameIds.get(targetElement));
   if (prefersReducedMotion || startValue === endValue) {
     targetElement.textContent = formatValue(endValue);
     return;
@@ -26,9 +29,9 @@ function animateNumericText(targetElement, startValue, endValue, formatValue) {
     const tweenProgress = Math.min((frameTimestamp - tweenStartTimestamp) / tweenDurationMilliseconds, 1);
     const easedProgress = 1 - Math.pow(1 - tweenProgress, 3);
     targetElement.textContent = formatValue(startValue + (endValue - startValue) * easedProgress);
-    if (tweenProgress < 1) requestAnimationFrame(renderTweenFrame);
+    if (tweenProgress < 1) runningTweenFrameIds.set(targetElement, requestAnimationFrame(renderTweenFrame));
   };
-  requestAnimationFrame(renderTweenFrame);
+  runningTweenFrameIds.set(targetElement, requestAnimationFrame(renderTweenFrame));
 }
 
 /* Applies the selected billing period to every plan card */
@@ -59,6 +62,10 @@ function validateNumericInput(numericInputElement, fieldLabel) {
   const numericValue = Number(numericInputElement.value.replace(",", "."));
   const minimumValue = Number(numericInputElement.min);
   const maximumValue = Number(numericInputElement.max);
+  if (numericInputElement.validity.badInput) {
+    setFieldErrorState(numericInputElement, `Valeur entre ${minimumValue} et ${maximumValue}.`);
+    return null;
+  }
   if (!numericInputElement.value.trim()) {
     setFieldErrorState(numericInputElement, `Indiquez votre ${fieldLabel}.`);
     return null;

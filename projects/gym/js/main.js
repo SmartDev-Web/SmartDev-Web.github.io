@@ -24,7 +24,7 @@ function initializePageTransitions() {
     if (!clickedLinkElement) return;
     const linkHref = clickedLinkElement.getAttribute("href");
     const isInternalPageLink = linkHref.endsWith(".html") && !clickedLinkElement.target && !linkHref.startsWith("http");
-    if (!isInternalPageLink || clickEvent.metaKey || clickEvent.ctrlKey || clickEvent.shiftKey || clickEvent.button !== 0) return;
+    if (!isInternalPageLink || clickEvent.defaultPrevented || clickEvent.metaKey || clickEvent.ctrlKey || clickEvent.shiftKey || clickEvent.altKey || clickEvent.button !== 0) return;
     if (prefersReducedMotion) return;
     clickEvent.preventDefault();
     const navigateToTarget = (transitionEndEvent) => {
@@ -69,6 +69,7 @@ function initializeMobileNavigation() {
       burgerButtonElement.focus();
     }
   });
+  window.matchMedia("(min-width: 1101px)").addEventListener("change", () => setNavigationOpenState(false));
 }
 
 /* Reveals elements with the .reveal class when they enter the viewport */
@@ -170,30 +171,34 @@ function initializeSliders() {
   });
 }
 
-/* Displays a short status message; its CSS animation handles entry, hold and exit */
+/* Displays a short status message above any open modal; its CSS animation handles entry, hold and exit */
 function showToastMessage(messageText) {
+  const toastHostElement = document.querySelector("dialog[open]") || document.body;
   let toastElement = document.querySelector(".toast");
   if (!toastElement) {
     toastElement = document.createElement("div");
     toastElement.className = "toast";
     toastElement.setAttribute("role", "status");
     toastElement.setAttribute("aria-live", "polite");
-    document.body.appendChild(toastElement);
     toastElement.addEventListener("animationend", () => toastElement.classList.remove("is-visible"));
   }
+  if (toastElement.parentElement !== toastHostElement) toastHostElement.appendChild(toastElement);
   toastElement.textContent = messageText;
   toastElement.classList.remove("is-visible");
   void toastElement.offsetWidth;
   toastElement.classList.add("is-visible");
 }
 
-/* Shows or clears the error message attached to a form field */
+/* Shows or clears the error message attached to a form field and links it to the field for assistive technologies */
 function setFieldErrorState(fieldInputElement, errorMessageText) {
   const fieldWrapperElement = fieldInputElement.closest(".form-field, .checkbox-field");
   const fieldErrorElement = fieldWrapperElement ? fieldWrapperElement.querySelector(".form-field__error") : null;
   if (fieldWrapperElement) fieldWrapperElement.classList.toggle("has-error", Boolean(errorMessageText));
   fieldInputElement.setAttribute("aria-invalid", errorMessageText ? "true" : "false");
-  if (fieldErrorElement) fieldErrorElement.textContent = errorMessageText || "";
+  if (!fieldErrorElement) return;
+  if (!fieldErrorElement.id) fieldErrorElement.id = `${fieldInputElement.id || fieldInputElement.name}-erreur`;
+  fieldInputElement.setAttribute("aria-describedby", fieldErrorElement.id);
+  fieldErrorElement.textContent = errorMessageText || "";
 }
 
 /* Clears a field error as soon as the user edits it, unless the field validates itself live */

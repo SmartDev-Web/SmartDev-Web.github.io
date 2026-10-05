@@ -1,11 +1,13 @@
 /* ==========================================================================
    IronPulse — weekly class schedule
-   Renders the schedule grid, applies filters, handles bookings persisted
-   in localStorage and the "Mes réservations" drawer
+   Renders the next seven days of classes, applies filters, handles bookings
+   persisted in localStorage and the "Mes réservations" drawer
    ========================================================================== */
 
 const BOOKINGS_STORAGE_KEY = "ironpulse-class-bookings";
 const MAXIMUM_SIMULTANEOUS_BOOKINGS = 6;
+const BOOKING_CLOSING_DELAY_MILLISECONDS = 2 * 60 * 60 * 1000;
+const UPCOMING_DAY_COUNT = 7;
 const WEEK_DAY_NAMES = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 const INTENSITY_LABELS = { 1: "Douce", 2: "Modérée", 3: "Intense" };
 
@@ -58,34 +60,70 @@ const weeklyClasses = WEEKLY_CLASS_ROWS.map((classRow, classIndex) => {
   return { id: `cours-${dayIndex}-${startTime.replace(":", "")}-${classIndex}`, dayIndex, startTime, durationMinutes, classType, className, coachName, intensityLevel, capacity, takenPlaces, roomName };
 });
 
-const planningState = { activeTypeFilter: "all", activeIntensityFilter: "all", bookedClassIds: loadBookedClassIds(), selectedClassId: null };
-
-/* Reads the booked class identifiers from localStorage, ignoring unknown entries */
-function loadBookedClassIds() {
-  try {
-    const storedValue = JSON.parse(localStorage.getItem(BOOKINGS_STORAGE_KEY) || "[]");
-    const knownClassIds = new Set(WEEKLY_CLASS_ROWS.map((classRow, classIndex) => `cours-${classRow[0]}-${classRow[1].replace(":", "")}-${classIndex}`));
-    return Array.isArray(storedValue) ? storedValue.filter((classId) => knownClassIds.has(classId)) : [];
-  } catch (storageError) {
-    return [];
-  }
+function formatDateKey(dateValue) {
+  return `${dateValue.getFullYear()}-${String(dateValue.getMonth() + 1).padStart(2, "0")}-${String(dateValue.getDate()).padStart(2, "0")}`;
 }
 
-/* Persists the booked class identifiers */
-function saveBookedClassIds() {
-  try {
-    localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(planningState.bookedClassIds));
-  } catch (storageError) {
-    showToastMessage("Impossible d'enregistrer la réservation sur cet appareil.");
-  }
+/* Returns the Monday-based index of a date */
+function getMondayBasedDayIndex(dateValue) {
+  return (dateValue.getDay() + 6) % 7;
+}
+
+/* Lists the bookable days, starting today: [{ dayIndex, date, dateKey }] */
+function getUpcomingDays() {
+  return Array.from({ length: UPCOMING_DAY_COUNT }, (unusedValue, dayOffset) => {
+    const dayDate = new Date();
+    dayDate.setHours(0, 0, 0, 0);
+    dayDate.setDate(dayDate.getDate() + dayOffset);
+    return { dayIndex: getMondayBasedDayIndex(dayDate), date: dayDate, dateKey: formatDateKey(dayDate) };
+  });
+}
+
+/* Returns the date of the next occurrence of a weekly class within the bookable window */
+function getClassOccurrenceDate(weeklyClass) {
+  return getUpcomingDays().find((upcomingDay) => upcomingDay.dayIndex === weeklyClass.dayIndex).date;
+}
+
+/* Bookings and cancellations close two hours before the class starts */
+function isClassBookingClosed(weeklyClass) {
+  const [startHours, startMinutes] = weeklyClass.startTime.split(":").map(Number);
+  const classStartDate = new Date(getClassOccurrenceDate(weeklyClass));
+  classStartDate.setHours(startHours, startMinutes, 0, 0);
+  return classStartDate.getTime() - Date.now() < BOOKING_CLOSING_DELAY_MILLISECONDS;
 }
 
 function findClassById(classId) {
   return weeklyClasses.find((weeklyClass) => weeklyClass.id === classId);
 }
 
+/* Reads stored bookings, keeping only known classes whose booked occurrence is still upcoming */
+function loadStoredBookings() {
+  try {
+    const storedValue = JSON.parse(localStorage.getItem(BOOKINGS_STORAGE_KEY) || "[]");
+    if (!Array.isArray(storedValue)) return [];
+    const validBookings = storedValue.filter((storedBooking) => {
+      const bookedClass = storedBooking && typeof storedBooking.classId === "string" ? findClassById(storedBooking.classId) : null;
+      return Boolean(bookedClass) && storedBooking.dateKey === formatDateKey(getClassOccurrenceDate(bookedClass));
+    });
+    return validBookings.slice(0, MAXIMUM_SIMULTANEOUS_BOOKINGS).map((validBooking) => ({ classId: validBooking.classId, dateKey: validBooking.dateKey }));
+  } catch (storageError) {
+    return [];
+  }
+}
+
+const planningState = { activeTypeFilter: "all", activeIntensityFilter: "all", bookings: loadStoredBookings(), selectedClassId: null };
+
+/* Persists the bookings (class identifier and occurrence date only) */
+function saveBookings() {
+  try {
+    localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(planningState.bookings));
+  } catch (storageError) {
+    showToastMessage("Impossible d'enregistrer la réservation sur cet appareil.");
+  }
+}
+
 function isClassBooked(classId) {
-  return planningState.bookedClassIds.includes(classId);
+  return planningState.bookings.some((booking) => booking.classId === classId);
 }
 
 /* Remaining places take the member's own booking into account */
@@ -120,29 +158,25 @@ function matchesActiveFilters(weeklyClass) {
   return matchesType && matchesIntensity;
 }
 
-/* Returns the Monday-based index of the current day */
-function getTodayDayIndex() {
-  return (new Date().getDay() + 6) % 7;
+/* Formats a class occurrence as « lundi 5 octobre » */
+function formatOccurrenceDate(weeklyClass) {
+  return new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" }).format(getClassOccurrenceDate(weeklyClass));
 }
 
-/* Writes the current week date range into the toolbar title */
+/* Writes the bookable date range into the toolbar title */
 function renderWeekLabel() {
-  const weekLabelElement = document.querySelector("[data-week-label]");
-  const todayDate = new Date();
-  const mondayDate = new Date(todayDate);
-  mondayDate.setDate(todayDate.getDate() - getTodayDayIndex());
-  const sundayDate = new Date(mondayDate);
-  sundayDate.setDate(mondayDate.getDate() + 6);
+  const upcomingDays = getUpcomingDays();
   const dateFormatter = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long" });
-  weekLabelElement.textContent = `Semaine du ${dateFormatter.format(mondayDate)} au ${dateFormatter.format(sundayDate)}`;
+  document.querySelector("[data-week-label]").textContent = `Du ${dateFormatter.format(upcomingDays[0].date)} au ${dateFormatter.format(upcomingDays[upcomingDays.length - 1].date)}`;
 }
 
 /* Renders the full schedule grid from the current state */
 function renderScheduleGrid() {
   const scheduleGridElement = document.querySelector("[data-schedule-grid]");
-  const todayDayIndex = getTodayDayIndex();
+  const shortDateFormatter = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short" });
   let visibleClassCount = 0;
-  scheduleGridElement.innerHTML = WEEK_DAY_NAMES.map((dayName, dayIndex) => {
+  scheduleGridElement.innerHTML = getUpcomingDays().map(({ dayIndex, date }, dayOffset) => {
+    const dayName = WEEK_DAY_NAMES[dayIndex];
     const dayClasses = weeklyClasses.filter((weeklyClass) => weeklyClass.dayIndex === dayIndex && matchesActiveFilters(weeklyClass));
     visibleClassCount += dayClasses.length;
     const classSlotsMarkup = dayClasses.map((weeklyClass, slotPosition) => {
@@ -150,18 +184,20 @@ function renderScheduleGrid() {
       const placesDescription = describeRemainingPlaces(remainingPlaces);
       const typeDefinition = CLASS_TYPE_DEFINITIONS[weeklyClass.classType];
       const isBooked = isClassBooked(weeklyClass.id);
-      const slotClassNames = ["class-slot", isBooked ? "is-booked" : "", remainingPlaces === 0 && !isBooked ? "is-full" : ""].join(" ").trim();
+      const isClosed = isClassBookingClosed(weeklyClass);
+      const statusText = isBooked ? "Réservé" : isClosed ? "Clos" : placesDescription.text;
+      const slotClassNames = ["class-slot", isBooked ? "is-booked" : "", (remainingPlaces === 0 || isClosed) && !isBooked ? "is-full" : ""].join(" ").trim();
       const bookedBadgeMarkup = isBooked ? `<span class="class-slot__badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span>` : "";
-      return `<button type="button" class="${slotClassNames}" style="--slot-color:${typeDefinition.color};animation-delay:${slotPosition * 60}ms" data-class-id="${weeklyClass.id}" aria-label="${weeklyClass.className}, ${dayName} ${formatTimeLabel(weeklyClass.startTime)}, ${placesDescription.text}${isBooked ? ", réservé" : ""}">
+      return `<button type="button" class="${slotClassNames}" style="--slot-color:${typeDefinition.color};animation-delay:${slotPosition * 60}ms" data-class-id="${weeklyClass.id}" aria-label="${weeklyClass.className}, ${formatOccurrenceDate(weeklyClass)} ${formatTimeLabel(weeklyClass.startTime)}, ${isClosed ? "réservations closes" : placesDescription.text}${isBooked ? ", réservé" : ""}">
         ${bookedBadgeMarkup}
         <span class="class-slot__time">${formatTimeLabel(weeklyClass.startTime)} – ${formatTimeLabel(computeEndTime(weeklyClass.startTime, weeklyClass.durationMinutes))}</span>
         <span class="class-slot__name">${weeklyClass.className}</span>
         <span class="class-slot__coach">${weeklyClass.coachName}</span>
-        <span class="class-slot__footer">${buildIntensityMeterMarkup(weeklyClass.intensityLevel)}<span class="class-slot__spots${placesDescription.modifier ? ` class-slot__spots--${placesDescription.modifier}` : ""}">${isBooked ? "Réservé" : placesDescription.text}</span></span>
+        <span class="class-slot__footer">${buildIntensityMeterMarkup(weeklyClass.intensityLevel)}<span class="class-slot__spots${placesDescription.modifier && !isClosed ? ` class-slot__spots--${placesDescription.modifier}` : ""}">${statusText}</span></span>
       </button>`;
     }).join("");
     return `<div class="schedule-day">
-      <div class="schedule-day__header${dayIndex === todayDayIndex ? " is-today" : ""}">${dayName}</div>
+      <div class="schedule-day__header${dayOffset === 0 ? " is-today" : ""}">${dayName}<span class="schedule-day__date">${dayOffset === 0 ? "Aujourd'hui" : shortDateFormatter.format(date)}</span></div>
       ${classSlotsMarkup || '<div class="schedule-day__empty">Aucun cours</div>'}
     </div>`;
   }).join("");
@@ -176,25 +212,27 @@ function renderClassDialog() {
   const typeDefinition = CLASS_TYPE_DEFINITIONS[selectedClass.classType];
   const remainingPlaces = getRemainingPlaces(selectedClass);
   const isBooked = isClassBooked(selectedClass.id);
+  const isClosed = isClassBookingClosed(selectedClass);
   const dialogActionButton = classDialogElement.querySelector("[data-dialog-action]");
   classDialogElement.querySelector("[data-dialog-type]").textContent = `${typeDefinition.label} · ${INTENSITY_LABELS[selectedClass.intensityLevel]}`;
   classDialogElement.querySelector("[data-dialog-title]").textContent = selectedClass.className;
   classDialogElement.querySelector("[data-dialog-description]").textContent = typeDefinition.description;
-  classDialogElement.querySelector("[data-dialog-day]").textContent = WEEK_DAY_NAMES[selectedClass.dayIndex];
+  classDialogElement.querySelector("[data-dialog-day]").textContent = formatOccurrenceDate(selectedClass);
   classDialogElement.querySelector("[data-dialog-time]").textContent = `${formatTimeLabel(selectedClass.startTime)} · ${selectedClass.durationMinutes} min`;
   classDialogElement.querySelector("[data-dialog-coach]").textContent = selectedClass.coachName;
   classDialogElement.querySelector("[data-dialog-room]").textContent = selectedClass.roomName;
   classDialogElement.querySelector("[data-dialog-spots]").textContent = `${remainingPlaces} / ${selectedClass.capacity}`;
   classDialogElement.querySelector("[data-dialog-progress]").style.width = `${((selectedClass.capacity - remainingPlaces) / selectedClass.capacity) * 100}%`;
-  dialogActionButton.disabled = !isBooked && remainingPlaces === 0;
-  dialogActionButton.classList.toggle("button--danger", isBooked);
-  dialogActionButton.textContent = isBooked ? "Annuler ma réservation" : remainingPlaces === 0 ? "Cours complet" : "Réserver ma place";
+  dialogActionButton.disabled = isClosed || (!isBooked && remainingPlaces === 0);
+  dialogActionButton.classList.toggle("button--danger", isBooked && !isClosed);
+  if (isClosed) dialogActionButton.textContent = isBooked ? "Annulation close (moins de 2 h)" : "Réservations closes";
+  else dialogActionButton.textContent = isBooked ? "Annuler ma réservation" : remainingPlaces === 0 ? "Cours complet" : "Réserver ma place";
 }
 
 /* Renders the list inside the bookings drawer and the header counter */
 function renderBookingsPanel() {
   const bookingListElement = document.querySelector("[data-booking-list]");
-  const bookedClasses = planningState.bookedClassIds.map(findClassById).filter(Boolean).sort((firstClass, secondClass) => firstClass.dayIndex - secondClass.dayIndex || firstClass.startTime.localeCompare(secondClass.startTime));
+  const bookedClasses = planningState.bookings.map((booking) => findClassById(booking.classId)).filter(Boolean).sort((firstClass, secondClass) => getClassOccurrenceDate(firstClass) - getClassOccurrenceDate(secondClass) || firstClass.startTime.localeCompare(secondClass.startTime));
   document.querySelector("[data-booking-count]").textContent = bookedClasses.length;
   if (!bookedClasses.length) {
     bookingListElement.innerHTML = `<li class="booking-empty">Aucune réservation pour le moment.<br>Choisissez un cours dans le planning pour réserver votre place.</li>`;
@@ -203,9 +241,9 @@ function renderBookingsPanel() {
   bookingListElement.innerHTML = bookedClasses.map((bookedClass) => `<li class="booking-item" style="--slot-color:${CLASS_TYPE_DEFINITIONS[bookedClass.classType].color}">
     <div>
       <span class="booking-item__name">${bookedClass.className}</span>
-      <span class="booking-item__meta">${WEEK_DAY_NAMES[bookedClass.dayIndex]} · ${formatTimeLabel(bookedClass.startTime)} · ${bookedClass.coachName}</span>
+      <span class="booking-item__meta">${formatOccurrenceDate(bookedClass)} · ${formatTimeLabel(bookedClass.startTime)} · ${bookedClass.coachName}</span>
     </div>
-    <button class="button button--ghost button--small" type="button" data-cancel-booking="${bookedClass.id}" aria-label="Annuler ${bookedClass.className} du ${WEEK_DAY_NAMES[bookedClass.dayIndex]}">Annuler</button>
+    <button class="button button--ghost button--small" type="button" data-cancel-booking="${bookedClass.id}" aria-label="Annuler ${bookedClass.className} du ${formatOccurrenceDate(bookedClass)}"${isClassBookingClosed(bookedClass) ? " disabled" : ""}>Annuler</button>
   </li>`).join("");
 }
 
@@ -220,20 +258,25 @@ function renderPlanningViews() {
 function toggleClassBooking(classId) {
   const targetClass = findClassById(classId);
   if (!targetClass) return;
+  if (isClassBookingClosed(targetClass)) {
+    showToastMessage("Réservations et annulations closes 2 heures avant le cours.");
+    renderPlanningViews();
+    return;
+  }
   if (isClassBooked(classId)) {
-    planningState.bookedClassIds = planningState.bookedClassIds.filter((bookedClassId) => bookedClassId !== classId);
+    planningState.bookings = planningState.bookings.filter((booking) => booking.classId !== classId);
     showToastMessage(`Réservation annulée : ${targetClass.className}`);
   } else if (getRemainingPlaces(targetClass) === 0) {
     showToastMessage("Ce cours est complet.");
     return;
-  } else if (planningState.bookedClassIds.length >= MAXIMUM_SIMULTANEOUS_BOOKINGS) {
+  } else if (planningState.bookings.length >= MAXIMUM_SIMULTANEOUS_BOOKINGS) {
     showToastMessage(`Limite de ${MAXIMUM_SIMULTANEOUS_BOOKINGS} réservations simultanées atteinte.`);
     return;
   } else {
-    planningState.bookedClassIds = [...planningState.bookedClassIds, classId];
-    showToastMessage(`Place réservée : ${targetClass.className}, ${WEEK_DAY_NAMES[targetClass.dayIndex].toLowerCase()} à ${formatTimeLabel(targetClass.startTime)}`);
+    planningState.bookings = [...planningState.bookings, { classId, dateKey: formatDateKey(getClassOccurrenceDate(targetClass)) }];
+    showToastMessage(`Place réservée : ${targetClass.className}, ${formatOccurrenceDate(targetClass)} à ${formatTimeLabel(targetClass.startTime)}`);
   }
-  saveBookedClassIds();
+  saveBookings();
   renderPlanningViews();
 }
 
@@ -270,7 +313,14 @@ function initializePlanningInteractions() {
   document.querySelector("[data-open-bookings]").addEventListener("click", () => bookingsDialogElement.showModal());
   document.querySelector("[data-booking-list]").addEventListener("click", (clickEvent) => {
     const cancelButtonElement = clickEvent.target.closest("[data-cancel-booking]");
-    if (cancelButtonElement) toggleClassBooking(cancelButtonElement.dataset.cancelBooking);
+    if (!cancelButtonElement) return;
+    toggleClassBooking(cancelButtonElement.dataset.cancelBooking);
+    const nextFocusTargetElement = bookingsDialogElement.querySelector("[data-cancel-booking]:not(:disabled)") || bookingsDialogElement.querySelector("[data-close-dialog]");
+    nextFocusTargetElement.focus();
+  });
+  classDialogElement.addEventListener("close", () => {
+    const selectedSlotElement = document.querySelector(`[data-schedule-grid] [data-class-id="${planningState.selectedClassId}"]`);
+    if (selectedSlotElement) selectedSlotElement.focus();
   });
   [classDialogElement, bookingsDialogElement].forEach((dialogElement) => {
     dialogElement.querySelector("[data-close-dialog]").addEventListener("click", () => dialogElement.close());

@@ -63,15 +63,17 @@ function openLightbox(startIndex) {
   lightboxCloseButtonElement.focus();
 }
 
-/* Closes the lightbox once its fade-out transition completes */
+/* Hides the lightbox once its fade-out has finished, unless it was reopened in the meantime */
+function hideLightboxAfterFade(transitionEvent) {
+  if (transitionEvent.target !== lightboxElement || transitionEvent.propertyName !== 'opacity') return;
+  if (!lightboxElement.classList.contains('is-open')) lightboxElement.hidden = true;
+}
+
+/* Closes the lightbox, fading it out unless reduced motion is requested */
 function closeLightbox() {
   if (!lightboxElement.classList.contains('is-open')) return;
-  lightboxElement.addEventListener('transitionend', function hideLightboxAfterFade(transitionEvent) {
-    if (transitionEvent.target !== lightboxElement || transitionEvent.propertyName !== 'opacity') return;
-    lightboxElement.removeEventListener('transitionend', hideLightboxAfterFade);
-    lightboxElement.hidden = true;
-  });
   lightboxElement.classList.remove('is-open');
+  if (prefersReducedMotionQuery.matches) lightboxElement.hidden = true;
   document.body.style.overflow = '';
   if (galleryState.elementFocusedBeforeLightbox) galleryState.elementFocusedBeforeLightbox.focus();
 }
@@ -104,7 +106,9 @@ galleryListElement.addEventListener('click', (clickEvent) => {
   openLightbox(galleryState.visibleItemElements.indexOf(thumbnailButtonElement.closest('.masonry__item')));
 });
 
-lightboxImageElement.addEventListener('load', () => lightboxImageElement.classList.remove('is-loading'));
+['load', 'error'].forEach((imageEventName) => lightboxImageElement.addEventListener(imageEventName, () => lightboxImageElement.classList.remove('is-loading')));
+lightboxElement.addEventListener('transitionend', hideLightboxAfterFade);
+lightboxElement.addEventListener('transitioncancel', hideLightboxAfterFade);
 lightboxCloseButtonElement.addEventListener('click', closeLightbox);
 lightboxElement.querySelector('[data-lightbox-previous]').addEventListener('click', () => renderLightboxPhoto(galleryState.lightboxIndex - 1));
 lightboxElement.querySelector('[data-lightbox-next]').addEventListener('click', () => renderLightboxPhoto(galleryState.lightboxIndex + 1));

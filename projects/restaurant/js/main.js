@@ -7,6 +7,8 @@
 const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 let sharedRevealObserver = null;
+let pageLeaveAnimation = null;
+let pendingNavigationUrl = '';
 
 /* Toggles the compact header style once the page is scrolled */
 function initializeStickyHeader() {
@@ -42,26 +44,34 @@ function initializeMobileNavigation() {
   window.matchMedia('(min-width: 960px)').addEventListener('change', () => setNavigationOpenState(false));
 }
 
-/* Fades the page out before following internal links, navigating once the fade has finished */
+/* Fades the page out before following internal links, navigating once the fade animation has finished
+   (the Web Animations API overrides the entrance animation, so a click during page load still navigates).
+   Placeholder links (href="#") stay inert instead of jumping to the top of the page. */
 function initializePageTransitions() {
   document.addEventListener('click', (clickEvent) => {
     const clickedLinkElement = clickEvent.target.closest('a[href]');
     if (!clickedLinkElement || clickEvent.defaultPrevented || clickEvent.button !== 0) return;
+    if (clickedLinkElement.getAttribute('href') === '#') {
+      clickEvent.preventDefault();
+      return;
+    }
     if (clickEvent.metaKey || clickEvent.ctrlKey || clickEvent.shiftKey || clickEvent.altKey) return;
     const destinationUrl = new URL(clickedLinkElement.href, window.location.href);
     const isInternalDestination = destinationUrl.origin === window.location.origin && clickedLinkElement.target !== '_blank';
-    const isSamePageAnchor = destinationUrl.pathname === window.location.pathname && destinationUrl.hash !== '';
+    const isSamePageLink = destinationUrl.pathname === window.location.pathname && destinationUrl.search === window.location.search;
     const isHtmlPage = /\.html$|\/$/.test(destinationUrl.pathname);
-    if (!isInternalDestination || isSamePageAnchor || !isHtmlPage || prefersReducedMotionQuery.matches) return;
+    if (!isInternalDestination || isSamePageLink || !isHtmlPage || prefersReducedMotionQuery.matches) return;
     clickEvent.preventDefault();
-    document.body.addEventListener('transitionend', function navigateAfterFade(transitionEvent) {
-      if (transitionEvent.target !== document.body || transitionEvent.propertyName !== 'opacity') return;
-      document.body.removeEventListener('transitionend', navigateAfterFade);
-      window.location.href = destinationUrl.href;
-    });
-    document.body.classList.add('is-leaving');
+    pendingNavigationUrl = destinationUrl.href;
+    if (pageLeaveAnimation) return;
+    pageLeaveAnimation = document.body.animate([{ opacity: getComputedStyle(document.body).opacity }, { opacity: 0 }], { duration: 350, easing: 'ease', fill: 'forwards' });
+    pageLeaveAnimation.addEventListener('finish', () => { window.location.href = pendingNavigationUrl; });
   });
-  window.addEventListener('pageshow', () => document.body.classList.remove('is-leaving'));
+  window.addEventListener('pageshow', (pageShowEvent) => {
+    if (!pageShowEvent.persisted || !pageLeaveAnimation) return;
+    pageLeaveAnimation.cancel();
+    pageLeaveAnimation = null;
+  });
 }
 
 /* Reveals elements carrying the data-reveal attribute when they enter the viewport */
@@ -134,12 +144,15 @@ function getFieldValidationMessage(fieldElement) {
   return '';
 }
 
-/* Displays or clears the inline error of a field and reports whether it is valid */
+/* Displays or clears the inline error of a field, links it to the field and reports whether the field is valid */
 function updateFieldErrorState(fieldElement) {
   const validationMessage = getFieldValidationMessage(fieldElement);
   const errorMessageElement = document.querySelector(`[data-error-for="${fieldElement.id}"]`);
   fieldElement.setAttribute('aria-invalid', String(Boolean(validationMessage)));
-  if (errorMessageElement) errorMessageElement.textContent = validationMessage;
+  if (!errorMessageElement) return !validationMessage;
+  if (!errorMessageElement.id) errorMessageElement.id = `${fieldElement.id}-erreur`;
+  fieldElement.setAttribute('aria-describedby', errorMessageElement.id);
+  errorMessageElement.textContent = validationMessage;
   return !validationMessage;
 }
 

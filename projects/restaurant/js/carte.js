@@ -205,5 +205,12 @@ dietFilterButtonElements.forEach((filterButtonElement) => {
 if ('ResizeObserver' in window) new ResizeObserver(positionTabIndicator).observe(menuTabListElement);
 if (document.fonts) document.fonts.ready.then(positionTabIndicator);
 
-const requestedMenuCategory = window.location.hash.slice(1);
-selectMenuCategory(isKnownMenuCategory(requestedMenuCategory) ? requestedMenuCategory : 'entrees', false);
+/* Selects the category named in the URL hash, falling back to the starters */
+function selectMenuCategoryFromHash() {
+  const requestedMenuCategory = window.location.hash.slice(1);
+  selectMenuCategory(isKnownMenuCategory(requestedMenuCategory) ? requestedMenuCategory : 'entrees', false);
+}
+
+window.addEventListener('hashchange', selectMenuCategoryFromHash);
+
+selectMenuCategoryFromHash();

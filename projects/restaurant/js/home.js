@@ -43,6 +43,7 @@ function initializeReviewsSlider(sliderRootElement) {
     if (keyboardEvent.key === 'ArrowRight') showSlide(activeSlideIndex + 1);
   });
   viewportElement.addEventListener('pointerdown', (pointerEvent) => {
+    if (pointerEvent.button !== 0) return;
     dragStartX = pointerEvent.clientX;
     viewportElement.setPointerCapture(pointerEvent.pointerId);
     viewportElement.classList.add('is-dragging');

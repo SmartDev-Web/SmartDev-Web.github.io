@@ -38,8 +38,11 @@ function getTrialFieldError(trialFormElement, fieldName) {
       if (!selectedDateValue) return "Choisissez une date.";
       return selectedDateValue < formFields.trialDate.min || selectedDateValue > formFields.trialDate.max ? `Date entre aujourd'hui et J+${MAXIMUM_TRIAL_DAYS_AHEAD}.` : "";
     }
-    case "trialSlot":
-      return formFields.trialSlot.value ? "" : "Choisissez un créneau.";
+    case "trialSlot": {
+      if (!formFields.trialSlot.value) return "Choisissez un créneau.";
+      const isSundayEvening = Boolean(formFields.trialDate.value) && new Date(`${formFields.trialDate.value}T12:00:00`).getDay() === 0 && formFields.trialSlot.value.startsWith("Soirée");
+      return isSundayEvening ? "Le dimanche, le club ferme à 19h : choisissez un autre créneau." : "";
+    }
     case "mainGoal":
       return formFields.mainGoal.value ? "" : "Sélectionnez un objectif.";
     case "privacyConsent":
@@ -65,6 +68,7 @@ function initializeTrialForm() {
   configureTrialDateLimits(trialFormElement.elements.trialDate);
   trialFormElement.addEventListener("change", (changeEvent) => {
     if (validatedFieldNames.includes(changeEvent.target.name)) validateTrialField(trialFormElement, changeEvent.target.name);
+    if (changeEvent.target.name === "trialDate" && trialFormElement.elements.trialSlot.value) validateTrialField(trialFormElement, "trialSlot");
   });
   trialFormElement.addEventListener("focusout", (focusEvent) => {
     const fieldName = focusEvent.target.name;
