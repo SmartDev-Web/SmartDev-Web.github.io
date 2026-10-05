@@ -45,10 +45,6 @@ body {
   overflow-x: hidden;
 }
 
-body.is-menu-open {
-  overflow: hidden;
-}
-
 img {
   max-width: 100%;
   display: block;
@@ -181,6 +177,7 @@ body.has-pointer .cursor-glow {
 }
 
 .nav {
+  position: relative;
   height: 100%;
   display: flex;
   align-items: center;
@@ -2171,28 +2168,109 @@ body.has-pointer .cursor-glow {
   .nav__toggle {
     display: block;
   }
+  body.is-menu-open .site-header {
+    background: rgba(11, 13, 20, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-color: var(--color-border);
+  }
   .nav__links {
-    position: fixed;
-    inset: 0;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
     flex-direction: column;
-    justify-content: center;
-    gap: 14px;
-    background: rgba(11, 13, 20, 0.97);
-    backdrop-filter: blur(16px);
-    clip-path: circle(0 at calc(100% - 38px) 38px);
-    transition: clip-path 0.6s var(--easing-out);
+    align-items: stretch;
+    gap: 2px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    background: linear-gradient(160deg, rgba(124, 92, 255, 0.12), transparent 45%), #121520;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.3);
+    counter-reset: mobile-nav;
+    opacity: 0;
     visibility: hidden;
+    transform: translateY(-10px) scale(0.98);
+    transform-origin: top right;
+    transition: opacity 0.25s ease, transform 0.35s var(--easing-out), visibility 0s linear 0.35s;
   }
   .nav__links.is-open {
-    clip-path: circle(150% at calc(100% - 38px) 38px);
+    opacity: 1;
     visibility: visible;
+    transform: none;
+    transition: opacity 0.25s ease, transform 0.35s var(--easing-out), visibility 0s;
   }
-  .nav__link {
-    font-size: 1.5rem;
+  .nav__links li {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.3s ease, transform 0.35s var(--easing-out);
+  }
+  .nav__links.is-open li {
+    opacity: 1;
+    transform: none;
+  }
+  .nav__links.is-open li:nth-child(2) { transition-delay: 0.03s; }
+  .nav__links.is-open li:nth-child(3) { transition-delay: 0.06s; }
+  .nav__links.is-open li:nth-child(4) { transition-delay: 0.09s; }
+  .nav__links.is-open li:nth-child(5) { transition-delay: 0.12s; }
+  .nav__links.is-open li:nth-child(6) { transition-delay: 0.15s; }
+  .nav__links .nav__link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
     font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text);
+    transition: background 0.25s ease, color 0.25s ease;
   }
-  .nav__link--cta {
-    margin: 12px 0 0;
+  .nav__links .nav__link:not(.nav__link--cta)::before {
+    counter-increment: mobile-nav;
+    content: counter(mobile-nav, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    transition: color 0.25s ease;
+  }
+  .nav__links .nav__link:not(.nav__link--cta)::after {
+    content: "→";
+    position: static;
+    height: auto;
+    margin-left: auto;
+    background: none;
+    color: var(--color-text-muted);
+    transform: translateX(-4px);
+    opacity: 0.5;
+    transition: transform 0.3s var(--easing-out), opacity 0.3s ease, color 0.3s ease;
+  }
+  .nav__links .nav__link:hover,
+  .nav__links .nav__link:focus-visible,
+  .nav__links .nav__link.is-current {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .nav__links .nav__link.is-current::before,
+  .nav__links .nav__link.is-current::after {
+    color: var(--color-secondary);
+  }
+  .nav__links .nav__link:hover::after,
+  .nav__links .nav__link.is-current::after {
+    transform: none;
+    opacity: 1;
+  }
+  .nav__links .nav__link--cta {
+    justify-content: center;
+    margin: 8px 0 0;
+    border: 0;
+    border-radius: 14px;
+    background: var(--gradient-brand);
+    color: #0b0d14;
+    font-weight: 600;
+  }
+  .nav__links .nav__link--cta:hover {
+    background: var(--gradient-brand);
+    filter: brightness(1.08);
   }
 }
 

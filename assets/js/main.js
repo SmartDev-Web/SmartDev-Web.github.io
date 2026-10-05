@@ -61,23 +61,43 @@
 
   /* ---------- Header, navigation and scroll progress ---------- */
 
+  /**
+   * Opens or closes the mobile dropdown menu; it closes automatically when the visitor scrolls,
+   * taps outside of the navigation, presses Escape, picks a link or switches to the desktop layout.
+   */
   function initializeNavigationMenu() {
+    const navigationElement = document.querySelector(".nav");
     const navigationToggleButton = document.getElementById("navToggle");
     const navigationLinksList = document.getElementById("navLinks");
+    const desktopLayoutQuery = window.matchMedia("(min-width: 901px)");
+    const scrollClosingDistance = 24;
+    let scrollPositionAtOpening = 0;
+    const isMenuOpen = () => navigationToggleButton.getAttribute("aria-expanded") === "true";
     const setMenuOpenState = (shouldOpen) => {
+      if (shouldOpen === isMenuOpen()) return;
       navigationToggleButton.setAttribute("aria-expanded", String(shouldOpen));
       navigationToggleButton.setAttribute("aria-label", shouldOpen ? "Fermer le menu" : "Ouvrir le menu");
       navigationLinksList.classList.toggle("is-open", shouldOpen);
       document.body.classList.toggle("is-menu-open", shouldOpen);
+      scrollPositionAtOpening = window.scrollY;
     };
-    navigationToggleButton.addEventListener("click", () => {
-      setMenuOpenState(navigationToggleButton.getAttribute("aria-expanded") !== "true");
-    });
+    navigationToggleButton.addEventListener("click", () => setMenuOpenState(!isMenuOpen()));
     navigationLinksList.addEventListener("click", (clickEvent) => {
       if (clickEvent.target.closest("a")) setMenuOpenState(false);
     });
+    document.addEventListener("pointerdown", (pointerEvent) => {
+      if (isMenuOpen() && !navigationElement.contains(pointerEvent.target)) setMenuOpenState(false);
+    });
+    window.addEventListener("scroll", () => {
+      if (isMenuOpen() && Math.abs(window.scrollY - scrollPositionAtOpening) > scrollClosingDistance) setMenuOpenState(false);
+    }, { passive: true });
     document.addEventListener("keydown", (keyboardEvent) => {
-      if (keyboardEvent.key === "Escape") setMenuOpenState(false);
+      if (keyboardEvent.key !== "Escape" || !isMenuOpen()) return;
+      setMenuOpenState(false);
+      navigationToggleButton.focus();
+    });
+    desktopLayoutQuery.addEventListener("change", (mediaQueryEvent) => {
+      if (mediaQueryEvent.matches) setMenuOpenState(false);
     });
   }
 
