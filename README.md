@@ -86,7 +86,7 @@ Tant qu'aucun relais n'est configuré, le formulaire ouvre le client mail du vis
 
 1. Dans Mailjet, valider l'adresse expéditrice (**Account settings → Sender addresses & domains**) et récupérer la clé API et la clé secrète (**API key management**).
 2. Installer Wrangler et se connecter : `npm install -g wrangler` puis `wrangler login`.
-3. Depuis le dossier `serverless/` :
+3. Depuis le dossier `serverless/` (après avoir adapté `ALLOWED_ORIGIN` dans `wrangler.toml` si le portfolio est publié sur un autre domaine) :
    ```
    wrangler secret put MAILJET_API_KEY
    wrangler secret put MAILJET_API_SECRET
@@ -100,7 +100,7 @@ Pour une délivrabilité optimale, utiliser idéalement une adresse expéditrice
 
 ## Aperçu en local
 
-Ouvrir `index.html` dans un navigateur suffit. Pour reproduire fidèlement GitHub Pages (page 404, chemins absolus) :
+Ouvrir `index.html` dans un navigateur suffit. Pour se rapprocher de GitHub Pages (chemins absolus de la page 404, transitions animées entre les pages, actives uniquement en HTTP) :
 
 ```
 python3 -m http.server 8000
@@ -118,4 +118,4 @@ puis ouvrir <http://localhost:8000/>.
 
 1. Créer le dossier `projects/<slug>/` avec un `index.html` et appliquer les mêmes balises de sécurité et `noindex` que les autres démos.
 2. Ajouter une ligne `<li class="project-row">` dans la liste `#projectList` de `index.html` (catégorie, couleur d'accent, image, titre, description, étiquettes).
-3. Mettre à jour le compteur de pages et de sites dans la section d'accueil si nécessaire.
+3. Adapter le titre et le texte de la section Projets qui annoncent dix sites. Les chiffres clés de l'accueil se calculent seuls à partir des listes de technologies et de domaines d'expertise.

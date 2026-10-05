@@ -450,7 +450,6 @@ body.has-pointer .cursor-glow {
   transform: translateY(110%);
   opacity: 0;
   transition: transform 0.7s var(--easing-out), opacity 0.7s ease;
-  white-space: nowrap;
 }
 
 .hero__rotator-word.is-active {
@@ -736,7 +735,7 @@ body.has-pointer .cursor-glow {
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   overflow: hidden;
-  transition: border-color 0.35s ease, transform 0.35s var(--easing-out);
+  transition: opacity 0.9s var(--easing-out) var(--reveal-delay, 0s), transform 0.9s var(--easing-out) var(--reveal-delay, 0s), border-color 0.35s ease, translate 0.35s var(--easing-out);
 }
 
 .pillar::before {
@@ -752,7 +751,7 @@ body.has-pointer .cursor-glow {
 
 .pillar:hover {
   border-color: rgba(124, 92, 255, 0.4);
-  transform: translateY(-4px);
+  translate: 0 -4px;
 }
 
 .pillar:hover::before,
@@ -809,7 +808,6 @@ body.has-pointer .cursor-glow {
   list-style: none;
   margin: 0;
   padding: 0;
-  counter-reset: service;
 }
 
 .service-item {
@@ -1093,9 +1091,6 @@ body.has-pointer .cursor-glow {
   background: var(--color-secondary);
   color: #0b0d14;
   font-size: 0.68rem;
-}
-
-.mock-cart__count {
   overflow: hidden;
   line-height: 18px;
 }
@@ -1484,7 +1479,6 @@ body.has-pointer .cursor-glow {
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--color-border);
-  counter-reset: project;
 }
 
 .project-row {
@@ -1601,7 +1595,8 @@ body.has-pointer .cursor-glow {
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--row-accent);
+  color: color-mix(in srgb, var(--row-accent) 65%, var(--color-text));
+  transition: color 0.3s ease;
 }
 
 .project-row__tags {
@@ -1656,7 +1651,9 @@ body.has-pointer .cursor-glow {
 }
 
 .project-row:hover .project-row__index,
-.project-row:focus-within .project-row__index {
+.project-row:focus-within .project-row__index,
+.project-row:hover .project-row__category,
+.project-row:focus-within .project-row__category {
   color: #fff;
 }
 

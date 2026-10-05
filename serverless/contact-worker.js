@@ -82,9 +82,18 @@ function isLikelyAutomated(requestPayload) {
 }
 
 /**
- * Sends the validated request through the Mailjet Send API v3.1 as a plain-text email.
+ * Sends the validated request through the Mailjet Send API v3.1 as a plain-text email;
+ * resolves to false when Mailjet is unreachable, rejects the message or answers with an unexpected body.
  */
 async function sendWithMailjet(environment, contactRequest) {
+  try {
+    return await requestMailjetDelivery(environment, contactRequest);
+  } catch {
+    return false;
+  }
+}
+
+async function requestMailjetDelivery(environment, contactRequest) {
   const basicCredentials = btoa(`${environment.MAILJET_API_KEY}:${environment.MAILJET_API_SECRET}`);
   const mailjetResponse = await fetch(MAILJET_SEND_ENDPOINT, {
     method: "POST",
@@ -104,6 +113,21 @@ async function sendWithMailjet(environment, contactRequest) {
   return mailjetResult?.Messages?.[0]?.Status === "success";
 }
 
+/**
+ * Checks the optional rate limiter binding for the client address; when the binding is missing
+ * or unavailable the request is allowed, the honeypot and fill-time checks still filtering bots.
+ */
+async function isWithinRateLimit(request, environment) {
+  if (!environment.CONTACT_RATE_LIMITER) return true;
+  const clientAddress = request.headers.get("CF-Connecting-IP") || "unknown";
+  try {
+    const { success: isAllowed } = await environment.CONTACT_RATE_LIMITER.limit({ key: clientAddress });
+    return isAllowed;
+  } catch {
+    return true;
+  }
+}
+
 export default {
   async fetch(request, environment) {
     const requestOrigin = request.headers.get("Origin");
@@ -111,11 +135,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: buildCorsHeaders(environment) });
     if (request.method !== "POST") return createJsonResponse(environment, 405, { ok: false });
     if (!(request.headers.get("Content-Type") || "").startsWith("application/json")) return createJsonResponse(environment, 415, { ok: false });
-    if (environment.CONTACT_RATE_LIMITER) {
-      const clientAddress = request.headers.get("CF-Connecting-IP") || "unknown";
-      const { success: isWithinLimit } = await environment.CONTACT_RATE_LIMITER.limit({ key: clientAddress });
-      if (!isWithinLimit) return createJsonResponse(environment, 429, { ok: false });
-    }
+    if (!(await isWithinRateLimit(request, environment))) return createJsonResponse(environment, 429, { ok: false });
     const rawBody = await request.text();
     if (new TextEncoder().encode(rawBody).length > MAXIMUM_BODY_BYTES) return createJsonResponse(environment, 413, { ok: false });
     let requestPayload;

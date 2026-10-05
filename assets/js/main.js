@@ -269,7 +269,8 @@
 
   /**
    * Draws an interactive constellation of particles that react to the pointer.
-   * Rendering pauses automatically when the hero leaves the viewport.
+   * Rendering pauses automatically when the hero leaves the viewport; a single static frame is drawn
+   * after each resize while paused or when reduced motion is requested.
    */
   function initializeHeroCanvas() {
     const canvasElement = document.getElementById("heroCanvas");
@@ -290,16 +291,7 @@
         radius: Math.random() * 1.6 + 0.6
       }));
     };
-    const resizeCanvas = () => {
-      const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      canvasWidth = canvasElement.clientWidth;
-      canvasHeight = canvasElement.clientHeight;
-      canvasElement.width = canvasWidth * devicePixelRatio;
-      canvasElement.height = canvasHeight * devicePixelRatio;
-      drawingContext.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-      createParticles();
-    };
-    const renderFrame = () => {
+    const drawParticleNetwork = () => {
       drawingContext.clearRect(0, 0, canvasWidth, canvasHeight);
       particleList.forEach((particle, particleIndex) => {
         const pointerDeltaX = particle.x - pointerPosition.x;
@@ -330,6 +322,19 @@
           drawingContext.stroke();
         }
       });
+    };
+    const resizeCanvas = () => {
+      const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      canvasWidth = canvasElement.clientWidth;
+      canvasHeight = canvasElement.clientHeight;
+      canvasElement.width = canvasWidth * devicePixelRatio;
+      canvasElement.height = canvasHeight * devicePixelRatio;
+      drawingContext.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      createParticles();
+      if (animationFrameIdentifier === null) drawParticleNetwork();
+    };
+    const renderFrame = () => {
+      drawParticleNetwork();
       animationFrameIdentifier = requestAnimationFrame(renderFrame);
     };
     const startRendering = () => {
@@ -340,6 +345,7 @@
       animationFrameIdentifier = null;
     };
     new ResizeObserver(resizeCanvas).observe(canvasElement);
+    if (prefersReducedMotion) return;
     canvasElement.parentElement.addEventListener("pointermove", (pointerEvent) => {
       const canvasBounds = canvasElement.getBoundingClientRect();
       pointerPosition.x = pointerEvent.clientX - canvasBounds.left;
@@ -349,19 +355,13 @@
       pointerPosition.x = -9999;
       pointerPosition.y = -9999;
     });
-    if (prefersReducedMotion) {
-      resizeCanvas();
-      renderFrame();
-      stopRendering();
-      return;
-    }
     new IntersectionObserver(([heroEntry]) => {
       if (heroEntry.isIntersecting) startRendering();
       else stopRendering();
     }).observe(canvasElement);
   }
 
-  /* ---------- Pointer effects: glow, tilt, magnetic buttons ---------- */
+  /* ---------- Pointer effects: glow and magnetic buttons ---------- */
 
   function initializeCursorGlow() {
     const cursorGlowElement = document.querySelector(".cursor-glow");
@@ -381,24 +381,6 @@
       });
     }, { passive: true });
     document.documentElement.addEventListener("pointerleave", () => document.body.classList.remove("has-pointer"));
-  }
-
-  /**
-   * Applies a 3D tilt that follows the pointer and exposes its position as CSS variables for spotlight effects.
-   */
-  function attachTiltEffect(tiltElement) {
-    if (!hasFinePointer || prefersReducedMotion) return;
-    tiltElement.addEventListener("pointermove", (pointerEvent) => {
-      const elementBounds = tiltElement.getBoundingClientRect();
-      const relativeX = (pointerEvent.clientX - elementBounds.left) / elementBounds.width;
-      const relativeY = (pointerEvent.clientY - elementBounds.top) / elementBounds.height;
-      tiltElement.style.transform = `perspective(900px) rotateX(${(0.5 - relativeY) * 8}deg) rotateY(${(relativeX - 0.5) * 8}deg) translateY(-4px)`;
-      tiltElement.style.setProperty("--pointer-x", `${relativeX * 100}%`);
-      tiltElement.style.setProperty("--pointer-y", `${relativeY * 100}%`);
-    });
-    tiltElement.addEventListener("pointerleave", () => {
-      tiltElement.style.transform = "";
-    });
   }
 
   /**
@@ -508,7 +490,7 @@
 
   const contactValidationRules = {
     name: (fieldValue) => fieldValue.trim().length >= 2 || "Indiquez votre nom (2 caractères minimum).",
-    email: (fieldValue) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(fieldValue.trim()) || "Saisissez une adresse e-mail valide.",
+    email: (fieldValue) => /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']{2,}$/.test(fieldValue.trim()) || "Saisissez une adresse e-mail valide.",
     projectType: (fieldValue) => fieldValue !== "" || "Choisissez un type de projet.",
     message: (fieldValue) => fieldValue.trim().length >= 20 || "Détaillez un peu votre besoin (20 caractères minimum)."
   };
@@ -604,7 +586,6 @@
 
   document.getElementById("currentYear").textContent = new Date().getFullYear();
   observeRevealElements([...document.querySelectorAll(".reveal")]);
-  document.querySelectorAll(".tilt").forEach(attachTiltEffect);
   document.querySelectorAll(".magnetic").forEach(attachMagneticEffect);
   initializePageTransitions();
   initializeNavigationMenu();
