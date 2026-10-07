@@ -101,6 +101,158 @@
     });
   }
 
+  /* Section « Pourquoi » (#pourquoi) — SmartDev
+   Pas de script inline : compatible avec script-src 'self'.
+   Les apparitions au scroll (.reveal) restent gérées par main.js. */
+  (function () {
+    "use strict";
+
+    var root = document.getElementById("pourquoi");
+    if (!root) return;
+
+    var list = root.querySelector("#presResults");
+    var queryEl = root.querySelector("#presQuery");
+    var caret = root.querySelector(".pres-caret");
+    var verdict = root.querySelector("#presVerdict");
+    var stage = root.querySelector(".pres-stage");
+    var buttons = Array.prototype.slice.call(root.querySelectorAll(".pres-switch__button"));
+    var items = Array.prototype.slice.call(list.children);
+    var byId = {};
+    items.forEach(function (li) { byId[li.getAttribute("data-id")] = li; });
+
+    var you = byId.you;
+    if (!you || !byId["rival-a"] || !byId["rival-b"]) return;
+
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var parts = {
+      url: you.querySelector(".pres-res__url"),
+      line: you.querySelector(".pres-res__line"),
+      tag: you.querySelector(".pres-res__tag")
+    };
+    var states = {
+      without: { url: parts.url.textContent, line: parts.line.textContent, tag: parts.tag.textContent },
+      with: {
+        url: you.getAttribute("data-with-url"),
+        line: you.getAttribute("data-with-line"),
+        tag: you.getAttribute("data-with-tag")
+      }
+    };
+    var orders = {
+      without: ["rival-a", "you", "rival-b"],
+      with: ["you", "rival-a", "rival-b"]
+    };
+    var verdicts = {
+      without: { text: "Le client appelle quelqu'un d'autre, et vous ne le saurez jamais.", cls: "is-lost" },
+      with: { text: "Le client vous trouve, vérifie vos références et vous contacte.", cls: "is-won" }
+    };
+
+    var mode = "without";
+    var fullQuery = queryEl.textContent.trim();
+    var introDone = false;
+    var timers = [];
+
+    function later(fn, ms) { timers.push(window.setTimeout(fn, ms)); }
+
+    /* Termine (ou saute) l'intro : requête complète, résultats visibles. */
+    function finishIntro() {
+      if (introDone) return;
+      introDone = true;
+      timers.forEach(window.clearTimeout);
+      timers = [];
+      queryEl.textContent = fullQuery;
+      caret.classList.add("is-idle");
+      list.classList.add("is-instant");
+      items.forEach(function (li) { li.classList.add("is-in"); });
+      void list.offsetWidth; /* applique l'état final avant toute mesure */
+      window.requestAnimationFrame(function () { list.classList.remove("is-instant"); });
+    }
+
+    /* Un seul moment orchestré : la requête se tape, les résultats arrivent. */
+    function intro() {
+      if (reduced) { finishIntro(); return; }
+      var i = 0;
+      queryEl.textContent = "";
+      (function type() {
+        if (introDone) return;
+        i += 1;
+        queryEl.textContent = fullQuery.slice(0, i);
+        if (i < fullQuery.length) { later(type, 38); return; }
+        items.forEach(function (li, k) {
+          later(function () { li.classList.add("is-in"); }, 160 + k * 170);
+        });
+        later(function () { introDone = true; caret.classList.add("is-idle"); }, 160 + items.length * 170);
+      })();
+    }
+
+    function measure() {
+      var tops = {};
+      items.forEach(function (li) { tops[li.getAttribute("data-id")] = li.getBoundingClientRect().top; });
+      return tops;
+    }
+
+    /* FLIP : chaque résultat glisse de son ancienne position vers la nouvelle. */
+    function flip(first) {
+      items.forEach(function (li) {
+        var dy = first[li.getAttribute("data-id")] - li.getBoundingClientRect().top;
+        if (!dy || !li.animate) return;
+        li.animate(
+          [{ transform: "translateY(" + dy + "px)" }, { transform: "translateY(0)" }],
+          { duration: 480, easing: "cubic-bezier(.2,.8,.2,1)" }
+        );
+      });
+    }
+
+    function pulse(el) {
+      el.classList.remove("is-pulse");
+      void el.offsetWidth;
+      el.classList.add("is-pulse");
+    }
+
+    function setMode(next) {
+      if (next === mode) return;
+      finishIntro();
+      var first = measure();
+      mode = next;
+
+      var s = states[mode];
+      parts.url.textContent = s.url;
+      parts.line.textContent = s.line;
+      parts.tag.textContent = s.tag;
+      you.classList.toggle("is-ghost", mode === "without");
+      orders[mode].forEach(function (id) { list.appendChild(byId[id]); });
+
+      if (!reduced) {
+        flip(first);
+        if (mode === "with") pulse(you);
+      }
+
+      verdict.textContent = verdicts[mode].text;
+      verdict.classList.remove("is-lost", "is-won");
+      verdict.classList.add(verdicts[mode].cls);
+
+      buttons.forEach(function (b) {
+        var on = b.getAttribute("data-mode") === mode;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { setMode(b.getAttribute("data-mode")); });
+    });
+
+    root.setAttribute("data-armed", "");
+    if ("IntersectionObserver" in window && stage) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); intro(); }
+      }, { threshold: 0.4 });
+      io.observe(stage);
+    } else {
+      finishIntro();
+    }
+  })();
+
   /**
    * Synchronizes every scroll-dependent visual (header state, progress bar, process timeline) in a single frame.
    */

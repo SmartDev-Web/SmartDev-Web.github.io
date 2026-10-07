@@ -2383,3 +2383,206 @@ body.has-pointer .cursor-glow {
 .skip-link:focus-visible {
   transform: none;
 }
+
+/* ==========================================================================
+   Section « Pourquoi » (#pourquoi) — SmartDev
+   Réutilise les composants existants : .section, .container, .section__*,
+   .mock-window, .button. Tout le reste est préfixé .pres- pour ne rien casser.
+   ========================================================================== */
+
+.pres {
+  /* À aligner sur les variables de main.css (couleur d'accent du site). */
+  --pres-accent: var(--accent, #00f0ff);
+  --pres-lost: #f5a524;
+  --pres-line: rgba(255, 255, 255, .1);
+  --pres-muted: rgba(232, 235, 245, .62);
+  --pres-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.pres__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-areas:
+    "control stage"
+    "reasons stage";
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+  row-gap: 2rem;
+  align-items: start;
+}
+.pres__control { grid-area: control; }
+.pres__reasons { grid-area: reasons; }
+.pres-stage    { grid-area: stage; position: sticky; top: 6rem; }
+
+/* ---------- Bascule « Sans site / Avec un site » ---------- */
+.pres-switch {
+  display: inline-flex;
+  padding: 4px;
+  border: 1px solid var(--pres-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .03);
+}
+.pres-switch__button {
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--pres-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: .6rem 1.2rem;
+  cursor: pointer;
+  transition: background-color .3s ease, color .3s ease;
+}
+.pres-switch__button:hover { color: inherit; }
+.pres-switch__button.is-active {
+  background: var(--pres-accent);
+  color: #0b0d14;
+  font-weight: 600;
+}
+.pres-switch__button:focus-visible,
+.pres .button:focus-visible { outline: 2px solid var(--pres-accent); outline-offset: 3px; }
+
+/* ---------- Verdict ---------- */
+.pres-verdict {
+  margin: 1.5rem 0 0;
+  min-height: 3.9em;
+  font-family: "Space Grotesk", inherit;
+  font-size: clamp(1.2rem, 2.3vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  transition: color .35s ease;
+}
+.pres-verdict.is-lost { color: var(--pres-lost); }
+.pres-verdict.is-won  { color: var(--pres-accent); }
+
+/* ---------- Arguments ---------- */
+.pres-reasons {
+  display: grid;
+  gap: 1.1rem;
+  margin: 0 0 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--pres-line);
+}
+.pres-reasons dt {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-weight: 600;
+}
+.pres-reasons dt::before {
+  content: "";
+  width: 2px;
+  height: 1em;
+  background: var(--pres-accent);
+}
+.pres-reasons dd {
+  margin: .25rem 0 0 calc(2px + .6rem);
+  color: var(--pres-muted);
+  max-width: 46ch;
+}
+
+/* ---------- Fenêtre de recherche (réutilise .mock-window) ---------- */
+.pres-stage .mock-window {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  opacity: 1;
+  transform: none;
+}
+.pres-search { padding: 1.25rem; }
+.pres-query {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  margin: 0;
+  padding: .65rem 1rem;
+  border: 1px solid var(--pres-line);
+  border-radius: 999px;
+  font-family: var(--pres-mono);
+  font-size: .85rem;
+}
+.pres-query svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: .55;
+}
+.pres-caret {
+  width: 2px;
+  height: 1.1em;
+  background: var(--pres-accent);
+  animation: pres-blink 1s steps(1) infinite;
+}
+.pres-caret.is-idle { opacity: 0; animation: none; }
+@keyframes pres-blink { 50% { opacity: 0; } }
+
+.pres-results {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: .6rem;
+}
+.pres-res {
+  display: grid;
+  gap: .2rem;
+  justify-items: start;
+  padding: .85rem 1rem;
+  border-radius: 10px;
+  border-left: 3px solid var(--pres-line);
+  background: rgba(255, 255, 255, .03);
+  transition: opacity .45s ease, transform .45s ease, border-color .35s ease, background-color .35s ease;
+}
+.pres-res__url { font-family: var(--pres-mono); font-size: .72rem; color: var(--pres-muted); }
+.pres-res__title { font-size: 1.05rem; font-weight: 600; }
+.pres-res__line { margin: 0; font-size: .88rem; color: var(--pres-muted); }
+.pres-res__tag {
+  margin-top: .35rem;
+  padding: .1rem .55rem;
+  border: 1px solid var(--pres-accent);
+  border-radius: 6px;
+  font-family: var(--pres-mono);
+  font-size: .7rem;
+  color: var(--pres-accent);
+}
+.pres-res--you { border-left-color: var(--pres-accent); background: rgba(255, 255, 255, .06); }
+.pres-res--you.is-ghost { border-left-color: var(--pres-lost); background: rgba(255, 255, 255, .03); opacity: .7; }
+.pres-res--you.is-ghost .pres-res__tag { color: var(--pres-lost); border-color: var(--pres-lost); }
+.pres-res.is-pulse { animation: pres-pulse .9s ease-out; }
+@keyframes pres-pulse {
+  from { box-shadow: 0 0 0 1px var(--pres-accent), 0 0 28px -6px var(--pres-accent); }
+  to   { box-shadow: 0 0 0 1px transparent, 0 0 0 0 transparent; }
+}
+
+/* Masqué uniquement quand le JS est actif (sans JS : tout reste visible). */
+.pres[data-armed] .pres-res:not(.is-in) { opacity: 0; transform: translateY(8px); }
+.pres-results.is-instant .pres-res { transition: none; }
+
+.pres-note {
+  margin: .9rem 0 0;
+  font-family: var(--pres-mono);
+  font-size: .72rem;
+  color: var(--pres-muted);
+}
+
+@media (max-width: 900px) {
+  .pres__layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "control" "stage" "reasons";
+    grid-template-rows: auto;
+  }
+  .pres-stage { position: static; }
+  .pres-verdict { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pres-caret { animation: none; }
+  .pres-res, .pres-switch__button, .pres-verdict { transition: none; }
+  .pres-res.is-pulse { animation: none; }
+}

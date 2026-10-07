@@ -32,6 +32,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/presence.css">
   <noscript><style>.page-transition { display: none; } .reveal { opacity: 1; transform: none; }</style></noscript>
   <script type="application/ld+json">
   {
@@ -146,10 +147,72 @@
       </div>
     </section>
 
+    <section class="section section--pourquoi pres" id="pourquoi">
+      <div class="container">
+        <header class="section__header reveal">
+          <p class="section__kicker">01 — Pourquoi</p>
+          <h2 class="section__title">Un client vous cherche.<br>Qui répond ?</h2>
+          <p class="section__lead">Avant d'appeler ou de se déplacer, un client cherche en ligne. Basculez entre les deux situations pour voir qui reçoit l'appel.</p>
+        </header>
+        <div class="pres__layout">
+          <div class="pres__control reveal">
+            <div class="pres-switch" role="group" aria-label="Situation de l'entreprise">
+              <button class="pres-switch__button is-active" type="button" aria-pressed="true" data-mode="without">Sans site</button>
+              <button class="pres-switch__button" type="button" aria-pressed="false" data-mode="with">Avec un site vitrine</button>
+            </div>
+            <p class="pres-verdict is-lost" id="presVerdict" role="status" aria-live="polite">Le client appelle quelqu'un d'autre, et vous ne le saurez jamais.</p>
+          </div>
+          <div class="pres__reasons reveal">
+            <dl class="pres-reasons">
+              <div><dt>On vous trouve</dt><dd>Les clients cherchent d'abord en ligne. Sans site, la première place revient à un concurrent.</dd></div>
+              <div><dt>On vous fait confiance</dt><dd>Adresse, réalisations, mentions légales : un site prouve que l'entreprise existe et travaille sérieusement.</dd></div>
+              <div><dt>Vous répondez à toute heure</dt><dd>Horaires, zone d'intervention, demande de devis : le site renseigne même quand vous êtes sur un chantier.</dd></div>
+              <div><dt>Vous gardez la main</dt><dd>Votre message, vos photos et vos tarifs viennent de vous, pas d'un annuaire incomplet ou périmé.</dd></div>
+            </dl>
+            <a href="#contact" class="button button--primary magnetic">Parlons de votre site
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            </a>
+          </div>
+          <div class="pres-stage reveal" aria-hidden="true">
+            <div class="mock-window">
+              <div class="mock-window__bar"><i></i><i></i><i></i><span>recherche.example</span></div>
+              <div class="pres-search">
+                <p class="pres-query">
+                  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                  <span id="presQuery">plombier près de moi</span><i class="pres-caret"></i>
+                </p>
+                <ol class="pres-results" id="presResults">
+                  <li class="pres-res" data-id="rival-a">
+                    <span class="pres-res__url">depannage-express.example</span>
+                    <b class="pres-res__title">Dépannage Express</b>
+                    <p class="pres-res__line">Site officiel · Devis en 2 minutes</p>
+                    <span class="pres-res__tag">Appeler</span>
+                  </li>
+                  <li class="pres-res pres-res--you is-ghost" data-id="you" data-with-url="votre-entreprise.example" data-with-line="Site officiel · Horaires, zone d'intervention, réalisations" data-with-tag="Demander un devis">
+                    <span class="pres-res__url">annuaire.example/fiche/4821</span>
+                    <b class="pres-res__title">Votre entreprise</b>
+                    <p class="pres-res__line">Fiche non vérifiée · Horaires et adresse à confirmer</p>
+                    <span class="pres-res__tag">Informations incomplètes</span>
+                  </li>
+                  <li class="pres-res" data-id="rival-b">
+                    <span class="pres-res__url">allo-plomberie.example</span>
+                    <b class="pres-res__title">Allo Plomberie Services</b>
+                    <p class="pres-res__line">Site officiel · Intervention sous 24 h</p>
+                    <span class="pres-res__tag">Appeler</span>
+                  </li>
+                </ol>
+                <p class="pres-note">Illustration : résultats fictifs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section section--expertise" id="expertise">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">01 — Expertise</p>
+          <p class="section__kicker">02 — Expertise</p>
           <h2 class="section__title">Développeur web - Architecte solution & Spécialiste IA,<br>au service de votre site</h2>
           <p class="section__lead">Je sais développer chaque ligne, et c'est précisément ce qui me permet d'exploiter l'IA à son plein potentiel. Ma spécialité : concevoir l'architecture et organiser les données de votre site, puis m'appuyer sur l'IA pour le construire vite, sans rien céder sur la qualité.</p>
         </header>
@@ -199,7 +262,7 @@
     <section class="section section--services" id="services">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">02 — Services</p>
+          <p class="section__kicker">03 — Services</p>
           <h2 class="section__title">Ce que je conçois pour vous</h2>
           <p class="section__lead">Du site vitrine qui convertit vos utilisateurs en clients à l'application qui gère vos données, chaque projet est architecturé pour la convertion de vos visiteurs et pour vous facilité la gestion de votre travail.</p>
         </header>
@@ -292,7 +355,7 @@
     <section class="section section--projects" id="projets">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">03 — Projets</p>
+          <p class="section__kicker">04 — Projets Demos</p>
           <h2 class="section__title">Dix sites, dix univers, tous explorables</h2>
           <p class="section__lead">Survolez ou parcourez la liste, puis plongez dans un projet : chaque site de démonstration est complet, avec plusieurs pages, des interactions réelles et sa propre identité visuelle.</p>
         </header>
@@ -462,7 +525,7 @@
     <section class="section" id="methode">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">04 — Méthode</p>
+          <p class="section__kicker">05 — Méthode</p>
           <h2 class="section__title">Une conception rapide, sans compromis sur la qualité</h2>
         </header>
         <ol class="timeline" id="processTimeline">
@@ -489,7 +552,7 @@
     <section class="section" id="competences">
       <div class="container">
         <header class="section__header reveal">
-          <p class="section__kicker">05 — Compétences</p>
+          <p class="section__kicker">06 — Compétences</p>
           <h2 class="section__title">Architecte spécialiste,<br>Développeur passionné.</h2>
           <p class="section__lead">Les technologies et les compétences que je mets au service de votre projet, de la première esquisse à la mise en ligne.</p>
         </header>
@@ -545,7 +608,7 @@
     <section class="section section--contact" id="contact">
       <div class="container contact">
         <div class="contact__intro reveal">
-          <p class="section__kicker">06 — Contact</p>
+          <p class="section__kicker">07 — Contact</p>
           <h2 class="section__title">Un projet en tête ?<br>Parlons-en.</h2>
           <p class="section__lead">Décrivez votre besoin en quelques lignes, je vous réponds sous 48 heures avec une première estimation.</p>
           <a class="contact__mail" href="mailto:smart.developpement.web@gmail.com">smart.developpement.web@gmail.com</a>
@@ -602,5 +665,6 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/presence.js" defer></script>
 </body>
 </html>
